@@ -30,6 +30,17 @@ const App = () => {
         setGameStarted(false);
     };
 
+    if(!joinGame && !hostGame && !hostLobby && !joinLobby && !gameStarted) {
+        return(
+            <Home
+            joinGame={joinGame}
+            hostGame={hostGame}
+            setJoinGame={setJoinGame}
+            setHostGame={setHostGame}
+        />  
+        );
+    }
+
     return(
         <>
             {
