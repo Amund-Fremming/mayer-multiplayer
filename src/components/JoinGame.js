@@ -4,6 +4,11 @@ import { db } from '../util/firebase';
 
 const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsername, setJoinLobby }) => {
 
+    const playerJoinGame = () => {
+        // Takes gameid and username
+        // Joins the given game
+    };
+
     const handleJoinedGame = () => {
         if (username === "" || gameid === "") {
             alert("Fill out username/gameid");

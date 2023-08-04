@@ -2,6 +2,12 @@ import React, { useState } from "react";
 
 const HostLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => {
 
+    const allPlayersReady = () => {
+        // onSnapshot to the game that is created
+        // Checks if all players are ready
+        // If all players ready, set gameStarted to true
+    };
+
     return(
         <>
             <div className="flex flex-col justify-center items-center h-screen">

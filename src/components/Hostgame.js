@@ -5,6 +5,11 @@ import { v4 } from 'uuid';
 
 const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername, setHostLobby }) => {
 
+    const createGame = () => {
+        // Creates a new game in the database
+        // With all properties needed
+    };
+
     const handleHostedGame = () => {
         // Her må det sjekkes at game ID ikke er i bruk eller finnes allerede
         if(gameid === "" || username === "") {
