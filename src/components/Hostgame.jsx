@@ -1,13 +1,32 @@
 import React from 'react';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../util/firebase';
 import { v4 } from 'uuid';
 
 const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername, setHostLobby }) => {
 
-    const createGame = () => {
+    const gamesRef = collection(db, "games");
+
+    const createGame = async () => {
         // Creates a new game in the database
         // With all properties needed
+
+        await addDoc(gamesRef, {
+            gameid: gameid,
+            currentPlayer: "",
+            players: [
+                {
+                    username: username,
+                    ready: false,
+                },
+                {
+                    username: "bruker2",
+                    ready: false,
+                }
+            ],
+            roundnumber: 0,
+            state: "Created",
+        }); 
     };
 
     const handleHostedGame = () => {
@@ -17,6 +36,7 @@ const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername
         } else {
             resetAllGameStates();
             setHostLobby(true);
+            createGame();
         }
     };
 

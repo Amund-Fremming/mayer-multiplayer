@@ -1,20 +1,60 @@
 import React, { useState } from 'react';
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, getDoc, arrayUnion, updateDoc, query, where } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
 const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsername, setJoinLobby }) => {
 
-    const playerJoinGame = () => {
-        // Takes gameid and username
-        // Joins the given game
+    const gameRef = collection(db, "games");
+
+    const getData = async () => {
+        const data = await getDocs(gameRef);
+        const fetchedGames = data.docs.map((doc) => ({...doc.data()}));
+
+        fetchedGames.forEach(game => console.log("ID " + game.gameid));
+        
     };
 
-    const handleJoinedGame = () => {
+    const playerJoinGame = async () => {
+        const collectionRef = collection(db, "games");
+        const q = query(collectionRef, where("gameid", "==", gameid));
+      
+        try {
+          const querySnapshot = await getDocs(q);
+          if (!querySnapshot.empty) {
+            const documentSnapshot = querySnapshot.docs[0];
+            const documentRef = doc(collectionRef, documentSnapshot.id);
+            
+            await updateDoc(documentRef, {
+                players: arrayUnion(username)
+            });
+            console.log("Document updated successfully!");
+          } else {
+            console.log("Document not found!");
+          }
+        } catch (error) {
+          console.error("Error updating document:", error);
+        }
+      };
+      
+    const handleJoinedGame = async () => {
+        let duplicate = false;
+        const collectionRef = collection(db, "games");
+        const q = query(collectionRef, where("gameid", "==", gameid));
+        const querySnapshot = await getDocs(q);
+
+        if(!querySnapshot.empty) {
+            let players = querySnapshot.docs[0].data().players;
+            if(players.includes(username)) duplicate = true;
+        }
+
         if (username === "" || gameid === "") {
             alert("Fill out username/gameid");
+        } else if(duplicate) {
+            alert("Username is taken");
         } else {
             resetAllGameStates();
             setJoinLobby(true);
+            playerJoinGame();
         }
     };
 
@@ -41,7 +81,7 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
                 </button>
                 <button
                     className='p-1 bg-gray-200 m-1'
-                    onClick={handleJoinedGame}
+                    onClick={() => {handleJoinedGame()}}
                 >   
                     Join
                 </button>

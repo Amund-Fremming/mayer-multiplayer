@@ -22,26 +22,6 @@ const App = () => {
         // sets all other states to false so only game is live
     };
 
-    const allPlayersReady = () => {
-        // onSnapshot to the game that is created
-        // Checks if all players are ready
-        // If all players ready, set gameStarted to true
-    };
-
-    const createGame = () => {
-        // Creates a new game in the database
-        // With all properties needed
-    };
-
-    const playerJoinGame = () => {
-        // Takes gameid and username
-        // Joins the given game
-    };
-
-    const getPlayersTurn = () => {
-
-    };
-
     const resetAllGameStates = () => {
         setJoinGame(false);
         setHostGame(false);
