@@ -26,29 +26,26 @@ const GameLobby = ({ resetAllGameStates, gameid, username }) => {
     const handleReadyUp = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
-    
         try {
             const querySnapshot = await getDocs(q);
-            if (!querySnapshot.empty) {
+            if(!querySnapshot.empty) {
                 const documentSnapshot = querySnapshot.docs[0];
                 const documentRef = doc(collectionRef, documentSnapshot.id);
-    
-                await db.runTransaction(async transaction => {
-                    const document = await transaction.get(documentRef);
-                    const players = document.data().players;
-                    
-                    const updatedPlayers = players.map(player => {
-                        if (player.username === username) {
-                            return { ...player, ready: true };
-                        }
-                        return player;
-                    });
-    
-                    transaction.update(documentRef, { players: updatedPlayers });
+
+                const players = documentSnapshot.data().players;
+                const updatedPlayers = players.map(player => {
+                    if(player.username === username) {
+                        return {...player, ready: true}
+                    }
+                    return player;
                 });
-    
+
+                await updateDoc(documentRef, {
+                    players: updatedPlayers
+                });
+
             }
-        } catch (err) {
+        } catch(err) {
             console.log("Error: " + err);
         }
     };
