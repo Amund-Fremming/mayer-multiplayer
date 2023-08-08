@@ -6,14 +6,6 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
 
     const gameRef = collection(db, "games");
 
-    const getData = async () => {
-        const data = await getDocs(gameRef);
-        const fetchedGames = data.docs.map((doc) => ({...doc.data()}));
-
-        fetchedGames.forEach(game => console.log("ID " + game.gameid));
-        
-    };
-
     const playerJoinGame = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
@@ -25,7 +17,10 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
             const documentRef = doc(collectionRef, documentSnapshot.id);
             
             await updateDoc(documentRef, {
-                players: arrayUnion(username)
+                players: arrayUnion({
+                    username: username,
+                    ready: false,
+                })
             });
             console.log("Document updated successfully!");
           } else {
@@ -38,6 +33,7 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
       
     const handleJoinedGame = async () => {
         let duplicate = false;
+        let idExists = true;
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
         const querySnapshot = await getDocs(q);
@@ -45,10 +41,14 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
         if(!querySnapshot.empty) {
             let players = querySnapshot.docs[0].data().players;
             if(players.includes(username)) duplicate = true;
+        } else {
+            idExists = false;
         }
 
         if (username === "" || gameid === "") {
             alert("Fill out username/gameid");
+        } else if(!idExists) {
+            alert("Id noes not exist");
         } else if(duplicate) {
             alert("Username is taken");
         } else {

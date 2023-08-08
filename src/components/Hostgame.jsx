@@ -1,16 +1,15 @@
 import React from 'react';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../util/firebase';
-import { v4 } from 'uuid';
 
 const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername, setHostLobby }) => {
 
     const gamesRef = collection(db, "games");
 
+    /**
+     *  Creates a new game instance in the firestore database
+     */
     const createGame = async () => {
-        // Creates a new game in the database
-        // With all properties needed
-
         await addDoc(gamesRef, {
             gameid: gameid,
             currentPlayer: "",
@@ -19,24 +18,36 @@ const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername
                     username: username,
                     ready: false,
                 },
-                {
-                    username: "bruker2",
-                    ready: false,
-                }
             ],
             roundnumber: 0,
             state: "Created",
         }); 
     };
 
-    const handleHostedGame = () => {
+    /**
+     * Sets the states from the App so that the next "page" 
+     * renders
+     */
+    const handleHostedGame = async () => {
         // Her må det sjekkes at game ID ikke er i bruk eller finnes allerede
-        if(gameid === "" || username === "") {
-            alert("Fill out username/gameid");
-        } else {
-            resetAllGameStates();
-            setHostLobby(true);
-            createGame();
+        try {
+            const collectionRef = collection(db, "games");
+            const gamesDoc = await getDocs(collectionRef);
+            const gamesData = gamesDoc.docs.map(doc => doc.data());
+            const filteredWithId = gamesData.filter(game => game.gameid === gameid);
+
+            if(gameid === "" || username === "") {
+                alert("Fill out username/gameid");
+            } else if(filteredWithId.length !== 0) {
+                alert("Game id in use");
+            } else {
+                resetAllGameStates();
+                setHostLobby(true);
+                createGame();
+            }
+
+        } catch (err) {
+            console.log("Error: " + err);
         }
     };
 

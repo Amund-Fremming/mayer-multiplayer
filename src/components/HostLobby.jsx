@@ -8,6 +8,10 @@ const HostLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => 
         // If all players ready, set gameStarted to true
     };
 
+    const handleLeaveGame = () => {
+        resetAllGameStates();
+    };
+
     return(
         <>
             <div className="flex flex-col justify-center items-center h-screen">
@@ -17,7 +21,7 @@ const HostLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => 
                 <div className='flex m-1'>
                     <button
                         className='p-1 bg-gray-200 m-1'
-                        onClick={() => resetAllGameStates()}
+                        onClick={handleLeaveGame}
                     >
                         Leave
                     </button>
