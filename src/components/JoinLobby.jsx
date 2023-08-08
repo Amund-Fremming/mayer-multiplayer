@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../util/firebase';
+import { debounce } from "lodash";
 
 const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
 
@@ -18,7 +19,12 @@ const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
             });
         });
 
-        return () => unsubscribe();
+        const debouncedUnsubscribe = debounce(unsubscribe, 500);
+
+        return () => {
+            debouncedUnsubscribe();
+            debouncedUnsubscribe.cancel();
+        }
     });
 
     const handleLeaveGame = async () => {
@@ -55,7 +61,7 @@ const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
                     className='p-1 bg-gray-200 m-1'
                     onClick={handleLeaveGame}
                 >
-                    Leave
+                    Leaven
                 </button>      
             </div>
         </>

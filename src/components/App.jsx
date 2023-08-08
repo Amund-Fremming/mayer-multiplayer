@@ -17,12 +17,6 @@ const App = () => {
     const [username, setUsername] = useState("");
     const [gameid, setGameId] = useState("");
 
-    const toggleGameState = (newState) => {
-        // Updates the game to inProgress
-        // update gameStarted State
-        // sets all other states to false so only game is live
-    };
-
     const resetAllGameStates = () => {
         setJoinGame(false);
         setHostGame(false);

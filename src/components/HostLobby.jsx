@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { collection, doc, getDocs, arrayUnion, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../util/firebase';
+import { debounce } from "lodash";
 
 const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
 
@@ -11,13 +12,15 @@ const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
         const q = query(collectionRef, where("gameid", "==", gameid));
 
         const unsubscribe = onSnapshot(q, snapshot => {
-            snapshot.docs.forEach(doc => {
-                const gameData = doc.data();
-                setPlayers(gameData.players);
-            });
+            setPlayers(snapshot.docs[0].data().players);
         });
 
-        return () => unsubscribe();
+        const debouncedUnsubscribe = debounce(unsubscribe, 500);
+
+        return () => {
+            debouncedUnsubscribe();
+            debouncedUnsubscribe.cancel();
+        }
     });
 
     const handleLeaveGame = () => {

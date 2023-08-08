@@ -27,7 +27,7 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
         } catch (error) {
           console.error("Error updating document:", error);
         }
-      };
+    };
       
     const handleJoinedGame = async () => {
         let duplicate = false;
