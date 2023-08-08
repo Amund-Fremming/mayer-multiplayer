@@ -10,6 +10,8 @@ const HostLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => 
 
     const handleLeaveGame = () => {
         resetAllGameStates();
+        // Deletes the game that was created
+        // The joined players need to get the update so they can also leave their game that does not exist anymore
     };
 
     return(
