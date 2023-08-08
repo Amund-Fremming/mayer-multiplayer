@@ -1,14 +1,24 @@
-import React from "react";
-import { collection, doc, getDocs, arrayUnion, updateDoc, query, where } from 'firebase/firestore';
+import React, { useEffect, useState } from "react";
+import { collection, doc, getDocs, arrayUnion, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
 const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
-    
-    /*const allPlayersReady = () => {
-        // onSnapshot to the game that is created
-        // Checks if all players are ready
-        // If all players ready, set gameStarted to true
-    };*/
+
+    const [players, setPlayers] = useState([]);
+
+    useEffect(() => {
+        const collectionRef = collection(db, "games");
+        const q = query(collectionRef, where("gameid", "==", gameid));
+
+        const unsubscribe = onSnapshot(q, snapshot => {
+            snapshot.docs.forEach(doc => {
+                const gameData = doc.data();
+                setPlayers(gameData.players);
+            });
+        });
+
+        return () => unsubscribe();
+    });
 
     const handleLeaveGame = () => {
         resetAllGameStates();
@@ -40,6 +50,16 @@ const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
     return(
         <>
             <div className="flex flex-col justify-center items-center h-screen">
+                {
+                    <div className="m-2 p-1 bg-gray-200">
+                        <h1 className="text-xl font-bold">Players</h1>
+                        {
+                            players.map(player => (
+                                <p>{player.username}</p>
+                            ))
+                        }
+                    </div>
+                }
                 <h1>HostLobby</h1>
                 <h2>username: {username}</h2>
                 <h2>gameid: {gameid}</h2>

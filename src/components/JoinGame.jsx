@@ -30,9 +30,6 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
       };
       
     const handleJoinedGame = async () => {
-
-        console.log(`USERNAME: ${username}, GAMEID: ${gameid}}`);
-
         let duplicate = false;
         let idExists = true;
         const collectionRef = collection(db, "games");
@@ -42,9 +39,11 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
         if(!querySnapshot.empty) {
             let players = querySnapshot.docs[0].data().players;
             players.forEach(player => {
-                console.log(player.username);
+                if(player.username.toUpperCase() === username.toUpperCase()) {
+                    duplicate = true;
+                    console.log("Username exists");
+                }
             });
-            if(players.includes(username)) duplicate = true;
         } else {
             console.log("ID does not exist");
             idExists = false;
