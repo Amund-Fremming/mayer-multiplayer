@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { collection, doc, getDocs, getDoc, arrayUnion, updateDoc, query, where } from 'firebase/firestore';
+import React from 'react';
+import { collection, doc, getDocs, arrayUnion, updateDoc, query, where } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
 const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsername, setJoinLobby }) => {
-
-    const gameRef = collection(db, "games");
 
     const playerJoinGame = async () => {
         const collectionRef = collection(db, "games");

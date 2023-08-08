@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 
 const HostLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => {
-
-    const allPlayersReady = () => {
+    
+    /*const allPlayersReady = () => {
         // onSnapshot to the game that is created
         // Checks if all players are ready
         // If all players ready, set gameStarted to true
-    };
+    };*/
 
     const handleLeaveGame = () => {
         resetAllGameStates();

@@ -1,5 +1,5 @@
 import React from "react";
-import { collection, doc, getDocs, getDoc, arrayUnion, updateDoc, query, where } from 'firebase/firestore';
+import { collection, doc, getDocs, updateDoc, query, where } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
 const JoinLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => {
