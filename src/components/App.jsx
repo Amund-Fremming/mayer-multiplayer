@@ -4,6 +4,7 @@ import JoinGame from "./JoinGame";
 import HostGame from "./Hostgame";
 import HostLobby from "./HostLobby";
 import JoinLobby from "./JoinLobby";
+import GameLobby from "./GameLobby";
 import Game from "./Game";
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
     const [hostGame, setHostGame] = useState(false);
     const [hostLobby, setHostLobby] = useState(false);
     const [joinLobby, setJoinLobby] = useState(false);
-    const [gameStarted, setGameStarted] = useState(false);
+    const [gameLobby, setGameLobby] = useState(false);
     const [username, setUsername] = useState("");
     const [gameid, setGameId] = useState("");
 
@@ -27,10 +28,10 @@ const App = () => {
         setHostGame(false);
         setHostLobby(false);
         setJoinLobby(false);
-        setGameStarted(false);
+        setGameLobby(false);
     };
 
-    if(!joinGame && !hostGame && !hostLobby && !joinLobby && !gameStarted) {
+    if(!joinGame && !hostGame && !hostLobby && !joinLobby && !gameLobby) {
         return(
             <Home
                 joinGame={joinGame}
@@ -67,7 +68,7 @@ const App = () => {
                 resetAllGameStates={resetAllGameStates}
                 gameid={gameid}
                 username={username}
-                setGameStarted={setGameStarted}
+                setGameLobby={setGameLobby}
             />
         )
     } else if(joinLobby) {
@@ -76,9 +77,17 @@ const App = () => {
                 resetAllGameStates={resetAllGameStates}
                 gameid={gameid}
                 username={username}
-                setGameStarted={setGameStarted}
+                setGameLobby={setGameLobby}
             />
         )
+    } else if(gameLobby) {
+        return(
+            <GameLobby
+                resetAllGameStates={resetAllGameStates}
+                gameid={gameid}
+                username={username}
+            />
+        );
     }
 };
 

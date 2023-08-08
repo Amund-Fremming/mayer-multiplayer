@@ -1,8 +1,25 @@
-import React from "react";
-import { collection, doc, getDocs, updateDoc, query, where } from 'firebase/firestore';
+import React, { useEffect } from "react";
+import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
-const JoinLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => {
+const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
+
+    useEffect(() => {
+        const collectionRef = collection(db, "games");
+        const q = query(collectionRef, where("gameid", "==", gameid));
+
+        const unsubscribe = onSnapshot(q, snapshot => {
+            snapshot.docs.forEach(doc => {
+                const gameData = doc.data();
+                if(gameData.state === "Waiting") {
+                    resetAllGameStates();
+                    setGameLobby(true);
+                }
+            });
+        });
+
+        return () => unsubscribe();
+    });
 
     const handleLeaveGame = async () => {
         // Remove the username from the game
@@ -19,6 +36,7 @@ const JoinLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => 
             await updateDoc(documentRef, {
                 players: updatedPlayers
             });
+            console.log(username + " left the game");
         } catch (error) {
           console.error("Error updating document:", error);
         }

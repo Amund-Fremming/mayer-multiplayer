@@ -4,6 +4,8 @@
 ## Må ordnes
 - Gjøre slik at det ikke er forskjell på KURT og kurt
 - Når host leaver game må andre spillere få info at spillet er avsluttet
+- Hvis noen faller ut / refresher må de fjernes fra spillet
+- Ha timer slik at hvis noen bruker for lang tid blir de kicka.
 
 ## Neste
 - HostLobby endrer gameStarted til true så gameLobby komponentet rendrer og endrer state i database til inProgress

@@ -1,6 +1,8 @@
 import React from "react";
+import { collection, doc, getDocs, arrayUnion, updateDoc, query, where } from 'firebase/firestore';
+import { db } from '../util/firebase';
 
-const HostLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => {
+const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
     
     /*const allPlayersReady = () => {
         // onSnapshot to the game that is created
@@ -12,6 +14,27 @@ const HostLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => 
         resetAllGameStates();
         // Deletes the game that was created
         // The joined players need to get the update so they can also leave their game that does not exist anymore
+    };
+
+    const handleStartGame = async () => {
+        const collectionRef = collection(db, "games");
+        const q = query(collectionRef, where("gameid", "==", gameid));
+        try {
+            const querySnapshot = await getDocs(q);
+            if(!querySnapshot.empty) {
+                const documentSnapshot = querySnapshot.docs[0];
+                const documentRef = doc(collectionRef, documentSnapshot.id);
+                
+                await updateDoc(documentRef, {
+                    state: "Waiting"
+                });
+            }
+            resetAllGameStates();
+            setGameLobby(true);
+            console.log("Game state changed. State: Waiting");
+        } catch(err) {
+            console.log("Error: " + err);
+        }
     };
 
     return(
@@ -29,7 +52,7 @@ const HostLobby = ({ gameid, username, setGameStarted, resetAllGameStates }) => 
                     </button>
                     <button
                         className="p-1 bg-gray-200 m-1"
-                        onClick={() => setGameStarted(true)}
+                        onClick={handleStartGame}
                     >
                         Start Game
                     </button>

@@ -10,18 +10,23 @@ const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername
      *  Creates a new game instance in the firestore database
      */
     const createGame = async () => {
-        await addDoc(gamesRef, {
-            gameid: gameid,
-            currentPlayer: "",
-            players: [
-                {
-                    username: username,
-                    ready: false,
-                },
-            ],
-            roundnumber: 0,
-            state: "Created",
-        }); 
+        try {
+            await addDoc(gamesRef, {
+                gameid: gameid,
+                currentPlayer: "",
+                players: [
+                    {
+                        username: username,
+                        ready: false,
+                    },
+                ],
+                roundnumber: 0,
+                state: "Created",
+            }); 
+            console.log("Game created");
+        } catch(err) {
+            console.log("Error: " + err);
+        }
     };
 
     /**
@@ -29,7 +34,6 @@ const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername
      * renders
      */
     const handleHostedGame = async () => {
-        // Her må det sjekkes at game ID ikke er i bruk eller finnes allerede
         try {
             const collectionRef = collection(db, "games");
             const gamesDoc = await getDocs(collectionRef);
@@ -45,7 +49,6 @@ const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername
                 setHostLobby(true);
                 createGame();
             }
-
         } catch (err) {
             console.log("Error: " + err);
         }
