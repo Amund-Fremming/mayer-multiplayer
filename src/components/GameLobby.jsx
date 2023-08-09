@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, doc, getDocs, query, where, onSnapshot, runTransaction } from 'firebase/firestore';
 import { db } from '../util/firebase';
 import { debounce } from "lodash";
 
@@ -31,19 +31,25 @@ const GameLobby = ({ resetAllGameStates, gameid, username }) => {
             if(!querySnapshot.empty) {
                 const documentSnapshot = querySnapshot.docs[0];
                 const documentRef = doc(collectionRef, documentSnapshot.id);
-
-                const players = documentSnapshot.data().players;
-                const updatedPlayers = players.map(player => {
-                    if(player.username === username) {
-                        return {...player, ready: true}
+    
+                const updatePlayerStatus = async (transaction) => {
+                    const docSnapshot = await transaction.get(documentRef);
+                    if (!docSnapshot.exists) {
+                        throw new Error("Document does not exist!");
                     }
-                    return player;
-                });
-
-                await updateDoc(documentRef, {
-                    players: updatedPlayers
-                });
-
+    
+                    const players = docSnapshot.data().players;
+                    const updatedPlayers = players.map(player => {
+                        if (player.username === username) {
+                            return {...player, ready: true}
+                        }
+                        return player;
+                    });
+    
+                    transaction.update(documentRef, { players: updatedPlayers });
+                };
+    
+                await runTransaction(db, updatePlayerStatus);
             }
         } catch(err) {
             console.log("Error: " + err);

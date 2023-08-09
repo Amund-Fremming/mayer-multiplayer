@@ -1,10 +1,10 @@
 import React from 'react';
-import { collection, doc, getDocs, arrayUnion, updateDoc, query, where } from 'firebase/firestore';
+import { collection, doc, getDocs, query, where, runTransaction } from 'firebase/firestore';
 import { db } from '../util/firebase';
+import Game from './Game';
 
 const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsername, setJoinLobby }) => {
-
-    const playerJoinGame = async () => {
+    /*const playerJoinGame = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
       
@@ -27,37 +27,47 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
         } catch (error) {
           console.error("Error updating document:", error);
         }
-    };
-      
-    const handleJoinedGame = async () => {
-        let duplicate = false;
-        let idExists = true;
+    };*/
+
+    const playerJoinGame = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
-        const querySnapshot = await getDocs(q);
+        let usernameExists = false;
 
-        if(!querySnapshot.empty) {
-            let players = querySnapshot.docs[0].data().players;
-            players.forEach(player => {
-                if(player.username.toUpperCase() === username.toUpperCase()) {
-                    duplicate = true;
-                    console.log("Username exists");
-                }
-            });
-        } else {
-            console.log("ID does not exist");
-            idExists = false;
+        try {
+            const documentSnapshot = await getDocs(q);
+            if (!documentSnapshot.empty) {
+                const documentRef = doc(collectionRef, documentSnapshot.docs[0].id);
+    
+                const joinTransaction = async (transaction) => {
+                    const docSnapshot = await transaction.get(documentRef);
+                    if (!docSnapshot.exists) {
+                        throw new Error("Document does not exist!");
+                    }
+    
+                    const players = docSnapshot.data().players;
+                    players.push({ username: username, ready: false });
+                    transaction.update(documentRef, { players: players });
+                };
+                
+                await runTransaction(db, joinTransaction);
+                console.log("Player joined the game!");
+                resetAllGameStates();
+                setJoinLobby(true);
+            } else {
+                alert(`Game id: ${gameid}, does not exist`);
+            }
+        } catch (err) {
+            console.log("Error: " + err.message);
         }
+    };
+
+    const handleJoinGame = () => {
+        // Sjekker om username finnes
 
         if (username === "" || gameid === "") {
             alert("Fill out username/gameid");
-        } else if(!idExists) {
-            alert("Id noes not exist");
-        } else if(duplicate) {
-            alert("Username is taken");
         } else {
-            resetAllGameStates();
-            setJoinLobby(true);
             playerJoinGame();
         }
     };
@@ -85,7 +95,7 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
                 </button>
                 <button
                     className='p-1 bg-gray-200 m-1'
-                    onClick={() => {handleJoinedGame()}}
+                    onClick={handleJoinGame}
                 >   
                     Join
                 </button>
