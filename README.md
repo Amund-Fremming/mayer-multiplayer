@@ -17,5 +17,3 @@
 
 ## Hva har jeg lært
 - Hvordan man mounter/unmounter funksjoner og begrenser reads for å ikke få ekstremt mange kall til databasen der man ønsker real-time oppdateringer.
-
-&HH
