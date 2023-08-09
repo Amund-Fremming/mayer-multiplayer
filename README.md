@@ -12,7 +12,6 @@
 - Sørg for at alle funksjoner eller apier bruker try catch og har error handling
 
 ## Neste
-- Når man er ready up, knappen blir grønn, og man kan ikke sende ny spørring til db
 - Fikse så det ikke er mulig med brukernavn som finnes
 - onSnapshot på game slik at man får oppdateringer når andre spillere blir Ready = true, så når alle spillere er ready renderer man selve spillet
 - Cleanup code
@@ -25,3 +24,4 @@
 
 ## Hva har jeg lært
 - Hvordan man mounter/unmounter funksjoner og begrenser reads for å ikke få ekstremt mange kall til databasen der man ønsker real-time oppdateringer.
+- Fikse data consistency med firebase der man har race conditions

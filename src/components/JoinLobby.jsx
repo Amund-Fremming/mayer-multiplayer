@@ -28,7 +28,6 @@ const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
     });
 
     const handleLeaveGame = async () => {
-        // Remove the username from the game
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
       
