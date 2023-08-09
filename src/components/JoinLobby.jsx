@@ -61,7 +61,7 @@ const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
                     className='p-1 bg-gray-200 m-1'
                     onClick={handleLeaveGame}
                 >
-                    Leaven
+                    Leave
                 </button>      
             </div>
         </>
