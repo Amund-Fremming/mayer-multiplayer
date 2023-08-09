@@ -13,10 +13,7 @@
 
 ## Neste
 - onSnapshot på game slik at man får oppdateringer når andre spillere blir Ready = true, så når alle spillere er ready renderer man selve spillet
-- Cleanup code
-- Documentasjon
-- lagre som multiplayer-game-base på github
-- push til hosting, test joine med likt brukernavn samtidig
+- se over koden, doc og struktur og push til git repo
 
 - Lage spillet
 - Cleanup code
