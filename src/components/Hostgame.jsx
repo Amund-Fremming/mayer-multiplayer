@@ -2,6 +2,10 @@ import React from 'react';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
+/**
+ * This component renders if the user decides that he want to create a game and be the host.
+ * Here the host sees all players that join and can start the game whenever he wants.
+ */
 const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername, setHostLobby }) => {
 
     const gamesRef = collection(db, "games");

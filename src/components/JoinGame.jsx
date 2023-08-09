@@ -4,36 +4,11 @@ import { db } from '../util/firebase';
 import Game from './Game';
 
 const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsername, setJoinLobby }) => {
-    /*const playerJoinGame = async () => {
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
-      
-        try {
-          const querySnapshot = await getDocs(q);
-          if (!querySnapshot.empty) {
-            const documentSnapshot = querySnapshot.docs[0];
-            const documentRef = doc(collectionRef, documentSnapshot.id);
-            
-            await updateDoc(documentRef, {
-                players: arrayUnion({
-                    username: username,
-                    ready: false,
-                })
-            });
-            console.log(`Player (${username}) joined game (${gameid})`);
-          } else {
-            console.log("Document not found!");
-          }
-        } catch (error) {
-          console.error("Error updating document:", error);
-        }
-    };*/
 
     const playerJoinGame = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
-        let usernameExists = false;
-
+    
         try {
             const documentSnapshot = await getDocs(q);
             if (!documentSnapshot.empty) {
@@ -46,14 +21,26 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
                     }
     
                     const players = docSnapshot.data().players;
+                    for (let player of players) {
+                        if (player.username.toUpperCase() === username.toUpperCase()) {
+                            return "USERNAME_EXISTS";
+                        }
+                    }
                     players.push({ username: username, ready: false });
                     transaction.update(documentRef, { players: players });
                 };
-                
-                await runTransaction(db, joinTransaction);
+    
+                const transactionResult = await runTransaction(db, joinTransaction);
+    
+                if (transactionResult === "USERNAME_EXISTS") {
+                    alert(`Username: ${username} is already in use!`);
+                    return;
+                }
+    
                 console.log("Player joined the game!");
                 resetAllGameStates();
                 setJoinLobby(true);
+    
             } else {
                 alert(`Game id: ${gameid}, does not exist`);
             }
@@ -62,9 +49,7 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
         }
     };
 
-    const handleJoinGame = () => {
-        // Sjekker om username finnes
-
+    const handleJoinGame = async () => {
         if (username === "" || gameid === "") {
             alert("Fill out username/gameid");
         } else {
@@ -106,3 +91,4 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
 };
 
 export default JoinGame;
+

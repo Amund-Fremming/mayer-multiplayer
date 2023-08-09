@@ -3,11 +3,21 @@ import { collection, doc, getDocs, query, where, onSnapshot, runTransaction, upd
 import { db } from '../util/firebase';
 import { debounce } from "lodash";
 
+/**
+ * This component renders when the host has presset the start-game button and the database game state is "Waiting"
+ * Here users can hit the Ready up button to ready up for the game.
+ * There is also a view off all the players, when they ready up their username turns green.
+ */
 const GameLobby = ({ resetAllGameStates, gameid, username }) => {
 
     const [players, setPlayers] = useState([]);
     const [isReady, setIsReady] = useState(false);
 
+    /**
+     * useEffect runs every time the component renders.
+     * Here we subscribe to the database, so it listens for updates on the database
+     * The debounce function delays the listener so its not too much traffic.
+     */
     useEffect(() => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
@@ -24,6 +34,11 @@ const GameLobby = ({ resetAllGameStates, gameid, username }) => {
         }
     });
 
+    /**
+     * This function queries the right document in the database and makes a referande to the instance.
+     * Then it uses transaction for avoiding race conditions when updating the players.
+     * In the end the function changes a players ready state to true, with the username they have.
+     */
     const handleReadyUp = async () => {
         if(isReady) return;
 
@@ -61,6 +76,9 @@ const GameLobby = ({ resetAllGameStates, gameid, username }) => {
         }
     };
 
+    /**
+     * Removes a player from the game collection they are in when they leave the game. 
+     */
     const handleLeaveGame = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));

@@ -9,6 +9,9 @@ import Game from "./Game";
 
 const App = () => {
 
+    /**
+     * Game states for what components should render.
+     */
     const [joinGame, setJoinGame] = useState(false);
     const [hostGame, setHostGame] = useState(false);
     const [hostLobby, setHostLobby] = useState(false);
@@ -28,8 +31,6 @@ const App = () => {
     if(!joinGame && !hostGame && !hostLobby && !joinLobby && !gameLobby) {
         return(
             <Home
-                joinGame={joinGame}
-                hostGame={hostGame}
                 setJoinGame={setJoinGame}
                 setHostGame={setHostGame}
             />  

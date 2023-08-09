@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { collection, doc, getDocs, arrayUnion, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../util/firebase';
 import { debounce } from "lodash";
 
+/**
+ * This component shows all the players that have joined the game the host has made.
+ * The host can also hit the start-game button to start the game.
+ */
 const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
 
     const [players, setPlayers] = useState([]);
 
+    /**
+     * This useEffect subscribes to a given entry in the database.
+     * It uses debounce to delay the listener so the traffic does not get to big.
+     * The listener fetches all the players that joins and displays them on the screen.
+     */
     useEffect(() => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
@@ -23,12 +32,20 @@ const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
         }
     });
 
+    /**
+     * Deletes the game entry in the database and alerts the joined players that the game is no longer in play.
+     * Then it resets the state and returns the user to the landing page.
+     */
     const handleLeaveGame = () => {
         resetAllGameStates();
         // Deletes the game that was created
         // The joined players need to get the update so they can also leave their game that does not exist anymore
     };
 
+    /**
+     * This function gets the entry in the database and updates the game state to "Waiting".
+     * It then changes the states from the App component and renders a new componen.
+     */
     const handleStartGame = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
