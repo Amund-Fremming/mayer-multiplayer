@@ -3,8 +3,16 @@ import { collection, doc, getDocs, query, where, runTransaction } from 'firebase
 import { db } from '../util/firebase';
 import Game from './Game';
 
+/**
+ * This component handles the players trying to join a game with a gicen id and username.
+ * Users can also leave the game resoulting in them getting removed from the database.
+ */
 const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsername, setJoinLobby }) => {
 
+    /**
+     * Creates a refferance to the collection and the specific entry in the database and makes a transaction to prevent race conditions.
+     * Adds the player to the game in the db and cheks for if the username already exists.
+     */
     const playerJoinGame = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
@@ -13,7 +21,7 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
             const documentSnapshot = await getDocs(q);
             if (!documentSnapshot.empty) {
                 const documentRef = doc(collectionRef, documentSnapshot.docs[0].id);
-    
+                
                 const joinTransaction = async (transaction) => {
                     const docSnapshot = await transaction.get(documentRef);
                     if (!docSnapshot.exists) {
@@ -29,14 +37,14 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
                     players.push({ username: username, ready: false });
                     transaction.update(documentRef, { players: players });
                 };
-    
+                
                 const transactionResult = await runTransaction(db, joinTransaction);
     
                 if (transactionResult === "USERNAME_EXISTS") {
                     alert(`Username: ${username} is already in use!`);
                     return;
                 }
-    
+                
                 console.log("Player joined the game!");
                 resetAllGameStates();
                 setJoinLobby(true);
@@ -49,6 +57,9 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
         }
     };
 
+    /**
+     * Handles the player trying to join a game and checks if all conditions are met.
+     */
     const handleJoinGame = async () => {
         if (username === "" || gameid === "") {
             alert("Fill out username/gameid");

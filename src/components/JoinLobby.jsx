@@ -3,8 +3,16 @@ import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'f
 import { db } from '../util/firebase';
 import { debounce } from "lodash";
 
+/**
+ * This components have a listener that listens for the game state to change in the database.
+ * When the game state changes a new component will render.
+ * The user can also
+ */
 const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
 
+    /**
+     * Sets up a listener to lisen for the game state in the collection to change to waiting so it can render a new component.
+     */
     useEffect(() => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
@@ -27,6 +35,9 @@ const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
         }
     });
 
+    /**
+     * Removes the player from the game collection, and then returns the user to the landing page.
+     */
     const handleLeaveGame = async () => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
