@@ -16,12 +16,12 @@
 - se over koden, doc og struktur og push til git repo
 
 - Lage spillet
-- Cleanup code
 - Style (Bruk js fil med tailwind for style for headere og paragrafer og ting som skal være likt over alt)
-
+- Cleanup school
 
 
 
 ## Hva har jeg lært
 - Hvordan man mounter/unmounter funksjoner og begrenser reads for å ikke få ekstremt mange kall til databasen der man ønsker real-time oppdateringer.
 - Fikse data consistency med firebase der man har race conditions
+- Håndtere flere brukere som interakter med hverandre samtidig real-time
