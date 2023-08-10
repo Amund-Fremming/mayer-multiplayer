@@ -13,12 +13,11 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
     const [isReady, setIsReady] = useState(false);
 
     const [collectionRef, setCollectionRef] = useState();
-    const [query, setQuery] = useState();
+    const [q, setQ] = useState();
 
     /*
-            querySnapshot:      
-            documentSnapshot:    1, 
-            documentRef:        1, 
+            querySnapshot:      1, 2, 3
+            documentRef:        1, 2, 3
     */
 
     /**
@@ -27,10 +26,10 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
      * The debounce function delays the listener so its not too much traffic.
      */
     useEffect(() => {
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
-        setCollectionRef(collectionRef);
-        setQuery(q);
+        const collectionRefLocal = collection(db, "games");
+        const q = query(collectionRefLocal, where("gameid", "==", gameid));
+        setCollectionRef(collectionRefLocal);
+        setQ(q);
         
         const unsubscribe = onSnapshot(q, snapshot => {
             const players = snapshot.docs[0].data().players
@@ -52,7 +51,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
                 // const q = query(collectionRef, where("gameid", "==", gameid));
 
                 try {
-                    const querySnapshot = await getDocs(query);
+                    const querySnapshot = await getDocs(q);
                     if(!querySnapshot.empty) {
                         const documentRef = doc(db, "games", querySnapshot.docs[0].id);
 
@@ -80,7 +79,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
         // const collectionRef = collection(db, "games");
         // const q = query(collectionRef, where("gameid", "==", gameid));
         try {
-            const querySnapshot = await getDocs(query);
+            const querySnapshot = await getDocs(q);
             if(!querySnapshot.empty) {
                 const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
     
