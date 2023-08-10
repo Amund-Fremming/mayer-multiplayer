@@ -48,11 +48,11 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
                 const q = query(collectionRef, where("gameid", "==", gameid));
 
                 try {
-                    const documentSnapshot = getDocs(q);
+                    const documentSnapshot = await getDocs(q);
                     if(!documentSnapshot.empty) {
-                        const documentRef = doc(collectionRef, documentSnapshot.docs[0].id);
+                        const documentRef = doc(db, "games", documentSnapshot.docs[0].id);
 
-                        updateDoc({
+                        await updateDoc(documentRef, {
                             state: "IN_PROGRESS"
                         });
                     }
