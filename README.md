@@ -12,8 +12,9 @@
 - Sørg for at alle funksjoner eller apier bruker try catch og har error handling
 
 ## Neste
-- onSnapshot på game slik at man får oppdateringer når andre spillere blir Ready = true, så når alle spillere er ready renderer man selve spillet
 - se over koden, doc og struktur og push til git repo
+- Sette state til IN PROGRESS når alle er ready
+- Hindre folk å joine spill om state er IN PROGRESS
 
 - Lage spillet
 - Style (Bruk js fil med tailwind for style for headere og paragrafer og ting som skal være likt over alt)
@@ -25,3 +26,4 @@
 - Hvordan man mounter/unmounter funksjoner og begrenser reads for å ikke få ekstremt mange kall til databasen der man ønsker real-time oppdateringer.
 - Fikse data consistency med firebase der man har race conditions
 - Håndtere flere brukere som interakter med hverandre samtidig real-time
+- Håndtering av lyttere, og hvordan disse kan skape problemer om de ikke blir unmounted.

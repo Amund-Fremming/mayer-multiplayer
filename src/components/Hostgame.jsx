@@ -6,7 +6,7 @@ import { db } from '../util/firebase';
  * This component renders if the user decides that he want to create a game and be the host.
  * Here the host sees all players that join and can start the game whenever he wants.
  */
-const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername, setHostLobby }) => {
+const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, setView }) => {
 
     const gamesRef = collection(db, "games");
 
@@ -49,8 +49,8 @@ const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername
             } else if(filteredWithId.length !== 0) {
                 alert("Game id in use");
             } else {
-                resetAllGameStates();
-                setHostLobby(true);
+                resetGameState();
+                setView("HOST_LOBBY");
                 createGame();
             }
         } catch (err) {
@@ -75,7 +75,7 @@ const HostGame = ({ resetAllGameStates, gameid, setGameid, username, setUsername
                 <div className='flex m-1'>
                     <button
                         className='p-1 bg-gray-200 m-1'
-                        onClick={() => resetAllGameStates()}
+                        onClick={() => resetGameState()}
                     >
                         Back
                     </button>

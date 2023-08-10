@@ -10,79 +10,78 @@ import Game from "./Game";
 const App = () => {
 
     /**
-     * Game states for what components should render.
+     * Game state for what components should render.
      */
-    const [joinGame, setJoinGame] = useState(false);
-    const [hostGame, setHostGame] = useState(false);
-    const [hostLobby, setHostLobby] = useState(false);
-    const [joinLobby, setJoinLobby] = useState(false);
-    const [gameLobby, setGameLobby] = useState(false);
+    const [view, setView] = useState("HOME");
     const [username, setUsername] = useState("");
     const [gameid, setGameId] = useState("");
 
-    const resetAllGameStates = () => {
-        setJoinGame(false);
-        setHostGame(false);
-        setHostLobby(false);
-        setJoinLobby(false);
-        setGameLobby(false);
+    const resetGameState = () => {
+        setView("HOME");
     };
 
-    if(!joinGame && !hostGame && !hostLobby && !joinLobby && !gameLobby) {
+    if(view === "HOME") {
         return(
             <Home
-                setJoinGame={setJoinGame}
-                setHostGame={setHostGame}
+                setView={setView}
             />  
         );
-    } else if (joinGame) {
+    } else if (view === "JOIN_GAME") {
         return(
             <JoinGame
-                resetAllGameStates={resetAllGameStates}
+                resetGameState={resetGameState}
                 gameid={gameid}
                 setGameid={setGameId}
                 username={username}
                 setUsername={setUsername}
-                setJoinLobby={setJoinLobby}
+                setView={setView}
             />
         )
-    } else if(hostGame) {
+    } else if(view === "HOST_GAME") {
         return(
             <HostGame
-                resetAllGameStates={resetAllGameStates}
+                resetGameState={resetGameState}
                 gameid={gameid}
                 setGameid={setGameId}
                 username={username}
                 setUsername={setUsername}
-                setHostLobby={setHostLobby}
+                setView={setView}
             />
         )
-    } else if (hostLobby) {
+    } else if (view === "HOST_LOBBY") {
         return(
             <HostLobby
-                resetAllGameStates={resetAllGameStates}
+                resetGameState={resetGameState}
                 gameid={gameid}
                 username={username}
-                setGameLobby={setGameLobby}
+                setView={setView}
             />
         )
-    } else if(joinLobby) {
+    } else if(view === "JOIN_LOBBY") {
         return(
             <JoinLobby
-                resetAllGameStates={resetAllGameStates}
+                resetGameState={resetGameState}
                 gameid={gameid}
                 username={username}
-                setGameLobby={setGameLobby}
+                setView={setView}
             />
         )
-    } else if(gameLobby) {
+    } else if(view === "GAME_LOBBY") {
         return(
             <GameLobby
-                resetAllGameStates={resetAllGameStates}
+                resetGameState={resetGameState}
+                gameid={gameid}
+                username={username}
+                setView={setView}
+            />
+        );
+    } else if(view === "GAME") {
+        return(
+            <Game 
                 gameid={gameid}
                 username={username}
             />
-        );
+        ); 
     }
 };
 

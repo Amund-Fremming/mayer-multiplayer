@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
 import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../util/firebase';
-import { debounce } from "lodash";
 
 /**
  * This components have a listener that listens for the game state to change in the database.
  * When the game state changes a new component will render.
  * The user can also
  */
-const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
+const JoinLobby = ({ gameid, username, setView, resetGameState }) => {
 
     /**
-     * Sets up a listener to lisen for the game state in the collection to change to waiting so it can render a new component.
+     * This useEffect subscribes a listener to a given entry in the database.
      */
     useEffect(() => {
         const collectionRef = collection(db, "games");
@@ -21,19 +20,14 @@ const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
             snapshot.docs.forEach(doc => {
                 const gameData = doc.data();
                 if(gameData.state === "Waiting") {
-                    resetAllGameStates();
-                    setGameLobby(true);
+                    resetGameState();
+                    setView("GAME_LOBBY");
                 }
             });
         });
 
-        const debouncedUnsubscribe = debounce(unsubscribe, 500);
-
-        return () => {
-            debouncedUnsubscribe();
-            debouncedUnsubscribe.cancel();
-        }
-    });
+        return () => unsubscribe();
+    }, []);
 
     /**
      * Removes the player from the game collection, and then returns the user to the landing page.
@@ -57,7 +51,7 @@ const JoinLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
           console.error("Error updating document:", error);
         }
         
-        resetAllGameStates();
+        resetGameState();
     };
 
     return(

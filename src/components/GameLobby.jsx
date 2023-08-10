@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { collection, doc, getDocs, query, where, onSnapshot, runTransaction, updateDoc } from 'firebase/firestore';
 import { db } from '../util/firebase';
-import { debounce } from "lodash";
 
 /**
  * This component renders when the host has presset the start-game button and the database game state is "Waiting"
  * Here users can hit the Ready up button to ready up for the game.
  * There is also a view off all the players, when they ready up their username turns green.
  */
-const GameLobby = ({ resetAllGameStates, gameid, username }) => {
+const GameLobby = ({ resetGameState, gameid, username, setView }) => {
 
     const [players, setPlayers] = useState([]);
     const [isReady, setIsReady] = useState(false);
+    const [allPlayersReady, setAllPlayersReady] = useState(false);
 
     /**
      * useEffect runs every time the component renders.
@@ -23,16 +23,22 @@ const GameLobby = ({ resetAllGameStates, gameid, username }) => {
         const q = query(collectionRef, where("gameid", "==", gameid));
         
         const unsubscribe = onSnapshot(q, snapshot => {
-            setPlayers(snapshot.docs[0].data().players);
+            const players = snapshot.docs[0].data().players
+            setPlayers(players);
         });
 
-        const debouncedUnsubscribe = debounce(unsubscribe, 500);
+        return () => unsubscribe();
+    }, []);
 
-        return () => {
-            debouncedUnsubscribe();
-            debouncedUnsubscribe.cancel();
+    const handleAllPlayersReady = async () => {
+        const areAllPlayersReady = players => players.every(player => player.ready === true);
+            
+        if(areAllPlayersReady(players)) {
+            setView("GAME");
         }
-    });
+        
+        // SET GAME STATE TO "In progress"
+    };
 
     /**
      * This function queries the right document in the database and makes a referande to the instance.
@@ -97,8 +103,8 @@ const GameLobby = ({ resetAllGameStates, gameid, username }) => {
         } catch (error) {
           console.error("Error updating document:", error);
         }
-        
-        resetAllGameStates();
+
+        resetGameState();
     };
 
     return(

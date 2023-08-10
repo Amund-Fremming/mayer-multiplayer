@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../util/firebase';
-import { debounce } from "lodash";
 
 /**
  * This component shows all the players that have joined the game the host has made.
  * The host can also hit the start-game button to start the game.
  */
-const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
+const HostLobby = ({ gameid, username, setView, resetGameState }) => {
 
     const [players, setPlayers] = useState([]);
 
     /**
-     * This useEffect subscribes to a given entry in the database.
-     * It uses debounce to delay the listener so the traffic does not get to big.
-     * The listener fetches all the players that joins and displays them on the screen.
+     * This useEffect subscribes a listener to a given entry in the database.
      */
     useEffect(() => {
         const collectionRef = collection(db, "games");
@@ -24,20 +21,15 @@ const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
             setPlayers(snapshot.docs[0].data().players);
         });
 
-        const debouncedUnsubscribe = debounce(unsubscribe, 500);
-
-        return () => {
-            debouncedUnsubscribe();
-            debouncedUnsubscribe.cancel();
-        }
-    });
+        return () => unsubscribe();
+    }, []);
 
     /**
      * Deletes the game entry in the database and alerts the joined players that the game is no longer in play.
      * Then it resets the state and returns the user to the landing page.
      */
     const handleLeaveGame = () => {
-        resetAllGameStates();
+        resetGameState();
         // Deletes the game that was created
         // The joined players need to get the update so they can also leave their game that does not exist anymore
     };
@@ -59,8 +51,8 @@ const HostLobby = ({ gameid, username, setGameLobby, resetAllGameStates }) => {
                     state: "Waiting"
                 });
             }
-            resetAllGameStates();
-            setGameLobby(true);
+            resetGameState();
+            setView("GAME_LOBBY");
             console.log("Game state changed. State: Waiting");
         } catch(err) {
             console.log("Error: " + err);

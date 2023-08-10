@@ -7,7 +7,7 @@ import Game from './Game';
  * This component handles the players trying to join a game with a gicen id and username.
  * Users can also leave the game resoulting in them getting removed from the database.
  */
-const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsername, setJoinLobby }) => {
+const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, setView }) => {
 
     /**
      * Creates a refferance to the collection and the specific entry in the database and makes a transaction to prevent race conditions.
@@ -46,8 +46,8 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
                 }
                 
                 console.log("Player joined the game!");
-                resetAllGameStates();
-                setJoinLobby(true);
+                resetGameState();
+                setView("JOIN_LOBBY");
     
             } else {
                 alert(`Game id: ${gameid}, does not exist`);
@@ -85,7 +85,7 @@ const JoinGame = ({ resetAllGameStates , gameid, setGameid, username, setUsernam
             <div className='flex m-1'>
                 <button
                     className='p-1 bg-gray-200 m-1'
-                    onClick={() => resetAllGameStates()}
+                    onClick={() => resetGameState()}
                 >
                     Back
                 </button>
