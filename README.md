@@ -15,6 +15,7 @@
 - se over koden, doc og struktur og push til git repo
 - Sette state til IN PROGRESS når alle er ready
 - Hindre folk å joine spill om state er IN PROGRESS
+- endre hosting domain
 
 - Lage spillet
 - Style (Bruk js fil med tailwind for style for headere og paragrafer og ting som skal være likt over alt)
