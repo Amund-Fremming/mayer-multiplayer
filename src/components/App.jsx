@@ -16,9 +16,7 @@ const App = () => {
     const [username, setUsername] = useState("");
     const [gameid, setGameId] = useState("");
 
-    const resetGameState = () => {
-        setView("HOME");
-    };
+    const resetGameState = () => setView("HOME");
 
     if(view === "HOME") {
         return(

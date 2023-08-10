@@ -18,9 +18,9 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
         const q = query(collectionRef, where("gameid", "==", gameid));
     
         try {
-            const documentSnapshot = await getDocs(q);
-            if (!documentSnapshot.empty) {
-                const documentRef = doc(collectionRef, documentSnapshot.docs[0].id);
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
                 
                 const joinTransaction = async (transaction) => {
                     const docSnapshot = await transaction.get(documentRef);

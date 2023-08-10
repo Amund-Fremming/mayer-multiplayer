@@ -19,7 +19,7 @@ const JoinLobby = ({ gameid, username, setView, resetGameState }) => {
         const unsubscribe = onSnapshot(q, snapshot => {
             snapshot.docs.forEach(doc => {
                 const gameData = doc.data();
-                if(gameData.state === "Waiting") {
+                if(gameData.state === "WAITING") {
                     resetGameState();
                     setView("GAME_LOBBY");
                 }
@@ -38,10 +38,9 @@ const JoinLobby = ({ gameid, username, setView, resetGameState }) => {
       
         try {
             const querySnapshot = await getDocs(q);
-            const documentSnapshot = querySnapshot.docs[0];
-            const documentRef = doc(collectionRef, documentSnapshot.id);
+            const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
 
-            const updatedPlayers = documentSnapshot.data().players.filter(player => player.username !== username);
+            const updatedPlayers = querySnapshot.docs[0].data().players.filter(player => player.username !== username);
                         
             await updateDoc(documentRef, {
                 players: updatedPlayers

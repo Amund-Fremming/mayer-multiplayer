@@ -11,7 +11,15 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
 
     const [players, setPlayers] = useState([]);
     const [isReady, setIsReady] = useState(false);
-    const [allPlayersReady, setAllPlayersReady] = useState(false);
+
+    const [collectionRef, setCollectionRef] = useState();
+    const [query, setQuery] = useState();
+
+    /*
+            querySnapshot:      
+            documentSnapshot:    1, 
+            documentRef:        1, 
+    */
 
     /**
      * useEffect runs every time the component renders.
@@ -21,6 +29,8 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
     useEffect(() => {
         const collectionRef = collection(db, "games");
         const q = query(collectionRef, where("gameid", "==", gameid));
+        setCollectionRef(collectionRef);
+        setQuery(q);
         
         const unsubscribe = onSnapshot(q, snapshot => {
             const players = snapshot.docs[0].data().players
@@ -30,27 +40,21 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
         return () => unsubscribe();
     }, []);
 
-    useEffect(() => {
-        handleAllPlayersReady();
-    });
+    useEffect(() => { handleAllPlayersReady() });
 
     const handleAllPlayersReady = async () => {
-        const areAllPlayersReady = players => players.every(player => player.ready === true);
-
-        console.log("SPILLERE: " + players.username);
-            
+        const areAllPlayersReady = players => players.every(player => player.ready === true);            
         if(players.length !== 0 && areAllPlayersReady(players)) {
             setView("GAME");
-            // SET GAME STATE TO "In progress"
             // denne metoden blir sendt flere ganger enn nødvendig
             const updateState = async () => {
-                const collectionRef = collection(db, "games");
-                const q = query(collectionRef, where("gameid", "==", gameid));
+                // const collectionRef = collection(db, "games");
+                // const q = query(collectionRef, where("gameid", "==", gameid));
 
                 try {
-                    const documentSnapshot = await getDocs(q);
-                    if(!documentSnapshot.empty) {
-                        const documentRef = doc(db, "games", documentSnapshot.docs[0].id);
+                    const querySnapshot = await getDocs(query);
+                    if(!querySnapshot.empty) {
+                        const documentRef = doc(db, "games", querySnapshot.docs[0].id);
 
                         await updateDoc(documentRef, {
                             state: "IN_PROGRESS"
@@ -73,13 +77,12 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
     const handleReadyUp = async () => {
         if(isReady) return;
 
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
+        // const collectionRef = collection(db, "games");
+        // const q = query(collectionRef, where("gameid", "==", gameid));
         try {
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await getDocs(query);
             if(!querySnapshot.empty) {
-                const documentSnapshot = querySnapshot.docs[0];
-                const documentRef = doc(collectionRef, documentSnapshot.id);
+                const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
     
                 const updatePlayerStatus = async (transaction) => {
                     const docSnapshot = await transaction.get(documentRef);
@@ -111,19 +114,16 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
      * Removes a player from the game collection they are in when they leave the game. 
      */
     const handleLeaveGame = async () => {
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
+        // const collectionRef = collection(db, "games");
+        // const q = query(collectionRef, where("gameid", "==", gameid));
       
         try {
-            const querySnapshot = await getDocs(q);
-            const documentSnapshot = querySnapshot.docs[0];
-            const documentRef = doc(collectionRef, documentSnapshot.id);
+            const querySnapshot = await getDocs(query);
+            const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
 
-            const updatedPlayers = documentSnapshot.data().players.filter(player => player.username !== username);
+            const updatedPlayers = querySnapshot.docs[0].data().players.filter(player => player.username !== username);
                         
-            await updateDoc(documentRef, {
-                players: updatedPlayers
-            });
+            await updateDoc(documentRef, { players: updatedPlayers });
             console.log(username + " left the game");
         } catch (error) {
           console.error("Error updating document:", error);

@@ -47,9 +47,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState }) => {
                 const documentSnapshot = querySnapshot.docs[0];
                 const documentRef = doc(collectionRef, documentSnapshot.id);
                 
-                await updateDoc(documentRef, {
-                    state: "Waiting"
-                });
+                await updateDoc(documentRef, { state: "WAITING" });
             }
             resetGameState();
             setView("GAME_LOBBY");

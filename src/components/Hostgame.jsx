@@ -25,7 +25,7 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
                     },
                 ],
                 roundnumber: 0,
-                state: "Created",
+                state: "CREATED",
             }); 
             console.log("Game created");
         } catch(err) {

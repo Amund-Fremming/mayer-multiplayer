@@ -17,6 +17,7 @@
 - Hindre folk å joine spill om state er IN PROGRESS
 - endre hosting domain
 - teste om fler spill kan spilles samtidig
+- Endre documentRef, querySnapshot til globale variabler, kanskje flere????? sjekk transactino metodene, er de like? 
 
 - Lage spillet
 - Style (Bruk js fil med tailwind for style for headere og paragrafer og ting som skal være likt over alt)
