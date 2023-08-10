@@ -16,6 +16,7 @@
 - Sette state til IN PROGRESS når alle er ready
 - Hindre folk å joine spill om state er IN PROGRESS
 - endre hosting domain
+- teste om fler spill kan spilles samtidig
 
 - Lage spillet
 - Style (Bruk js fil med tailwind for style for headere og paragrafer og ting som skal være likt over alt)
