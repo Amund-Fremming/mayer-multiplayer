@@ -30,14 +30,39 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
         return () => unsubscribe();
     }, []);
 
+    useEffect(() => {
+        handleAllPlayersReady();
+    });
+
     const handleAllPlayersReady = async () => {
         const areAllPlayersReady = players => players.every(player => player.ready === true);
+
+        console.log("SPILLERE: " + players.username);
             
-        if(areAllPlayersReady(players)) {
+        if(players.length !== 0 && areAllPlayersReady(players)) {
             setView("GAME");
+            // SET GAME STATE TO "In progress"
+            // denne metoden blir sendt flere ganger enn nødvendig
+            const updateState = async () => {
+                const collectionRef = collection(db, "games");
+                const q = query(collectionRef, where("gameid", "==", gameid));
+
+                try {
+                    const documentSnapshot = getDocs(q);
+                    if(!documentSnapshot.empty) {
+                        const documentRef = doc(collectionRef, documentSnapshot.docs[0].id);
+
+                        updateDoc({
+                            state: "IN_PROGRESS"
+                        });
+                    }
+                } catch (err) {
+                    console.log("Error: " + err.message);
+                }
+            };
+
+            updateState();
         }
-        
-        // SET GAME STATE TO "In progress"
     };
 
     /**
@@ -115,7 +140,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
                 <div className="w-[20%] flex flex-wrap">
                     {
                         players.map(player => (
-                            <p className={player.ready ? "text-green-500 m-1" : "text-red-500 m-1"}>{player.username}</p>
+                            <p key={player.id} className={player.ready ? "text-green-500 m-1" : "text-red-500 m-1"}>{player.username}</p>
                         ))
                     }
                 </div>
