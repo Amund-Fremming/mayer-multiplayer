@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Home from "./Home";
 import JoinGame from "./JoinGame";
 import HostGame from "./Hostgame";
@@ -8,7 +8,6 @@ import GameLobby from "./GameLobby";
 import Game from "./Game";
 
 const App = () => {
-
     /**
      * Game state for what components should render.
      */

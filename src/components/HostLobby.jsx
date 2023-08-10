@@ -10,13 +10,13 @@ const HostLobby = ({ gameid, username, setView, resetGameState }) => {
 
     const [players, setPlayers] = useState([]);
 
+    const collectionRef = collection(db, "games");
+    const q = query(collectionRef, where("gameid", "==", gameid));
+
     /**
      * This useEffect subscribes a listener to a given entry in the database.
      */
     useEffect(() => {
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
-
         const unsubscribe = onSnapshot(q, snapshot => {
             setPlayers(snapshot.docs[0].data().players);
         });
@@ -39,8 +39,6 @@ const HostLobby = ({ gameid, username, setView, resetGameState }) => {
      * It then changes the states from the App component and renders a new componen.
      */
     const handleStartGame = async () => {
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
         try {
             const querySnapshot = await getDocs(q);
             if(!querySnapshot.empty) {
@@ -53,7 +51,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState }) => {
             setView("GAME_LOBBY");
             console.log("Game state changed. State: Waiting");
         } catch(err) {
-            console.log("Error: " + err);
+            console.log("Error: " + err.message);
         }
     };
 

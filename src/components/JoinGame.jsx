@@ -9,14 +9,14 @@ import Game from './Game';
  */
 const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, setView }) => {
 
+    const collectionRef = collection(db, "games");
+    const q = query(collectionRef, where("gameid", "==", gameid));
+
     /**
      * Creates a refferance to the collection and the specific entry in the database and makes a transaction to prevent race conditions.
      * Adds the player to the game in the db and cheks for if the username already exists.
      */
     const playerJoinGame = async () => {
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
-    
         try {
             const querySnapshot = await getDocs(q);
             if (!querySnapshot.empty) {

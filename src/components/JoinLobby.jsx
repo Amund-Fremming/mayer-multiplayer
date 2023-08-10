@@ -9,13 +9,13 @@ import { db } from '../util/firebase';
  */
 const JoinLobby = ({ gameid, username, setView, resetGameState }) => {
 
+    const collectionRef = collection(db, "games");
+    const q = query(collectionRef, where("gameid", "==", gameid));
+
     /**
      * This useEffect subscribes a listener to a given entry in the database.
      */
     useEffect(() => {
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
-
         const unsubscribe = onSnapshot(q, snapshot => {
             snapshot.docs.forEach(doc => {
                 const gameData = doc.data();
@@ -32,10 +32,7 @@ const JoinLobby = ({ gameid, username, setView, resetGameState }) => {
     /**
      * Removes the player from the game collection, and then returns the user to the landing page.
      */
-    const handleLeaveGame = async () => {
-        const collectionRef = collection(db, "games");
-        const q = query(collectionRef, where("gameid", "==", gameid));
-      
+    const handleLeaveGame = async () => {      
         try {
             const querySnapshot = await getDocs(q);
             const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
@@ -46,8 +43,8 @@ const JoinLobby = ({ gameid, username, setView, resetGameState }) => {
                 players: updatedPlayers
             });
             console.log(username + " left the game");
-        } catch (error) {
-          console.error("Error updating document:", error);
+        } catch (err) {
+            console.error("Error: " + err.message);
         }
         
         resetGameState();

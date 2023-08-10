@@ -7,30 +7,20 @@ import { db } from '../util/firebase';
  * Here users can hit the Ready up button to ready up for the game.
  * There is also a view off all the players, when they ready up their username turns green.
  */
-const GameLobby = ({ resetGameState, gameid, username, setView }) => {
+const GameLobby = ({ resetGameState, gameid, username, setView, }) => {
 
     const [players, setPlayers] = useState([]);
     const [isReady, setIsReady] = useState(false);
 
-    const [collectionRef, setCollectionRef] = useState();
-    const [q, setQ] = useState();
-
-    /*
-            querySnapshot:      1, 2, 3
-            documentRef:        1, 2, 3
-    */
+    const collectionRef = collection(db, "games");
+    const q = query(collectionRef, where("gameid", "==", gameid));
 
     /**
      * useEffect runs every time the component renders.
      * Here we subscribe to the database, so it listens for updates on the database
      * The debounce function delays the listener so its not too much traffic.
      */
-    useEffect(() => {
-        const collectionRefLocal = collection(db, "games");
-        const q = query(collectionRefLocal, where("gameid", "==", gameid));
-        setCollectionRef(collectionRefLocal);
-        setQ(q);
-        
+    useEffect(async => {
         const unsubscribe = onSnapshot(q, snapshot => {
             const players = snapshot.docs[0].data().players
             setPlayers(players);
@@ -47,17 +37,12 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
             setView("GAME");
             // denne metoden blir sendt flere ganger enn nødvendig
             const updateState = async () => {
-                // const collectionRef = collection(db, "games");
-                // const q = query(collectionRef, where("gameid", "==", gameid));
-
                 try {
                     const querySnapshot = await getDocs(q);
                     if(!querySnapshot.empty) {
                         const documentRef = doc(db, "games", querySnapshot.docs[0].id);
 
-                        await updateDoc(documentRef, {
-                            state: "IN_PROGRESS"
-                        });
+                        await updateDoc(documentRef, { state: "IN_PROGRESS" });
                     }
                 } catch (err) {
                     console.log("Error: " + err.message);
@@ -75,9 +60,6 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
      */
     const handleReadyUp = async () => {
         if(isReady) return;
-
-        // const collectionRef = collection(db, "games");
-        // const q = query(collectionRef, where("gameid", "==", gameid));
         try {
             const querySnapshot = await getDocs(q);
             if(!querySnapshot.empty) {
@@ -105,27 +87,24 @@ const GameLobby = ({ resetGameState, gameid, username, setView }) => {
                 await runTransaction(db, updatePlayerStatus);
             }
         } catch(err) {
-            console.log("Error: " + err);
+            console.log("Error: " + err.message);
         }
     };
 
     /**
      * Removes a player from the game collection they are in when they leave the game. 
      */
-    const handleLeaveGame = async () => {
-        // const collectionRef = collection(db, "games");
-        // const q = query(collectionRef, where("gameid", "==", gameid));
-      
+    const handleLeaveGame = async () => {      
         try {
-            const querySnapshot = await getDocs(query);
+            const querySnapshot = await getDocs(q);
             const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
 
             const updatedPlayers = querySnapshot.docs[0].data().players.filter(player => player.username !== username);
                         
             await updateDoc(documentRef, { players: updatedPlayers });
             console.log(username + " left the game");
-        } catch (error) {
-          console.error("Error updating document:", error);
+        } catch (err) {
+          console.error("Error: " + err.message);
         }
 
         resetGameState();

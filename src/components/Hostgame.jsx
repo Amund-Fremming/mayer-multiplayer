@@ -8,14 +8,14 @@ import { db } from '../util/firebase';
  */
 const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, setView }) => {
 
-    const gamesRef = collection(db, "games");
+    const collectionRef = collection(db, "games");
 
     /**
      *  Creates a new game instance in the firestore database
      */
     const createGame = async () => {
         try {
-            await addDoc(gamesRef, {
+            await addDoc(collectionRef, {
                 gameid: gameid,
                 currentPlayer: "",
                 players: [
@@ -39,7 +39,6 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
      */
     const handleHostedGame = async () => {
         try {
-            const collectionRef = collection(db, "games");
             const gamesDoc = await getDocs(collectionRef);
             const gamesData = gamesDoc.docs.map(doc => doc.data());
             const filteredWithId = gamesData.filter(game => game.gameid === gameid);
@@ -54,7 +53,7 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
                 createGame();
             }
         } catch (err) {
-            console.log("Error: " + err);
+            console.log("Error: " + err.message);
         }
     };
 
