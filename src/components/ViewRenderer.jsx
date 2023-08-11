@@ -7,7 +7,7 @@ import JoinLobby from "./JoinLobby";
 import GameLobby from "./GameLobby";
 import Game from "./Game";
 
-const App = () => {
+const ViewRenderer = () => {
     /**
      * Game state for what components should render.
      */
@@ -93,4 +93,4 @@ const App = () => {
     };
 };
 
-export default App;
+export default ViewRenderer;
