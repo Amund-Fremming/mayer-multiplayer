@@ -15,19 +15,20 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
         if(!documentRef) return;
 
         const unsubscribe = onSnapshot(documentRef, snapshot => {
-            if (!snapshot.exists) {
-                console.error("Document does not exist!");
+            if (!snapshot.data()) {
+                console.log("Game deleted");
+                alert("Game deleted");
+                resetGameState();
                 return;
             }
     
             if (snapshot.data().state === "WAITING") {
-                resetGameState();
                 setView("GAME_LOBBY");
             }
         });
 
         return () => unsubscribe();
-    }, [documentRef]);
+    }, [documentRef, setView]);
 
     /**
      * Removes the player from the game collection, and then returns the user to the landing page.
@@ -36,8 +37,10 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
         try {
             const documentSnapshot = await getDoc(documentRef);
 
-            if(!documentSnapshot.exists) {
-                alert("Something went wrong. (document dont exist)");
+            if(!documentSnapshot.data()) {
+                console.log("Something went wrong. (document dont exist)");
+                resetGameState();
+                return;
             }
 
             const updatedPlayers = documentSnapshot.data().players.filter(player => player.username !== username);

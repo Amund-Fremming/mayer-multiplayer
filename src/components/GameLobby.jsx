@@ -20,7 +20,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
         // if(!documentRef) return;
 
         const unsubscribe = onSnapshot(documentRef, snapshot => {
-            if (!snapshot.exists) {
+            if (!snapshot.data()) {
                 console.error("Document does not exist!");
                 return;
             }
@@ -34,7 +34,6 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
     useEffect(() => {
         const handleAllPlayersReady = async () => {
             const areAllPlayersReady = players => players.every(player => player.ready === true); 
-            console.log(areAllPlayersReady(players));
             
             if(players.length !== 0 && areAllPlayersReady(players)) {
                 // denne metoden blir sendt flere ganger enn nødvendig

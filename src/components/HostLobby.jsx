@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { updateDoc, onSnapshot } from 'firebase/firestore';
+import { updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 
 /**
  * This component shows all the players that have joined the game the host has made.
@@ -16,8 +16,8 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
         if(!documentRef) return;
 
         const unsubscribe = onSnapshot(documentRef, snapshot => {
-            if(!snapshot.exists) {
-                console.error("Document does not exist!");
+            if(!snapshot.data()) {
+                console.log("Document does not exist!");
                 return;
             }
 
@@ -31,10 +31,9 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
      * Deletes the game entry in the database and alerts the joined players that the game is no longer in play.
      * Then it resets the state and returns the user to the landing page.
      */
-    const handleLeaveGame = () => {
+    const handleLeaveGame = async () => {
         resetGameState();
-        // Deletes the game that was created
-        // The joined players need to get the update so they can also leave their game that does not exist anymore
+        await deleteDoc(documentRef);
     };
 
     /**
@@ -44,7 +43,6 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
     const handleStartGame = async () => {
         try {   
             await updateDoc(documentRef, { state: "WAITING" });
-            resetGameState();
             setView("GAME_LOBBY");
             console.log("Game state changed. State: Waiting");
         } catch(err) {
@@ -59,6 +57,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
                     <div className="m-2 p-1 bg-gray-200">
                         <h1 className="text-xl font-bold">Players</h1>
                         {
+                            !players ? "" :
                             players.map(player => (
                                 <p key={player.id}>{player.username}</p>
                             ))
