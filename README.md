@@ -2,8 +2,8 @@
 - ikke bruke alert men vise feilen penere på siden
 
 ## Neste
-- se over koden, doc og struktur og push til git repo
 - hvis en bruker faller ut, så kan man joine igjen direkte med localhost spiller lagring, må også ha en timer om spilleren er innaktiv.
+- se over koden, doc og struktur og push til git repo
 
 
 
