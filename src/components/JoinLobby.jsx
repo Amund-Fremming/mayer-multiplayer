@@ -1,43 +1,46 @@
 import React, { useEffect } from "react";
-import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
-import { db } from '../util/firebase';
+import { getDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 
 /**
  * This components have a listener that listens for the game state to change in the database.
  * When the game state changes a new component will render.
  * The user can also
  */
-const JoinLobby = ({ gameid, username, setView, resetGameState }) => {
-
-    const collectionRef = collection(db, "games");
-    const q = query(collectionRef, where("gameid", "==", gameid));
+const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef }) => {
 
     /**
      * This useEffect subscribes a listener to a given entry in the database.
      */
     useEffect(() => {
-        const unsubscribe = onSnapshot(q, snapshot => {
-            snapshot.docs.forEach(doc => {
-                const gameData = doc.data();
-                if(gameData.state === "WAITING") {
-                    resetGameState();
-                    setView("GAME_LOBBY");
-                }
-            });
+        if(!documentRef) return;
+
+        const unsubscribe = onSnapshot(documentRef, snapshot => {
+            if (!snapshot.exists) {
+                console.error("Document does not exist!");
+                return;
+            }
+    
+            if (snapshot.data().state === "WAITING") {
+                resetGameState();
+                setView("GAME_LOBBY");
+            }
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [documentRef]);
 
     /**
      * Removes the player from the game collection, and then returns the user to the landing page.
      */
     const handleLeaveGame = async () => {      
         try {
-            const querySnapshot = await getDocs(q);
-            const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
+            const documentSnapshot = await getDoc(documentRef);
 
-            const updatedPlayers = querySnapshot.docs[0].data().players.filter(player => player.username !== username);
+            if(!documentSnapshot.exists) {
+                alert("Something went wrong. (document dont exist)");
+            }
+
+            const updatedPlayers = documentSnapshot.data().players.filter(player => player.username !== username);
                         
             await updateDoc(documentRef, {
                 players: updatedPlayers

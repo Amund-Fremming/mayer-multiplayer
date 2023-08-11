@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { collection, doc, getDocs, updateDoc, query, where, onSnapshot } from 'firebase/firestore';
-import { db } from '../util/firebase';
+import { updateDoc, onSnapshot } from 'firebase/firestore';
 
 /**
  * This component shows all the players that have joined the game the host has made.
  * The host can also hit the start-game button to start the game.
  */
-const HostLobby = ({ gameid, username, setView, resetGameState }) => {
+const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) => {
 
     const [players, setPlayers] = useState([]);
-
-    const collectionRef = collection(db, "games");
-    const q = query(collectionRef, where("gameid", "==", gameid));
 
     /**
      * This useEffect subscribes a listener to a given entry in the database.
      */
     useEffect(() => {
-        const unsubscribe = onSnapshot(q, snapshot => {
-            setPlayers(snapshot.docs[0].data().players);
+        if(!documentRef) return;
+
+        const unsubscribe = onSnapshot(documentRef, snapshot => {
+            if(!snapshot.exists) {
+                console.error("Document does not exist!");
+                return;
+            }
+
+            setPlayers(snapshot.data().players);
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [documentRef]);
 
     /**
      * Deletes the game entry in the database and alerts the joined players that the game is no longer in play.
@@ -39,14 +42,8 @@ const HostLobby = ({ gameid, username, setView, resetGameState }) => {
      * It then changes the states from the App component and renders a new componen.
      */
     const handleStartGame = async () => {
-        try {
-            const querySnapshot = await getDocs(q);
-            if(!querySnapshot.empty) {
-                const documentSnapshot = querySnapshot.docs[0];
-                const documentRef = doc(collectionRef, documentSnapshot.id);
-                
-                await updateDoc(documentRef, { state: "WAITING" });
-            }
+        try {   
+            await updateDoc(documentRef, { state: "WAITING" });
             resetGameState();
             setView("GAME_LOBBY");
             console.log("Game state changed. State: Waiting");
@@ -63,7 +60,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState }) => {
                         <h1 className="text-xl font-bold">Players</h1>
                         {
                             players.map(player => (
-                                <p>{player.username}</p>
+                                <p key={player.id}>{player.username}</p>
                             ))
                         }
                     </div>

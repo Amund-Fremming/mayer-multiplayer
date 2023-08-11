@@ -1,12 +1,12 @@
 import React from 'react';
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, getDocs, where, query } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
 /**
  * This component renders if the user decides that he want to create a game and be the host.
  * Here the host sees all players that join and can start the game whenever he wants.
  */
-const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, setView }) => {
+const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, setView, setDocumentRef }) => {
 
     const collectionRef = collection(db, "games");
 
@@ -15,7 +15,7 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
      */
     const createGame = async () => {
         try {
-            await addDoc(collectionRef, {
+            const newGameRef = await addDoc(collectionRef, {
                 gameid: gameid,
                 currentPlayer: "",
                 players: [
@@ -28,6 +28,9 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
                 state: "CREATED",
             }); 
             console.log("Game created");
+
+            // This sets the documentRef for later use, so i dont have to query more, and make the program less effective
+            setDocumentRef(newGameRef);
         } catch(err) {
             console.log("Error: " + err);
         }
@@ -39,18 +42,17 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
      */
     const handleHostedGame = async () => {
         try {
-            const gamesDoc = await getDocs(collectionRef);
-            const gamesData = gamesDoc.docs.map(doc => doc.data());
-            const filteredWithId = gamesData.filter(game => game.gameid === gameid);
+            const q = query(collectionRef, where("gameid", "==", gameid));
+            const querySnapshot = await getDocs(q);
 
             if(gameid === "" || username === "") {
                 alert("Fill out username/gameid");
-            } else if(filteredWithId.length !== 0) {
+            } else if(!querySnapshot.empty) {
                 alert("Game id in use");
             } else {
+                createGame();
                 resetGameState();
                 setView("HOST_LOBBY");
-                createGame();
             }
         } catch (err) {
             console.log("Error: " + err.message);

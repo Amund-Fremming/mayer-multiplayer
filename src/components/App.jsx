@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Home from "./Home";
 import JoinGame from "./JoinGame";
 import HostGame from "./Hostgame";
@@ -14,6 +14,7 @@ const App = () => {
     const [view, setView] = useState("HOME");
     const [username, setUsername] = useState("");
     const [gameid, setGameId] = useState("");
+    const [documentRef, setDocumentRef] = useState();
 
     const resetGameState = () => setView("HOME");
 
@@ -32,6 +33,7 @@ const App = () => {
                 username={username}
                 setUsername={setUsername}
                 setView={setView}
+                setDocumentRef={setDocumentRef}
             />
         )
     } else if(view === "HOST_GAME") {
@@ -43,6 +45,7 @@ const App = () => {
                 username={username}
                 setUsername={setUsername}
                 setView={setView}
+                setDocumentRef={setDocumentRef}
             />
         )
     } else if (view === "HOST_LOBBY") {
@@ -52,6 +55,7 @@ const App = () => {
                 gameid={gameid}
                 username={username}
                 setView={setView}
+                documentRef={documentRef}
             />
         )
     } else if(view === "JOIN_LOBBY") {
@@ -61,6 +65,7 @@ const App = () => {
                 gameid={gameid}
                 username={username}
                 setView={setView}
+                documentRef={documentRef}
             />
         )
     } else if(view === "GAME_LOBBY") {
@@ -70,6 +75,7 @@ const App = () => {
                 gameid={gameid}
                 username={username}
                 setView={setView}
+                documentRef={documentRef}
             />
         );
     } else if(view === "GAME") {

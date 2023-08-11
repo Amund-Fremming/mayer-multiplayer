@@ -1,13 +1,12 @@
 import React from 'react';
 import { collection, doc, getDocs, query, where, runTransaction } from 'firebase/firestore';
 import { db } from '../util/firebase';
-import Game from './Game';
 
 /**
  * This component handles the players trying to join a game with a gicen id and username.
  * Users can also leave the game resoulting in them getting removed from the database.
  */
-const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, setView }) => {
+const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, setView, setDocumentRef }) => {
 
     const collectionRef = collection(db, "games");
     const q = query(collectionRef, where("gameid", "==", gameid));
@@ -21,6 +20,7 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
             const querySnapshot = await getDocs(q);
             if (!querySnapshot.empty) {
                 const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
+                setDocumentRef(documentRef);
                 
                 const joinTransaction = async (transaction) => {
                     const docSnapshot = await transaction.get(documentRef);

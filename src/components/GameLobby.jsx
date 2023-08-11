@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, doc, getDocs, query, where, onSnapshot, runTransaction, updateDoc } from 'firebase/firestore';
+import { getDoc, onSnapshot, runTransaction, updateDoc } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
 /**
@@ -7,51 +7,47 @@ import { db } from '../util/firebase';
  * Here users can hit the Ready up button to ready up for the game.
  * There is also a view off all the players, when they ready up their username turns green.
  */
-const GameLobby = ({ resetGameState, gameid, username, setView, }) => {
+const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) => {
 
     const [players, setPlayers] = useState([]);
     const [isReady, setIsReady] = useState(false);
-
-    const collectionRef = collection(db, "games");
-    const q = query(collectionRef, where("gameid", "==", gameid));
 
     /**
      * useEffect runs every time the component renders.
      * Here we subscribe to the database, so it listens for updates on the database
      * The debounce function delays the listener so its not too much traffic.
      */
-    useEffect(async => {
-        const unsubscribe = onSnapshot(q, snapshot => {
-            const players = snapshot.docs[0].data().players
-            setPlayers(players);
+    useEffect(() => {
+        if(!documentRef) return;
+
+        const unsubscribe = onSnapshot(documentRef, snapshot => {
+            if (!snapshot.exists) {
+                console.error("Document does not exist!");
+                return;
+            }
+
+            setPlayers(snapshot.data().players);
         });
 
         return () => unsubscribe();
     }, []);
 
-    useEffect(() => { handleAllPlayersReady() });
-
-    const handleAllPlayersReady = async () => {
-        const areAllPlayersReady = players => players.every(player => player.ready === true);            
-        if(players.length !== 0 && areAllPlayersReady(players)) {
-            setView("GAME");
-            // denne metoden blir sendt flere ganger enn nødvendig
-            const updateState = async () => {
+    useEffect(() => {
+        const handleAllPlayersReady = async () => {
+            const areAllPlayersReady = players => players.every(player => player.ready === true);            
+            if(players.length !== 0 && areAllPlayersReady(players)) {
+                setView("GAME");
+                // denne metoden blir sendt flere ganger enn nødvendig
                 try {
-                    const querySnapshot = await getDocs(q);
-                    if(!querySnapshot.empty) {
-                        const documentRef = doc(db, "games", querySnapshot.docs[0].id);
-
-                        await updateDoc(documentRef, { state: "IN_PROGRESS" });
-                    }
+                    await updateDoc(documentRef, { state: "IN_PROGRESS" });
                 } catch (err) {
                     console.log("Error: " + err.message);
                 }
-            };
+            }
 
-            updateState();
-        }
-    };
+            handleAllPlayersReady();
+        };
+    });
 
     /**
      * This function queries the right document in the database and makes a referande to the instance.
@@ -60,32 +56,27 @@ const GameLobby = ({ resetGameState, gameid, username, setView, }) => {
      */
     const handleReadyUp = async () => {
         if(isReady) return;
-        try {
-            const querySnapshot = await getDocs(q);
-            if(!querySnapshot.empty) {
-                const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
-    
-                const updatePlayerStatus = async (transaction) => {
-                    const docSnapshot = await transaction.get(documentRef);
-                    if (!docSnapshot.exists) {
-                        throw new Error("Document does not exist!");
+        try {    
+            const updatePlayerStatus = async (transaction) => {
+                const docSnapshot = await transaction.get(documentRef);
+                if (!docSnapshot.exists) {
+                    throw new Error("Document does not exist!");
+                }
+
+                const players = docSnapshot.data().players;
+                const updatedPlayers = players.map(player => {
+                    if (player.username === username) {
+                        return {...player, ready: true}
                     }
-    
-                    const players = docSnapshot.data().players;
-                    const updatedPlayers = players.map(player => {
-                        if (player.username === username) {
-                            return {...player, ready: true}
-                        }
-                        return player;
-                    });
-    
-                    transaction.update(documentRef, { players: updatedPlayers });
-                };
+                    return player;
+                });
+
+                transaction.update(documentRef, { players: updatedPlayers });
+            };
                 
-                setIsReady(true);
-                console.log(`Player: ${username} is ready`);
-                await runTransaction(db, updatePlayerStatus);
-            }
+            setIsReady(true);
+            console.log(`Player: ${username} is ready`);
+            await runTransaction(db, updatePlayerStatus);
         } catch(err) {
             console.log("Error: " + err.message);
         }
@@ -96,10 +87,8 @@ const GameLobby = ({ resetGameState, gameid, username, setView, }) => {
      */
     const handleLeaveGame = async () => {      
         try {
-            const querySnapshot = await getDocs(q);
-            const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
-
-            const updatedPlayers = querySnapshot.docs[0].data().players.filter(player => player.username !== username);
+            const documentSnapshot = await getDoc(documentRef);
+            const updatedPlayers = documentSnapshot.data().players.filter(player => player.username !== username);
                         
             await updateDoc(documentRef, { players: updatedPlayers });
             console.log(username + " left the game");
