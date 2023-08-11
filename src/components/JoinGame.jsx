@@ -27,7 +27,13 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
                     if (!docSnapshot.exists) {
                         throw new Error("Document does not exist!");
                     }
+
+                    // Checks if the game has started
+                    if(docSnapshot.data().state === "IN_PROGRESS") {
+                        return "GAME_STARTED";
+                    };
     
+                    // Chekcs if the username exits
                     const players = docSnapshot.data().players;
                     for (let player of players) {
                         if (player.username.toUpperCase() === username.toUpperCase()) {
@@ -42,6 +48,10 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
     
                 if (transactionResult === "USERNAME_EXISTS") {
                     alert(`Username: ${username} is already in use!`);
+                    return;
+                }
+                if(transactionResult === "GAME_STARTED") {
+                    alert("Game has started");
                     return;
                 }
                 
