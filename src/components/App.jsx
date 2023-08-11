@@ -18,74 +18,79 @@ const App = () => {
 
     const resetGameState = () => setView("HOME");
 
-    if(view === "HOME") {
-        return(
-            <Home
-                setView={setView}
-            />  
-        );
-    } else if (view === "JOIN_GAME") {
-        return(
-            <JoinGame
-                resetGameState={resetGameState}
-                gameid={gameid}
-                setGameid={setGameId}
-                username={username}
-                setUsername={setUsername}
-                setView={setView}
-                setDocumentRef={setDocumentRef}
-            />
-        )
-    } else if(view === "HOST_GAME") {
-        return(
-            <HostGame
-                resetGameState={resetGameState}
-                gameid={gameid}
-                setGameid={setGameId}
-                username={username}
-                setUsername={setUsername}
-                setView={setView}
-                setDocumentRef={setDocumentRef}
-            />
-        )
-    } else if (view === "HOST_LOBBY") {
-        return(
-            <HostLobby
-                resetGameState={resetGameState}
-                gameid={gameid}
-                username={username}
-                setView={setView}
-                documentRef={documentRef}
-            />
-        )
-    } else if(view === "JOIN_LOBBY") {
-        return(
-            <JoinLobby
-                resetGameState={resetGameState}
-                gameid={gameid}
-                username={username}
-                setView={setView}
-                documentRef={documentRef}
-            />
-        )
-    } else if(view === "GAME_LOBBY") {
-        return(
-            <GameLobby
-                resetGameState={resetGameState}
-                gameid={gameid}
-                username={username}
-                setView={setView}
-                documentRef={documentRef}
-            />
-        );
-    } else if(view === "GAME") {
-        return(
-            <Game 
-                gameid={gameid}
-                username={username}
-            />
-        ); 
-    }
+    switch(view) {
+        case "HOME":
+            return(
+                <Home
+                    setView={setView}
+                /> 
+            );
+        case "JOIN_GAME":
+            return(
+                <JoinGame
+                    resetGameState={resetGameState}
+                    gameid={gameid}
+                    setGameid={setGameId}
+                    username={username}
+                    setUsername={setUsername}
+                    setView={setView}
+                    setDocumentRef={setDocumentRef}
+                />
+            );
+        case "HOST_GAME":
+            return(
+                <HostGame
+                    resetGameState={resetGameState}
+                    gameid={gameid}
+                    setGameid={setGameId}
+                    username={username}
+                    setUsername={setUsername}
+                    setView={setView}
+                    setDocumentRef={setDocumentRef}
+                />
+            );
+        case "JOIN_LOBBY":
+            return(
+                <JoinLobby
+                    resetGameState={resetGameState}
+                    gameid={gameid}
+                    username={username}
+                    setView={setView}
+                    documentRef={documentRef}
+                />
+            );
+        case "HOST_LOBBY":
+            return(
+                <HostLobby
+                    resetGameState={resetGameState}
+                    gameid={gameid}
+                    username={username}
+                    setView={setView}
+                    documentRef={documentRef}
+                />
+            );
+        case "GAME_LOBBY":
+            return(
+                <GameLobby
+                    resetGameState={resetGameState}
+                    gameid={gameid}
+                    username={username}
+                    setView={setView}
+                    documentRef={documentRef}
+                />
+            );
+        case "GAME":
+            return(
+                <Game 
+                    gameid={gameid}
+                    username={username}
+                />
+            );
+        default:
+            return(
+                <h1>Something went wrong</h1>
+            );
+    };
 };
 
 export default App;
