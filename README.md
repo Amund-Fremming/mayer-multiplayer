@@ -10,7 +10,7 @@
 - se over koden, doc og struktur og push til git repo
 - Hindre folk å joine spill om state er IN PROGRESS
 - Sjekke om man kan gjenbruke kode i transaction
-- hente data med useEffect så ting er raskere?s
+- hente data med listener så ting er raskere
 
 
 
