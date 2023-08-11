@@ -1,12 +1,10 @@
 ## Må ordnes
-- Når host leaver game må andre spillere få info at spillet er avsluttet
-- Hvis noen faller ut / refresher må de fjernes fra spillet eller lagre state i localstorage
-- Ha timer slik at hvis noen bruker for lang tid blir de kicka.
 - ikke bruke alert men vise feilen penere på siden
 
 ## Neste
+- Når host leaver game, må spillet slettes og andre oppdateres
 - se over koden, doc og struktur og push til git repo
-
+- hvis en bruker faller ut, så kan man joine igjen direkte med localhost spiller lagring, må også ha en timer om spilleren er innaktiv.
 
 
 
