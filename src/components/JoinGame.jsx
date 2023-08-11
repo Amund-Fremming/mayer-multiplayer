@@ -3,8 +3,7 @@ import { collection, doc, getDocs, query, where, runTransaction } from 'firebase
 import { db } from '../util/firebase';
 
 /**
- * This component handles the players trying to join a game with a gicen id and username.
- * Users can also leave the game resoulting in them getting removed from the database.
+ * Component for players to join an existing game or leave it.
  */
 const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, setView, setDocumentRef }) => {
 
@@ -12,8 +11,8 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
     const q = query(collectionRef, where("gameid", "==", gameid));
 
     /**
-     * Creates a refferance to the collection and the specific entry in the database and makes a transaction to prevent race conditions.
-     * Adds the player to the game in the db and cheks for if the username already exists.
+     * Adds the player to the specified game in the database after 
+     * performing necessary checks using a transaction.
      */
     const playerJoinGame = async () => {
         try {
@@ -33,7 +32,7 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
                         return "GAME_STARTED";
                     };
     
-                    // Chekcs if the username exits
+                    // Chekcs if the username exists
                     const players = docSnapshot.data().players;
                     for (let player of players) {
                         if (player.username.toUpperCase() === username.toUpperCase()) {
@@ -68,7 +67,7 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
     };
 
     /**
-     * Handles the player trying to join a game and checks if all conditions are met.
+     * Verifies user input before attempting to join a game.
      */
     const handleJoinGame = async () => {
         if (username === "" || gameid === "") {

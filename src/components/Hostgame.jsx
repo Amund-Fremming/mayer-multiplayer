@@ -3,15 +3,14 @@ import { addDoc, collection, getDocs, where, query } from 'firebase/firestore';
 import { db } from '../util/firebase';
 
 /**
- * This component renders if the user decides that he want to create a game and be the host.
- * Here the host sees all players that join and can start the game whenever he wants.
+ * Allows a user to create and host a new game.
  */
 const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, setView, setDocumentRef }) => {
 
     const collectionRef = collection(db, "games");
 
     /**
-     *  Creates a new game instance in the firestore database
+     *  Creates a new game in the firestore database
      */
     const createGame = async () => {
         try {
@@ -29,7 +28,7 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
             }); 
             console.log("Game created");
 
-            // This sets the documentRef for later use, so i dont have to query more, and make the program less effective
+            // Sets the documentRef, saves us form extra querying later.
             setDocumentRef(newGameRef);
         } catch(err) {
             console.log("Error: " + err);

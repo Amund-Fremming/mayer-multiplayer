@@ -1,8 +1,7 @@
 import React from "react";
 
 /**
- * This is the first component a player sees when they come to the site.
- * Here the user can choose between hosting a game, or to join an existing game.
+ * Initial screen allowing users to either host or join a game.
  */
 const Home = ({ setView }) => {
     return(

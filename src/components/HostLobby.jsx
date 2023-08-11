@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import { updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 
 /**
- * This component shows all the players that have joined the game the host has made.
- * The host can also hit the start-game button to start the game.
+ * Displays the host's game lobby and manages game start or termination.
  */
 const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) => {
 
     const [players, setPlayers] = useState([]);
 
     /**
-     * This useEffect subscribes a listener to a given entry in the database.
+     * Subscribes to player changes in the hosted game.
      */
     useEffect(() => {
         if(!documentRef) return;
@@ -28,8 +27,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
     }, [documentRef]);
 
     /**
-     * Deletes the game entry in the database and alerts the joined players that the game is no longer in play.
-     * Then it resets the state and returns the user to the landing page.
+     * Deletes the game and resets to the landing page.
      */
     const handleLeaveGame = async () => {
         resetGameState();
@@ -37,8 +35,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
     };
 
     /**
-     * This function gets the entry in the database and updates the game state to "Waiting".
-     * It then changes the states from the App component and renders a new componen.
+     * Initiates the game by updating its state.
      */
     const handleStartGame = async () => {
         try {   

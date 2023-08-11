@@ -2,14 +2,12 @@ import React, { useEffect } from "react";
 import { getDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 
 /**
- * This components have a listener that listens for the game state to change in the database.
- * When the game state changes a new component will render.
- * The user can also
+ * Component for players to join a game lobby. Listens for game state changes in the database and reacts accordingly.
  */
 const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef }) => {
 
     /**
-     * This useEffect subscribes a listener to a given entry in the database.
+     * Subscribes to database updates for the specified game, and changes view accordingly.
      */
     useEffect(() => {
         if(!documentRef) return;
@@ -31,7 +29,7 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
     }, [documentRef, setView]);
 
     /**
-     * Removes the player from the game collection, and then returns the user to the landing page.
+     * Removes the player from the game's player list and navigates to the landing page.
      */
     const handleLeaveGame = async () => {      
         try {

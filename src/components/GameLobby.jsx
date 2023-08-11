@@ -3,9 +3,8 @@ import { getDoc, onSnapshot, runTransaction, updateDoc } from 'firebase/firestor
 import { db } from '../util/firebase';
 
 /**
- * This component renders when the host has presset the start-game button and the database game state is "Waiting"
- * Here users can hit the Ready up button to ready up for the game.
- * There is also a view off all the players, when they ready up their username turns green.
+ * GameLobby: Renders when the host starts the game with a "Waiting" state.
+ * Allows users to ready up, displaying all player names, changing colors when ready.
  */
 const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) => {
 
@@ -13,12 +12,9 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
     const [isReady, setIsReady] = useState(false);
 
     /**
-     * useEffect runs every time the component renders.
-     * Here we subscribe to the database, so it listens for updates on the database
+     * Subscribes a listener to DB for updates for players list.
      */
     useEffect(() => {
-        // if(!documentRef) return;
-
         const unsubscribe = onSnapshot(documentRef, snapshot => {
             if (!snapshot.data()) {
                 console.error("Document does not exist!");
@@ -51,9 +47,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
     });
 
     /**
-     * This function queries the right document in the database and makes a referande to the instance.
-     * Then it uses transaction for avoiding race conditions when updating the players.
-     * In the end the function changes a players ready state to true, with the username they have.
+     * Checks if all players are ready and updates game state.
      */
     const handleReadyUp = async () => {
         if(isReady) return;
@@ -84,7 +78,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
     };
 
     /**
-     * Removes a player from the game collection they are in when they leave the game. 
+     * Handles player ready state, updating DB via transaction.
      */
     const handleLeaveGame = async () => {      
         try {

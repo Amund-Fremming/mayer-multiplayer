@@ -7,16 +7,20 @@ import JoinLobby from "./JoinLobby";
 import GameLobby from "./GameLobby";
 import Game from "./Game";
 
+/**
+ * Renders the correct view, and controlls the game flow.
+ */
 const ViewRenderer = () => {
-    /**
-     * Game state for what components should render.
-     */
+
     const [view, setView] = useState("HOME");
     const [username, setUsername] = useState("");
     const [gameid, setGameId] = useState("");
     const [documentRef, setDocumentRef] = useState();
 
-    const resetGameState = () => setView("HOME");
+    const resetGameState = () => {
+        setView("HOME");
+        // When dissconect logic is made: Removes the data from localhost
+    };
 
     switch(view) {
         case "HOME":
