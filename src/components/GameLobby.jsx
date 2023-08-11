@@ -15,10 +15,9 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
     /**
      * useEffect runs every time the component renders.
      * Here we subscribe to the database, so it listens for updates on the database
-     * The debounce function delays the listener so its not too much traffic.
      */
     useEffect(() => {
-        if(!documentRef) return;
+        // if(!documentRef) return;
 
         const unsubscribe = onSnapshot(documentRef, snapshot => {
             if (!snapshot.exists) {
@@ -34,19 +33,22 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
 
     useEffect(() => {
         const handleAllPlayersReady = async () => {
-            const areAllPlayersReady = players => players.every(player => player.ready === true);            
+            const areAllPlayersReady = players => players.every(player => player.ready === true); 
+            console.log(areAllPlayersReady(players));
+            
             if(players.length !== 0 && areAllPlayersReady(players)) {
-                setView("GAME");
                 // denne metoden blir sendt flere ganger enn nødvendig
                 try {
                     await updateDoc(documentRef, { state: "IN_PROGRESS" });
                 } catch (err) {
                     console.log("Error: " + err.message);
                 }
-            }
 
-            handleAllPlayersReady();
+                setView("GAME");
+            }
         };
+
+        handleAllPlayersReady();
     });
 
     /**
@@ -103,6 +105,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
         <>
             <div className="flex flex-col justify-center items-center h-screen">
                 <h1>GameLobby</h1>
+                <h2>Gameid: {gameid}</h2>
                 <h2>Players</h2>
                 <div className="w-[20%] flex flex-wrap">
                     {
