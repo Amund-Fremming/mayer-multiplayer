@@ -2,15 +2,10 @@
 - ikke bruke alert men vise feilen penere på siden
 
 ## Neste
-- hvis en bruker faller ut, så kan man joine igjen direkte med localhost spiller lagring, må også ha en timer om spilleren er innaktiv.
-
-- Bruke sessionStorage for å lagre id, username, hvilken view og documentRef i session
-- ha eventListener til "beforeunload" som fjerner spiller fra spillet når de lukker tabben sin
-- ViewRenderer må ha en useEffect som sjekker sessionStorage og laster game state basert på hvilen state spillet er i
-- UseEffect til å hente data fra sessionStorage så det ikke skjer feiler
-- Kan være en feil der man prøver å komme inn igjen i ett spill som er under IN_PROGRESS, der må man bare sjekk om username finnes og at man da kan bli med, men da må det håndteres at man ikke kan joine med ett brukernavn som finens også.
+- Når spiller lukker session, må han fjernes fra spillet, eller ha innaktiv fjerner
 
 - se over koden, doc og struktur og push til git repo
+- Start å lage spillet
 
 
 

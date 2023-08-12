@@ -46,6 +46,8 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
 
             if(gameid === "" || username === "") {
                 alert("Fill out username/gameid");
+            } else if(username.length > 14 || gameid.length > 14) {
+                alert("Too long username or gameid (Max 14)");
             } else if(!querySnapshot.empty) {
                 alert("Game id in use");
             } else {

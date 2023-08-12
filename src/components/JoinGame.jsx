@@ -72,6 +72,8 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
     const handleJoinGame = async () => {
         if (username === "" || gameid === "") {
             alert("Fill out username/gameid");
+        } else if(username.length > 14 || gameid.length > 14) {
+            alert("Too long username or gameid (Max 14)");
         } else {
             playerJoinGame();
         }
