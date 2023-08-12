@@ -15,9 +15,9 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
      * Subscribes a listener to DB for updates for players list.
      */
     useEffect(() => {
-        saveInSessionStorage(gameid, username, documentRef);
-
         if(!documentRef) return; 
+
+        saveInSessionStorage(gameid, username, documentRef);
 
         const unsubscribe = onSnapshot(documentRef, snapshot => {
             if (!snapshot.data()) {

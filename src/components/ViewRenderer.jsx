@@ -127,6 +127,7 @@ const ViewRenderer = () => {
                     username={username}
                     documentRef={documentRef}
                     saveInSessionStorage={saveInSessionStorage}
+                    resetGameState={resetGameState}
                 />
             );
         default:

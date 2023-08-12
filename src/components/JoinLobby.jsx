@@ -10,9 +10,9 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
      * Subscribes to database updates for the specified game, and changes view accordingly.
      */
     useEffect(() => {
-        saveInSessionStorage(gameid, username, documentRef);
-
         if(!documentRef) return;
+
+        saveInSessionStorage(gameid, username, documentRef);
 
         const unsubscribe = onSnapshot(documentRef, snapshot => {
             if (!snapshot.data()) {

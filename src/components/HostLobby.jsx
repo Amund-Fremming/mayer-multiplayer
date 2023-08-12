@@ -51,18 +51,16 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
 
     return(
         <>
-            <div className="flex flex-col justify-center items-center h-screen">
-                {
-                    <div className="m-2 p-1 bg-gray-200">
-                        <h1 className="text-xl font-bold">Players</h1>
-                        {
-                            !players ? "" :
-                            players.map(player => (
-                                <p key={player.id}>{player.username}</p>
-                            ))
-                        }
-                    </div>
-                }
+            <div className="flex flex-col justify-center items-center h-screen">                
+                <div className="m-2 p-1 bg-gray-200">
+                    <h1 className="text-xl font-bold">Players</h1>
+                    {
+                        !players ? "" :
+                        players.map(player => (
+                            <p key={player.id}>{player.username}</p>
+                        ))
+                    }
+                </div>
                 <h1>HostLobby</h1>
                 <h2>username: {username}</h2>
                 <h2>gameid: {gameid}</h2>
