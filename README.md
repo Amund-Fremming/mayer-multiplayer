@@ -1,11 +1,9 @@
 ## Må ordnes
 - bildeopplastning ved username
 - ikke bruke alert men vise feilen penere på siden
-
-## Neste
 - Er en spiller inaktiv for lenge må spilleren sparkes ut av spillet.
 
-- se over koden, doc og struktur og push til git repo
+## Neste
 - Start å lage spillet
 
 
