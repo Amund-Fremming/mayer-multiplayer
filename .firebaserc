@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "mayer-41a13"
-  }
+  },
+  "targets": {
+    "mayer-41a13": {
+      "hosting": {
+        "myTargetName": [
+          "mayer.web.app"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
