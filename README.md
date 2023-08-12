@@ -1,4 +1,5 @@
 ## Må ordnes
+- bildeopplastning ved username
 - ikke bruke alert men vise feilen penere på siden
 
 ## Neste
