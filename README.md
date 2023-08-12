@@ -5,7 +5,7 @@
 
 ## Neste
 - Start å lage spillet
-
+- Style spillet
 
 
 
