@@ -6,7 +6,7 @@ import { db } from '../util/firebase';
  * GameLobby: Renders when the host starts the game with a "Waiting" state.
  * Allows users to ready up, displaying all player names, changing colors when ready.
  */
-const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) => {
+const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, saveInSessionStorage }) => {
 
     const [players, setPlayers] = useState([]);
     const [isReady, setIsReady] = useState(false);
@@ -15,6 +15,10 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
      * Subscribes a listener to DB for updates for players list.
      */
     useEffect(() => {
+        saveInSessionStorage(gameid, username, documentRef);
+
+        if(!documentRef) return; 
+
         const unsubscribe = onSnapshot(documentRef, snapshot => {
             if (!snapshot.data()) {
                 console.error("Document does not exist!");
@@ -25,7 +29,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef }) =
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [documentRef]);
 
     useEffect(() => {
         const handleAllPlayersReady = async () => {

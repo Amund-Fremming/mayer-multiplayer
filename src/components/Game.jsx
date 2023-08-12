@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Game = ({  }) => {
+const Game = ({ gameid, username, documentRef, saveInSessionStorage }) => {
+    
+    useEffect(() => {
+        saveInSessionStorage(gameid, username, documentRef);
+    }, [documentRef]);
+    
     return(
         <>
             Game

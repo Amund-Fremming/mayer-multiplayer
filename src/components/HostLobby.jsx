@@ -4,7 +4,7 @@ import { updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 /**
  * Displays the host's game lobby and manages game start or termination.
  */
-const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) => {
+const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, saveInSessionStorage }) => {
 
     const [players, setPlayers] = useState([]);
 
@@ -12,6 +12,8 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef }) =
      * Subscribes to player changes in the hosted game.
      */
     useEffect(() => {
+        saveInSessionStorage(gameid, username, documentRef);
+
         if(!documentRef) return;
 
         const unsubscribe = onSnapshot(documentRef, snapshot => {

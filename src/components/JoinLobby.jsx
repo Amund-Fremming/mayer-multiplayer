@@ -4,12 +4,14 @@ import { getDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 /**
  * Component for players to join a game lobby. Listens for game state changes in the database and reacts accordingly.
  */
-const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef }) => {
+const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, saveInSessionStorage }) => {
 
     /**
      * Subscribes to database updates for the specified game, and changes view accordingly.
      */
     useEffect(() => {
+        saveInSessionStorage(gameid, username, documentRef);
+
         if(!documentRef) return;
 
         const unsubscribe = onSnapshot(documentRef, snapshot => {
