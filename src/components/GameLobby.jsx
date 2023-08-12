@@ -26,7 +26,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
             }
 
             setPlayers(snapshot.data().players);
-            setIsReady(players.some(player => player.username === username && player.ready === true));
+            setIsReady(snapshot.data().players.some(player => player.username === username && player.ready === true));
         });
 
         return () => unsubscribe();
