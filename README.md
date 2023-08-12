@@ -2,7 +2,7 @@
 - ikke bruke alert men vise feilen penere på siden
 
 ## Neste
-- Når spiller lukker session, må han fjernes fra spillet, eller ha innaktiv fjerner
+- Er en spiller inaktiv for lenge må spilleren sparkes ut av spillet.
 
 - se over koden, doc og struktur og push til git repo
 - Start å lage spillet
