@@ -12,7 +12,7 @@
 
 ### Kort om appen
 - Multiplayer terningspill som er laget etter <a href="https://da.wikipedia.org/wiki/Meyer_(terningspil)">Mayer</a>
-- Laget spillet slik at det kan spilles online.
+- Spillet er laget for å kunne spillers online.
 
 ### Hva har jeg lært
 - Hvordan man mounter/unmounter funksjoner og begrenser reads for å ikke få ekstremt mange kall til databasen der man ønsker real-time oppdateringer.
