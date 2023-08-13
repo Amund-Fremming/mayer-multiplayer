@@ -34,12 +34,16 @@ elif [ "$commitmsg" == "doc" ]; then
 	git commit -m "Added and cleaned up some documentation"
 	git push
 elif [ "$commitmsg" == "help" ]; then
+	echo ""
+	echo ""
 	echo "ALL COMMANDS"
 	echo "  prod  runs build and hosting after push"
 	echo "  ur    Update README"		
 	echo "  cc    Clean up some code"
 	echo "  bug   Fixed some bugs"
 	echo "  doc   Added some documentation"
+	echo ""
+	echo ""
 else
 	git pull
 	git add .
