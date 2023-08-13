@@ -17,6 +17,7 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
             const newGameRef = await addDoc(collectionRef, {
                 gameid: gameid,
                 currentPlayer: "",
+                previousPlayer: "",
                 players: [
                     {
                         username: username,

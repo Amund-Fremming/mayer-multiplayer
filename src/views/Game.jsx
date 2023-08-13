@@ -70,7 +70,11 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                 {/* Game logic */}
                 {
                     playersTurn
-                    ? <PlayerTurn />
+                    ? <PlayerTurn 
+                        documentRef={documentRef}
+                        username={username}
+                        gameid={gameid}
+                    />
                     : <WaitingTurn />
                 }
                 <button
