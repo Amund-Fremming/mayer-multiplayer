@@ -2,7 +2,7 @@
 - Lage popup hvordan man legger til appen på hjemskjerm og at det er bedre der.
 - bildeopplastning ved username
 - ikke bruke alert men vise feilen penere på siden
-- Er en spiller inaktiv for lenge må spilleren sparkes ut av spillet.
+- Er en spiller inaktiv for lenge må spilleren sparkes ut av spillet
 
 ### Neste
 - Lage component for PlayersTurn og WaitingTurn
