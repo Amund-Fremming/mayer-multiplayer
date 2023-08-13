@@ -4,7 +4,8 @@
 - Er en spiller inaktiv for lenge må spilleren sparkes ut av spillet.
 
 ## Neste
-- Start å lage spillet
+- Lage component for PlayersTurn og WaitingTurn
+
 - Style spillet
 
 
