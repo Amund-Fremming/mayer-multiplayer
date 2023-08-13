@@ -10,8 +10,6 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
     const [playersTurn, setPlayersTurn] = useState(false);
 
     useEffect(() => {
-        // Make a listener for currentPlayerUpdates
-
         if(!documentRef) return;
 
         saveInSessionStorage(gameid, username, documentRef);
@@ -24,6 +22,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                 return;
             }
 
+            setPlayersTurn(snapshot.data().currentPlayer === username);
             setPlayers(snapshot.data().players);
         });
     
