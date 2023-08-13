@@ -11,6 +11,8 @@ elif [ "$buildandhost" == "prod" ]; then
 	git add .
 	git commit -m "$commitmsg"
 	git push
+	npm run build
+	firebase deploy --only hosting
 elif [ "$commitmsg" == "ur" ]; then
 	git pull
 	git add .
