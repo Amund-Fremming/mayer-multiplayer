@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { onSnapshot } from "firebase/firestore";
+import { onSnapshot, runTransaction } from "firebase/firestore";
 import PlayerTurn from "../components/Game/PlayerTurn";
 import WaitingTurn from "../components/Game/WaitingTurn";
+import { db } from "../config/firebase";
 
 const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameState }) => {
     
@@ -28,6 +29,29 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
     
         return () => unsubscribe();
     }, [documentRef]);
+
+    const handleLeaveGame = async () => {
+        try {
+            await runTransaction(db, async (transaction) => {
+                const docSnapshot = await transaction.get(documentRef);
+    
+                if (!docSnapshot.exists()) {
+                    throw new Error("Document does not exist!");
+                }
+    
+                const currentPlayers = docSnapshot.data().players;
+                const updatedPlayers = currentPlayers.filter(player => player.username !== username);
+    
+                transaction.update(documentRef, { players: updatedPlayers });
+            });
+    
+            console.log(username + " left the game");
+        } catch (err) {
+            console.error("Error: " + err.message);
+        }
+    
+        resetGameState();
+    };    
     
     return(
         <>
@@ -39,10 +63,23 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                     {
                         !players ? "" :
                         players.map(player => (
-                            <p key={player.id}>{player.username}</p>
+                            <p key={player.id}>{player.username} rolled dices: {player.dice1 > player.dice2 ? player.dice1 + "" + player.dice2 : player.dice2 + "" + player.dice1}</p>
                         ))
                     }
                 </div>
+                
+                {/* Game logic */}
+                {
+                    playersTurn
+                    ? <PlayerTurn />
+                    : <WaitingTurn />
+                }
+                <button
+                    className='p-1 bg-gray-200 m-1'
+                    onClick={handleLeaveGame}
+                >
+                    Leave
+                </button>   
             </div>
         </>
     );

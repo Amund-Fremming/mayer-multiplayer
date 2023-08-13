@@ -85,19 +85,28 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
     /**
      * Handles player ready state, updating DB via transaction.
      */
-    const handleLeaveGame = async () => {      
+    const handleLeaveGame = async () => {
         try {
-            const documentSnapshot = await getDoc(documentRef);
-            const updatedPlayers = documentSnapshot.data().players.filter(player => player.username !== username);
-                        
-            await updateDoc(documentRef, { players: updatedPlayers });
+            await runTransaction(db, async (transaction) => {
+                const docSnapshot = await transaction.get(documentRef);
+    
+                if (!docSnapshot.exists()) {
+                    throw new Error("Document does not exist!");
+                }
+    
+                const currentPlayers = docSnapshot.data().players;
+                const updatedPlayers = currentPlayers.filter(player => player.username !== username);
+    
+                transaction.update(documentRef, { players: updatedPlayers });
+            });
+    
             console.log(username + " left the game");
         } catch (err) {
-          console.error("Error: " + err.message);
+            console.error("Error: " + err.message);
         }
-
+    
         resetGameState();
-    };
+    };    
 
     return(
         <>

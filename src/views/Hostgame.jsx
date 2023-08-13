@@ -21,6 +21,8 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
                     {
                         username: username,
                         ready: false,
+                        dice1: 0,
+                        dice2: 0,
                     },
                 ],
                 roundnumber: 0,

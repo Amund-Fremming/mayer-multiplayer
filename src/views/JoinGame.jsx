@@ -39,7 +39,12 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
                             return "USERNAME_EXISTS";
                         }
                     }
-                    players.push({ username: username, ready: false });
+                    players.push({
+                        username: username,
+                        ready: false,
+                        dice1: 0,
+                        dice2: 0,
+                    });
                     transaction.update(documentRef, { players: players });
                 };
                 

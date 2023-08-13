@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { getDoc, updateDoc, onSnapshot } from 'firebase/firestore';
+import { runTransaction, onSnapshot } from 'firebase/firestore';
+import { db } from "../config/firebase";
 
 /**
  * Component for players to join a game lobby. Listens for game state changes in the database and reacts accordingly.
@@ -33,28 +34,28 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
     /**
      * Removes the player from the game's player list and navigates to the landing page.
      */
-    const handleLeaveGame = async () => {      
+    const handleLeaveGame = async () => {
         try {
-            const documentSnapshot = await getDoc(documentRef);
-
-            if(!documentSnapshot.data()) {
-                console.log("Something went wrong. (document dont exist)");
-                resetGameState();
-                return;
-            }
-
-            const updatedPlayers = documentSnapshot.data().players.filter(player => player.username !== username);
-                        
-            await updateDoc(documentRef, {
-                players: updatedPlayers
+            await runTransaction(db, async (transaction) => {
+                const docSnapshot = await transaction.get(documentRef);
+    
+                if (!docSnapshot.exists()) {
+                    throw new Error("Document does not exist!");
+                }
+    
+                const currentPlayers = docSnapshot.data().players;
+                const updatedPlayers = currentPlayers.filter(player => player.username !== username);
+    
+                transaction.update(documentRef, { players: updatedPlayers });
             });
+    
             console.log(username + " left the game");
         } catch (err) {
             console.error("Error: " + err.message);
         }
-        
+    
         resetGameState();
-    };
+    };    
 
     return(
         <>
