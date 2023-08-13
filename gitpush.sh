@@ -1,10 +1,16 @@
 #!/bin/bash
 
 commitmsg=$1
+buildandhost=$2
 
 if [ -z "$commitmsg" ]; then
 	echo "Provide a commit message."
 	exit 1
+elif [ "$buildandhost" == "prod" ]; then
+	git pull
+	git add .
+	git commit -m "$commitmsg"
+	git push
 elif [ "$commitmsg" == "ur" ]; then
 	git pull
 	git add .
@@ -27,10 +33,11 @@ elif [ "$commitmsg" == "doc" ]; then
 	git push
 elif [ "$commitmsg" == "help" ]; then
 	echo "ALL COMMANDS"
-	echo "  ur   Update README"		
-	echo "  cc   Clean up some code"
-	echo "  bug  Fixed some bugs"
-	echo "  doc  Added some documentation"
+	echo "  prod  runs build and hosting after push"
+	echo "  ur    Update README"		
+	echo "  cc    Clean up some code"
+	echo "  bug   Fixed some bugs"
+	echo "  doc   Added some documentation"
 else
 	git pull
 	git add .
