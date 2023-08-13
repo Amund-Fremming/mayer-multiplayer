@@ -1,6 +1,14 @@
 import React from 'react'
 
-function PlayerTurn() {
+function PlayerTurn({ documentRef, username, gameid }) {
+
+  const updateDices = (dice1, dice2) => {
+
+  };
+
+  const handleBust = () => {
+    
+  };
 
   // IF THIS PLAYER LEAVES: set the currentPlayer to next player
   return (
