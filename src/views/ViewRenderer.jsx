@@ -7,7 +7,7 @@ import JoinLobby from "./JoinLobby";
 import GameLobby from "./GameLobby";
 import Game from "./Game";
 import { collection, doc, getDocs, where, query } from "firebase/firestore";
-import { db } from "../util/firebase";
+import { db } from "../config/firebase";
 
 /**
  * Renders the correct view, and controlls the game flow.

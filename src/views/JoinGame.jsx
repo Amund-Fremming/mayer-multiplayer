@@ -1,6 +1,6 @@
 import React from 'react';
 import { collection, doc, getDocs, query, where, runTransaction } from 'firebase/firestore';
-import { db } from '../util/firebase';
+import { db } from '../config/firebase';
 
 /**
  * Component for players to join an existing game or leave it.

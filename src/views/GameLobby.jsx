@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getDoc, onSnapshot, runTransaction, updateDoc } from 'firebase/firestore';
-import { db } from '../util/firebase';
+import { db } from '../config/firebase';
 
 /**
  * GameLobby: Renders when the host starts the game with a "Waiting" state.

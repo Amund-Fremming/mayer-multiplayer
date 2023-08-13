@@ -1,6 +1,6 @@
 import React from 'react';
 import { addDoc, collection, getDocs, where, query } from 'firebase/firestore';
-import { db } from '../util/firebase';
+import { db } from '../config/firebase';
 
 /**
  * Allows a user to create and host a new game.

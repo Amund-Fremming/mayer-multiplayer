@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { onSnapshot } from "firebase/firestore";
+import PlayerTurn from "../components/Game/PlayerTurn";
+import WaitingTurn from "../components/Game/WaitingTurn";
 
 const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameState }) => {
     
     const [players, setPlayers] = useState([]);
+    const [playersTurn, setPlayersTurn] = useState(false);
 
     useEffect(() => {
+        // Make a listener for currentPlayerUpdates
+
         if(!documentRef) return;
 
         saveInSessionStorage(gameid, username, documentRef);
@@ -20,6 +25,8 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
 
             setPlayers(snapshot.data().players);
         });
+    
+        return () => unsubscribe();
     }, [documentRef]);
     
     return(
