@@ -1,9 +1,9 @@
-## Må ordnes
+### Må ordnes
 - bildeopplastning ved username
 - ikke bruke alert men vise feilen penere på siden
 - Er en spiller inaktiv for lenge må spilleren sparkes ut av spillet.
 
-## Neste
+### Neste
 - Lage component for PlayersTurn og WaitingTurn
 - onSnapshot på currentPlayer
 - Vise PlayersTurn når currentPlayer er ditt brukernavn
@@ -17,6 +17,7 @@
 
 - Style spillet
 
+<br/><br/>
 
 
 # Meyer
@@ -37,6 +38,8 @@
 - Lage de fleste kallene til databasen først og så sende referansen videre til andre komponenter, kontra å hente ut referansen i hvert komponent. Blir mer effektivt program.
 - Bli bedre på å skrive kommentarer og dokumentasjon.
 - Ha kundemøter for å gjøre appen mer brukervennlig.
+
+<br />
 
 ### How to use gitpush.sh
 list all commands
