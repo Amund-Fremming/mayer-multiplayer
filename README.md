@@ -3,8 +3,10 @@
 - bildeopplastning ved username
 - ikke bruke alert men vise feilen penere på siden
 - Er en spiller inaktiv for lenge må spilleren sparkes ut av spillet
+- Kunne sende link via snapchat,messenger eller meldinger til ett spill
 
 ### Neste
+- Lage tutorial komponent, video eller how to?
 - Lage component for PlayersTurn og WaitingTurn
 - onSnapshot på currentPlayer
 - Vise PlayersTurn når currentPlayer er ditt brukernavn
