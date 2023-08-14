@@ -6,6 +6,7 @@
 - Kunne sende link via snapchat,messenger eller meldinger til ett spill
 
 ### Neste
+- Hvis begge terninger viser 0 skal ingen verdi vises eller ikke kastet.
 - Lage tutorial komponent, video eller how to?
 - Lage component for PlayersTurn og WaitingTurn
 - onSnapshot på currentPlayer
