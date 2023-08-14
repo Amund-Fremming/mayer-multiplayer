@@ -84,6 +84,10 @@ function PlayerTurn({ documentRef, username, gameid }) {
     await updateDoc(documentRef, { players: updatedPlayers });
   };
 
+  const alertPlayerBusted = () => {
+
+  };
+
   // IF THIS PLAYER LEAVES: set the currentPlayer to next player
   return (
     <>
