@@ -47,6 +47,9 @@ function PlayerTurn({ documentRef, username, gameid }) {
     // updateDices();
   };
 
+  /**
+   * Takes in the values the player decides that the dices are
+   */
   const handleinputDices = () => {
     // updates the db inputDices
     // Theese dices is shown to the table
@@ -56,6 +59,9 @@ function PlayerTurn({ documentRef, username, gameid }) {
     // resetGame();
   };
 
+  /**
+   * Updates the next players turr, so the game continues
+   */
   const updateNextPlayer = async () => {
     // Sets current User to previous
     // sets next player to current
@@ -81,6 +87,9 @@ function PlayerTurn({ documentRef, username, gameid }) {
     });
   };
 
+  /**
+   * Resets the game so its ready for a new round
+   */
   const resetGame = async () => {
     const rawData = await getDoc(documentRef);
     const updatedPlayers = rawData.data().map(player => {
@@ -96,6 +105,9 @@ function PlayerTurn({ documentRef, username, gameid }) {
     await updateDoc(documentRef, { players: updatedPlayers });
   };
 
+  /**
+   * Alerts the player that has been busted.
+   */
   const alertPlayerBusted = () => {
     // Updates a players busted state, and shows them that they are busted and to all other players
     // Needs to edit db
