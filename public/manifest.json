@@ -8,13 +8,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "dices.jpeg",
-      "type": "image/jpeg",
+      "src": "dices.png",
+      "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "dices.jpeg",
-      "type": "image/jpeg",
+      "src": "dices.png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ],
