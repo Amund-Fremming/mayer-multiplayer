@@ -1,8 +1,14 @@
 import { updateDoc, getDoc } from 'firebase/firestore';
 import React from 'react'
 
+/**
+ * Handles all the users choices when its their turn
+ */
 function PlayerTurn({ documentRef, username, gameid }) {
 
+  /**
+   * Updates the dices to a player in the firestore database
+   */
   const updateDices = async (dice1, dice2) => {
     try {
       const rawData = await getDoc(documentRef);
@@ -20,6 +26,9 @@ function PlayerTurn({ documentRef, username, gameid }) {
     }
   };
 
+  /**
+   * Handles the logic if a player thinks the previous player has cheated.
+   */
   const handleBust = () => {
     // Find previous players dices
     // If they are the same as inputDices bust if false, else true
@@ -29,6 +38,9 @@ function PlayerTurn({ documentRef, username, gameid }) {
     // resetGame();
   };
 
+  /**
+   * Handles the throw dice mechanism
+   */
   const handleThrowDices = () => {
     // Play dice annimation
     // Show the dices to only the player that thrown the dices
@@ -86,6 +98,7 @@ function PlayerTurn({ documentRef, username, gameid }) {
 
   const alertPlayerBusted = () => {
     // Updates a players busted state, and shows them that they are busted and to all other players
+    // Needs to edit db
   };
 
   // IF THIS PLAYER LEAVES: set the currentPlayer to next player
