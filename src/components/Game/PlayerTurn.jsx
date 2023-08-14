@@ -85,7 +85,7 @@ function PlayerTurn({ documentRef, username, gameid }) {
   };
 
   const alertPlayerBusted = () => {
-
+    // Updates a players busted state, and shows them that they are busted and to all other players
   };
 
   // IF THIS PLAYER LEAVES: set the currentPlayer to next player
