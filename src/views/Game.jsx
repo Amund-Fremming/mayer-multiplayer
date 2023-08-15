@@ -8,6 +8,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
     
     const [players, setPlayers] = useState([]);
     const [playersTurn, setPlayersTurn] = useState(false);
+    const [game, setGame] = useState({});
 
     useEffect(() => {
         if(!documentRef) return;
@@ -24,6 +25,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
 
             setPlayersTurn(snapshot.data().currentPlayer === username);
             setPlayers(snapshot.data().players);
+            setGame(snapshot.data());
         });
     
         return () => unsubscribe();
@@ -62,7 +64,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                     {
                         !players ? "" :
                         players.map(player => (
-                            <p key={player.id}>{player.username} rolled dices: {player.dice1 > player.dice2 ? player.dice1 + "" + player.dice2 : player.dice2 + "" + player.dice1}</p>
+                            <p key={player.id}>{player.username} rolled dices: {player.inputDice1 > player.inputDice2 ? player.inputDice1 + "" + player.inputDice2 : player.inputDice2 + "" + player.inputDice1}</p>
                         ))
                     }
                 </div>
@@ -74,6 +76,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                         documentRef={documentRef}
                         username={username}
                         gameid={gameid}
+                        game={game}
                     />
                     : <WaitingTurn />
                 }

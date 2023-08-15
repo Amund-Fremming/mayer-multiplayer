@@ -1,10 +1,10 @@
-import { updateDoc, getDoc } from 'firebase/firestore';
-import React from 'react'
+import React, { useState } from 'react'
+import { updateDoc, getDoc, onSnapshot } from 'firebase/firestore';
 
 /**
  * Handles all the users choices when its their turn
  */
-function PlayerTurn({ documentRef, username, gameid }) {
+function PlayerTurn({ documentRef, username, gameid, game }) {
 
   /**
    * Updates the dices to a player in the firestore database
