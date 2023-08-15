@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { updateDoc, getDoc, onSnapshot } from 'firebase/firestore';
+import { updateDoc, getDoc, runTransaction } from 'firebase/firestore';
 
 /**
  * Handles all the users choices when its their turn
@@ -20,7 +20,6 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
         return player;
       });
 
-
       await updateDoc(documentRef, { players: updatedPlayers });
     } catch(err) {
       console.log("Error: " + err.message);
@@ -31,15 +30,9 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
    * Handles the logic if a player thinks the previous player has cheated.
    */
   const handleBust = () => {
-    // return if the bust was correct or not
-    // if bust was correct or false the gameResets
-    // The same player plays the next turn.
-    // resetGame();
     const previousPlayer = game.previousPlayer;
-    const currentPlayer = game.currentPlayer;
 
     if(previousPlayer.inputDice1 !== previousPlayer.dice1 && previousPlayer.inputDice2 !== previousPlayer.dice2) {
-      isBustTrue = true;
       console.log("Previous player got BUSTED!");
       // kanskje si ifra at en spiller prøvde å buste noen
       // alertPlayerBusted();
@@ -62,13 +55,16 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
   /**
    * Takes in the values the player decides that the dices are
    */
-  const handleinputDices = () => {
+  const handleinputDices = (inputDice1, inputDice2) => {
     // updates the db inputDices
     // Theese dices is shown to the table
     // if theese dices are lower than the dices before, you loose, if not the game continues.
     // If a person looses the game resets all values and nextPerson starts
     // updateNextPlayer();
     // resetGame();
+    const updateInputDices = async (transaction) => {
+
+    }
   };
 
   /**
