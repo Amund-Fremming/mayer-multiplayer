@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { updateDoc, getDoc, runTransaction } from 'firebase/firestore';
+import React from 'react'
+import { updateDoc } from 'firebase/firestore';
 
 /**
  * Handles all the users choices when its their turn
