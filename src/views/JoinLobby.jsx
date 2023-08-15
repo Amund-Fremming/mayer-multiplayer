@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { runTransaction, onSnapshot } from 'firebase/firestore';
 import { db } from "../config/firebase";
+import { handleLeaveGame } from "../util/databaseFunctions";
 
 /**
  * Component for players to join a game lobby. Listens for game state changes in the database and reacts accordingly.
@@ -34,28 +35,6 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
     /**
      * Removes the player from the game's player list and navigates to the landing page.
      */
-    const handleLeaveGame = async () => {
-        try {
-            await runTransaction(db, async (transaction) => {
-                const docSnapshot = await transaction.get(documentRef);
-    
-                if (!docSnapshot.exists()) {
-                    throw new Error("Document does not exist!");
-                }
-    
-                const currentPlayers = docSnapshot.data().players;
-                const updatedPlayers = currentPlayers.filter(player => player.username !== username);
-    
-                transaction.update(documentRef, { players: updatedPlayers });
-            });
-    
-            console.log(username + " left the game");
-        } catch (err) {
-            console.error("Error: " + err.message);
-        }
-    
-        resetGameState();
-    };    
 
     return(
         <>
@@ -66,7 +45,7 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                 <h2>Waiting for Host ...</h2>
                 <button
                     className='p-1 bg-gray-200 m-1'
-                    onClick={handleLeaveGame}
+                    onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
                 >
                     Leave
                 </button>      

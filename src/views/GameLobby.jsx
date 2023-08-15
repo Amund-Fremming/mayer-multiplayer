@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getDoc, onSnapshot, runTransaction, updateDoc } from 'firebase/firestore';
+import { onSnapshot, runTransaction, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { handleLeaveGame } from "../util/databaseFunctions";
 
 /**
  * GameLobby: Renders when the host starts the game with a "Waiting" state.
@@ -80,33 +81,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
         } catch(err) {
             console.log("Error: " + err.message);
         }
-    };
-
-    /**
-     * Handles player ready state, updating DB via transaction.
-     */
-    const handleLeaveGame = async () => {
-        try {
-            await runTransaction(db, async (transaction) => {
-                const docSnapshot = await transaction.get(documentRef);
-    
-                if (!docSnapshot.exists()) {
-                    throw new Error("Document does not exist!");
-                }
-    
-                const currentPlayers = docSnapshot.data().players;
-                const updatedPlayers = currentPlayers.filter(player => player.username !== username);
-    
-                transaction.update(documentRef, { players: updatedPlayers });
-            });
-    
-            console.log(username + " left the game");
-        } catch (err) {
-            console.error("Error: " + err.message);
-        }
-    
-        resetGameState();
-    };    
+    };  
 
     return(
         <>
@@ -124,7 +99,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
                 <div className="flex">
                     <button
                         className='p-1 bg-gray-200 m-1'
-                        onClick={handleLeaveGame}
+                        onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
                     >
                         Leave
                     </button>  

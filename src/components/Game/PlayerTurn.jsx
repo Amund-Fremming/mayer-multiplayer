@@ -155,8 +155,6 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
     // Needs to edit db
   };
 
-  // FIKKKKKSSSSS!!!!!
-  // IF THIS PLAYER LEAVES: set the currentPlayer to next player
   return (
     <>
       <div className='flex justify-center items-center'>

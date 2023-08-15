@@ -9,6 +9,8 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
     const [players, setPlayers] = useState([]);
     const [playersTurn, setPlayersTurn] = useState(false);
     const [game, setGame] = useState({});
+    const [dice1, setDice1] = useState("");
+    const [dice2, setDice2] = useState("");
 
     useEffect(() => {
         if(!documentRef) return;
@@ -69,6 +71,10 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                         ))
                     }
                 </div>
+
+                {/* Dices */}
+                <p>Dice1: {dice1}</p>
+                <p>Dice2: {dice2}</p>
                 
                 {/* Game logic */}
                 {
