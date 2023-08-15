@@ -16,8 +16,15 @@ const HostGame = ({ resetGameState, gameid, setGameid, username, setUsername, se
         try {
             const newGameRef = await addDoc(collectionRef, {
                 gameid: gameid,
-                currentPlayer: "",
-                previousPlayer: "",
+                currentPlayer: {
+                    username: username,
+                    ready: true,
+                    dice1: 0,
+                    dice2: 0,
+                    inputDice1: 0,
+                    inputDice2: 0,
+                },
+                previousPlayer: {},
                 players: [
                     {
                         username: username,

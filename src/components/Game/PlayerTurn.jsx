@@ -36,6 +36,9 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
     // if bust was correct or false the gameResets
     // The same player plays the next turn.
     // resetGame();
+    const players = game.players;
+    const previousPlayer = game.players;
+    
   };
 
   /**
