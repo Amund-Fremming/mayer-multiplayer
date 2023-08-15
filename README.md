@@ -16,7 +16,7 @@
 - Hvis spilleren som har tur blir borte eller forlater, må neste spileller oppdateres og han må fjernes fra spillet.
 - timer når det er din tur, hvis du bruker for lang tid så blir du skippa, 3 skips blir du kasta ut.
 
-- Style spillet
+- Style spillet 
 
 <br/><br/>
 
