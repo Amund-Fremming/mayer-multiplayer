@@ -44,6 +44,8 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
                         ready: false,
                         dice1: 0,
                         dice2: 0,
+                        inputDice1: 0,
+                        inputDice2: 0,
                     });
                     transaction.update(documentRef, { players: players });
                 };
