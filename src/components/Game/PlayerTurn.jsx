@@ -11,8 +11,7 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
    */
   const updateDices = async (dice1, dice2) => {
     try {
-      const rawData = await getDoc(documentRef);
-      const updatedPlayers = rawData.data().players.map(player => {
+      const updatedPlayers = game.players.map(player => {
         if(player.username === username) {
           // Mulig enne oppdaterer feil
           return { ...player, dice1, dice2 };
@@ -47,23 +46,42 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
    * Handles the throw dice mechanism
    */
   const handleThrowDices = () => {
+    resetGame();
     // Play dice annimation
     // Show the dices to only the player that thrown the dices
-    // updateDices();
+    // updateDices(dice1, dice2);
   };
 
   /**
    * Takes in the values the player decides that the dices are
    */
-  const handleinputDices = (inputDice1, inputDice2) => {
-    // updates the db inputDices
-    // Theese dices is shown to the table
-    // if theese dices are lower than the dices before, you loose, if not the game continues.
-    // If a person looses the game resets all values and nextPerson starts
-    // updateNextPlayer();
-    // resetGame();
-    const updateInputDices = async (transaction) => {
+  const handleinputDices = async (inputDice1, inputDice2) => {
+    // Dont need a transaction, only one player can update this at a time
+    try {
+      const updatedCurrentPlayer = {
+        ...game.currentPlayer,
+        inputDice1: inputDice1,
+        inputDice2: inputDice2,
+      }
 
+      const updatedPlayers = game.players.map(player => {
+        if(player.username === username) {
+          return {
+            ...player,
+            inputDice1: inputDice1,
+            inputDice2: inputDice2,
+          }
+        }
+        return player;
+      });
+
+      await updateDoc(documentRef, {
+        currentPlayer: updatedCurrentPlayer,
+        players: updatedPlayers,
+      });
+
+    } catch(err) {
+      console.log("Error: " + err.message);
     }
   };
 
@@ -71,10 +89,7 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
    * Updates the next players turr, so the game continues
    */
   const updateNextPlayer = async () => {
-    // Sets current User to previous
-    // sets next player to current
-    const rawData = await getDoc(documentRef);
-    const players = rawData.data().players;
+    const players = game.players;
     const previousPlayerIndex = players.findIndex(player => player.username === username);
 
     const previousPlayer = players[previousPlayerIndex];
@@ -99,8 +114,7 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
    * Resets the game so its ready for a new round
    */
   const resetGame = async () => {
-    const rawData = await getDoc(documentRef);
-    const updatedPlayers = rawData.data().map(player => {
+    const updatedPlayers = game.players.map(player => {
       return {
         ...player,
         dice1: 0,
@@ -110,7 +124,27 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
       }
     });
 
-    await updateDoc(documentRef, { players: updatedPlayers });
+    const updatedCurrentPlayer = {
+      ...game.currentPlayer,
+      dice1: 0,
+      dice2: 0,
+      inputDice1: 0,
+      inputDice2: 0,
+    };
+
+    const updatedPreviousPlayer = {
+      ...game.previousPlayer,
+      dice1: 0,
+      dice2: 0,
+      inputDice1: 0,
+      inputDice2: 0,
+    };
+
+    await updateDoc(documentRef, {
+      currentPlayer: updatedCurrentPlayer,
+      players: updatedPlayers,
+      previousPlayer: updatedPreviousPlayer
+    });
   };
 
   /**

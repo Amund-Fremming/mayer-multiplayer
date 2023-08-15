@@ -23,9 +23,10 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                 return;
             }
 
-            setPlayersTurn(snapshot.data().currentPlayer === username);
+            setPlayersTurn(snapshot.data().currentPlayer.username === username);
             setPlayers(snapshot.data().players);
             setGame(snapshot.data());
+
         });
     
         return () => unsubscribe();
