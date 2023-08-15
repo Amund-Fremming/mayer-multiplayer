@@ -2,22 +2,18 @@
 - Lage popup hvordan man legger til appen på hjemskjerm og at det er bedre der.
 - bildeopplastning ved username
 - ikke bruke alert men vise feilen penere på siden
-- Er en spiller inaktiv for lenge må spilleren sparkes ut av spillet
 - Kunne sende link via snapchat,messenger eller meldinger til ett spill
 
 ### Neste
 - Hvis begge terninger viser 0 skal ingen verdi vises eller ikke kastet.
 - Lage tutorial komponent, video eller how to?
-- Lage component for PlayersTurn og WaitingTurn
-- onSnapshot på currentPlayer
-- Vise PlayersTurn når currentPlayer er ditt brukernavn
+- Fullføre waitingturn turn og playerturn
 
-- Når din tur kan man velge å buste, eller kaste terning
-- Når du har kasta kan du skrive inn hvor mye du fikk selv, eller lyve
-- Spillet oppdaterer valget ditt og det går til neste person
+- Ordne så spille kan velge om å lyve / bust / spille ærlig
 
 - Finn måte å avslutte spillet
-- timer når det er din tur, hvis ud bruker for lang tid så blir du skippa, 3 skips blir du kasta ut.
+- Hvis spilleren som har tur blir borte eller forlater, må neste spileller oppdateres og han må fjernes fra spillet.
+- timer når det er din tur, hvis du bruker for lang tid så blir du skippa, 3 skips blir du kasta ut.
 
 - Style spillet
 
@@ -32,6 +28,7 @@
 
 ### Hva har jeg lært
 - Hvordan man mounter/unmounter funksjoner og begrenser reads for å ikke få ekstremt mange kall til databasen der man ønsker real-time oppdateringer.
+- Lært litt om å debouce funksjoner
 - Fikse data consistency med firebase der man har race conditions
 - Håndtere flere brukere som interakter med hverandre samtidig real-time
 - Håndtering av lyttere, og hvordan disse kan skape problemer om de ikke blir unmounted.
