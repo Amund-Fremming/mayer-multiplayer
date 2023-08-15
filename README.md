@@ -3,6 +3,7 @@
 - bildeopplastning ved username
 - ikke bruke alert men vise feilen penere på siden
 - Kunne sende link via snapchat,messenger eller meldinger til ett spill
+- Endre fra create-react-app til next?
 
 ### Neste
 - Hvis begge terninger viser 0 skal ingen verdi vises eller ikke kastet.
