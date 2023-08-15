@@ -14,6 +14,7 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
       const rawData = await getDoc(documentRef);
       const updatedPlayers = rawData.data().players.map(player => {
         if(player.username === username) {
+          // Mulig enne oppdaterer feil
           return { ...player, dice1, dice2 };
         }
         return player;
@@ -30,15 +31,23 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
    * Handles the logic if a player thinks the previous player has cheated.
    */
   const handleBust = () => {
-    // Find previous players dices
-    // If they are the same as inputDices bust if false, else true
     // return if the bust was correct or not
     // if bust was correct or false the gameResets
     // The same player plays the next turn.
     // resetGame();
-    const players = game.players;
-    const previousPlayer = game.players;
+    const previousPlayer = game.previousPlayer;
+    const currentPlayer = game.currentPlayer;
+
+    if(previousPlayer.inputDice1 !== previousPlayer.dice1 && previousPlayer.inputDice2 !== previousPlayer.dice2) {
+      isBustTrue = true;
+      console.log("Previous player got BUSTED!");
+      // kanskje si ifra at en spiller prøvde å buste noen
+      // alertPlayerBusted();
+    } else {
+      console.log(`The BUST was false, player ${username} lost!`);
+    }
     
+    resetGame();
   };
 
   /**
@@ -116,6 +125,7 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
     // Needs to edit db
   };
 
+  // FIKKKKKSSSSS!!!!!
   // IF THIS PLAYER LEAVES: set the currentPlayer to next player
   return (
     <>
