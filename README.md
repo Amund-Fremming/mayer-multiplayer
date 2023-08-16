@@ -6,6 +6,7 @@
 - Endre fra create-react-app til next?
 
 ### Neste
+- Gjøre metodene i playerturn som transaksjoner, de oppdaterer dat feil i databasen. 
 - Hvis begge terninger viser 0 skal ingen verdi vises eller ikke kastet.
 - Lage tutorial komponent, video eller how to?
 - Fullføre waitingturn turn og playerturn

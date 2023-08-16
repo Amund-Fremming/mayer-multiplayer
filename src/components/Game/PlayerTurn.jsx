@@ -4,7 +4,7 @@ import { updateDoc } from 'firebase/firestore';
 /**
  * Handles all the users choices when its their turn
  */
-function PlayerTurn({ documentRef, username, game, setDice1, setDice2, inputDice1, setInputDice1, inputDice2, setInputDice2 }) {
+function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDice2, inputDice1, setInputDice1, inputDice2, setInputDice2 }) {
 
   const [thrownDices, setThrownDices] = useState(false);
   const [tryBust, setTryBust] = useState(false);
@@ -12,12 +12,15 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2, inputDice
   /**
    * Updates the dices to a player in the firestore database
    */
-  const updateDices = async (dice1, dice2) => {
+  const updateDices = async (dice1local, dice2local) => {
     try {
       const updatedPlayers = game.players.map(player => {
         if(player.username === username) {
-          // Mulig enne oppdaterer feil
-          return { ...player, dice1, dice2 };
+          return {
+            ...player,
+            dice1: dice1local,
+            dice2: dice2local,
+          }
         }
         return player;
       });
@@ -34,6 +37,11 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2, inputDice
   const handleBust = () => {
     const previousPlayer = game.previousPlayer;
 
+    console.log("inputdice1 " + previousPlayer.inputDice1);
+    console.log("dice1 " + previousPlayer.dice1);
+    console.log("inputdice2 " + previousPlayer.inputDice2);
+    console.log("dice2 " + previousPlayer.dice2);
+
     if(previousPlayer.inputDice1 !== previousPlayer.dice1 && previousPlayer.inputDice2 !== previousPlayer.dice2) {
       console.log("Previous player got BUSTED!");
       // kanskje si ifra at en spiller prøvde å buste noen
@@ -42,7 +50,7 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2, inputDice
       console.log(`The BUST was false, player ${username} lost!`);
     }
     
-    resetGame();
+    // resetGame();
   };
 
   /**
@@ -50,11 +58,12 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2, inputDice
    */
   const handleThrowDices = () => {
     // Play dice annimation
-    const dice1Result = Math.floor(Math.random() * 6) + 1;
-    const dice2Result = Math.floor(Math.random() * 6) + 1;
-    setDice1(dice1Result);
-    setDice2(dice2Result);
-    updateDices(dice1Result, dice2Result);
+    const dice1Local = Math.floor(Math.random() * 6) + 1;
+    const dice2Local = Math.floor(Math.random() * 6) + 1;
+    setDice1(dice1Local);
+    setDice2(dice2Local);
+    updateDices(dice1Local, dice2Local);
+
     // Show lie or play dices to go futher in game logic
     setThrownDices(true);
   };
@@ -67,6 +76,8 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2, inputDice
     try {
       const updatedCurrentPlayer = {
         ...game.currentPlayer,
+        dice1: dice1,
+        dice2: dice2,
         inputDice1: inputDice1,
         inputDice2: inputDice2,
       }
@@ -75,6 +86,8 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2, inputDice
         if(player.username === username) {
           return {
             ...player,
+            dice1: dice1,
+            dice2: dice2, 
             inputDice1: inputDice1,
             inputDice2: inputDice2,
           }
