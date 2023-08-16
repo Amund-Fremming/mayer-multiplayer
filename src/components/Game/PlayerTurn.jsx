@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { updateDoc } from 'firebase/firestore';
 
 /**
  * Handles all the users choices when its their turn
  */
-function PlayerTurn({ documentRef, username, game, setDice1, setDice2 }) {
+function PlayerTurn({ documentRef, username, game, setDice1, setDice2, inputDice1, setInputDice1, inputDice2, setInputDice2 }) {
+
+  const [thrownDices, setThrownDices] = useState(false);
+  const [tryBust, setTryBust] = useState(false);
 
   /**
    * Updates the dices to a player in the firestore database
@@ -53,6 +56,7 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2 }) {
     setDice2(dice2Result);
     updateDices(dice1Result, dice2Result);
     // Show lie or play dices to go futher in game logic
+    setThrownDices(true);
   };
 
   /**
@@ -83,6 +87,7 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2 }) {
         players: updatedPlayers,
       });
 
+      updateNextPlayer();
     } catch(err) {
       console.log("Error: " + err.message);
     }
@@ -160,8 +165,8 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2 }) {
     // Needs to edit db
   };
 
-  return (
-    <>
+  if(!thrownDices && !tryBust) {
+    return (
       <div className='flex justify-center items-center'>
         <button
           className='m-2 p-1 bg-gray-200'
@@ -176,8 +181,40 @@ function PlayerTurn({ documentRef, username, game, setDice1, setDice2 }) {
           Throw dice
         </button>
       </div>
-    </>
-  )
+    )
+  } else if(thrownDices) {
+    return(
+      <div className='flex flex-col justify-center items-center'>
+        <input 
+          type="number"
+          className="p-1 m-1 bg-gray-200 w-12"
+          onChange={e => setInputDice1(e.target.value)}
+          placeholder='Dice 1'
+          min={1} max={6}
+        />
+        <input 
+          type="number"
+          className="p-1 m-1 bg-gray-200 w-12"
+          placeholder='Dice 2'
+          onChange={e => setInputDice2(e.target.value)}
+          min={1} max={6}
+        />
+        <button
+          className='m-2 p-1 bg-gray-200'
+          onClick={() => handleinputDices(inputDice1, inputDice2)}
+        >
+          Play dices
+        </button>
+      </div>
+    );
+  } else if(tryBust) {
+    return(
+      <div className='flex justify-center items-center'>
+
+      </div>
+    );
+  }
 };
 
 export default PlayerTurn
+
