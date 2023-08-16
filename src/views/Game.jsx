@@ -67,7 +67,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                     {
                         !players ? "" :
                         players.map(player => (
-                            <p key={player.id}>{player.username} rolled dices: {player.inputDice1 > player.inputDice2 ? player.inputDice1 + "" + player.inputDice2 : player.inputDice2 + "" + player.inputDice1}</p>
+                            <p key={player.username}>{player.username} rolled dices: {player.inputDice1 > player.inputDice2 ? player.inputDice1 + "" + player.inputDice2 : player.inputDice2 + "" + player.inputDice1}</p>
                         ))
                     }
                 </div>

@@ -57,7 +57,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                     {
                         !players ? "" :
                         players.map(player => (
-                            <p key={player.id}>{player.username}</p>
+                            <p key={player.username}>{player.username}</p>
                         ))
                     }
                 </div>

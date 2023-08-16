@@ -92,7 +92,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
                 <div className="w-[20%] flex flex-wrap">
                     {
                         players.map(player => (
-                            <p key={player.id} className={player.ready ? "text-green-500 m-1" : "text-red-500 m-1"}>{player.username}</p>
+                            <p key={player.username} className={player.ready ? "text-green-500 m-1" : "text-red-500 m-1"}>{player.username}</p>
                         ))
                     }
                 </div>
