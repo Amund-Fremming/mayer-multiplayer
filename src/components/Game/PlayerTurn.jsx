@@ -4,7 +4,7 @@ import { updateDoc } from 'firebase/firestore';
 /**
  * Handles all the users choices when its their turn
  */
-function PlayerTurn({ documentRef, username, gameid, game }) {
+function PlayerTurn({ documentRef, username, game, setDice1, setDice2 }) {
 
   /**
    * Updates the dices to a player in the firestore database
@@ -46,10 +46,13 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
    * Handles the throw dice mechanism
    */
   const handleThrowDices = () => {
-    resetGame();
     // Play dice annimation
-    // Show the dices to only the player that thrown the dices
-    // updateDices(dice1, dice2);
+    const dice1Result = Math.floor(Math.random() * 6) + 1;
+    const dice2Result = Math.floor(Math.random() * 6) + 1;
+    setDice1(dice1Result);
+    setDice2(dice2Result);
+    updateDices(dice1Result, dice2Result);
+    // Show lie or play dices to go futher in game logic
   };
 
   /**
@@ -104,6 +107,8 @@ function PlayerTurn({ documentRef, username, gameid, game }) {
       currentPlayer = players[(previousPlayerIndex + 1)];
     }
 
+    setDice1(0);
+    setDice2(0);
     await updateDoc(documentRef, {
       currentPlayer: currentPlayer,
       previousPlayer: previousPlayer,

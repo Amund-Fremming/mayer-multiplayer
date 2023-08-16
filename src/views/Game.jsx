@@ -82,8 +82,9 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                     ? <PlayerTurn 
                         documentRef={documentRef}
                         username={username}
-                        gameid={gameid}
                         game={game}
+                        setDice1={setDice1}
+                        setDice2={setDice2}
                     />
                     : <WaitingTurn />
                 }
