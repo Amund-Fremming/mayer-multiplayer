@@ -15,6 +15,10 @@
 - Finn måte å avslutte spillet
 - Hvis spilleren som har tur blir borte eller forlater, må neste spileller oppdateres og han må fjernes fra spillet.
 - timer når det er din tur, hvis du bruker for lang tid så blir du skippa, 3 skips blir du kasta ut.
+
+- Lage design i figma
+- Kjøre A/B testing på design
+- beta testing med noen få brukere
  
 <br/><br/>
 
