@@ -28,7 +28,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
     } else {
       console.log(`The BUST was false, player ${username} lost!`);
       setBustSuccess(false);
-    }
+    } 
     
     // resetGame();
   };
