@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Transaction, updateDoc } from 'firebase/firestore';
+import { Transaction, runTransaction, updateDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 /**
  * Handles all the users choices when its their turn
@@ -8,28 +9,6 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
 
   const [thrownDices, setThrownDices] = useState(false);
   const [tryBust, setTryBust] = useState(false);
-
-  /**
-   * Updates the dices to a player in the firestore database
-   */
-  /*const updateDices = async (dice1local, dice2local) => {
-    try {
-      const updatedPlayers = game.players.map(player => {
-        if(player.username === username) {
-          return {
-            ...player,
-            dice1: dice1local,
-            dice2: dice2local,
-          }
-        }
-        return player;
-      });
-
-      await updateDoc(documentRef, { players: updatedPlayers });
-    } catch(err) {
-      console.log("Error: " + err.message);
-    }
-  };*/
 
   /**
    * Handles the logic if a player thinks the previous player has cheated.
@@ -111,32 +90,42 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
   /**
    * Updates the next players turr, so the game continues
    */
-  const updateNextPlayer = async () => {
-    const players = game.players;
-    const previousPlayerIndex = players.findIndex(player => player.username === username);
+  const updateNextPlayer = async () => {  
+    try {
+      const updateTransaction = async (transaction) => {
+        const docSnapshot = await transaction.get(documentRef);
+        if(!docSnapshot.exists) {
+          throw new Error("Document does not exist!");
+        }
 
-     const updateTransaction = async (transaction) => {
-      const docSnapshot = await transaction.get(documentRef);
-     };
+        const players = game.players;
+        const previousPlayerIndex = players.findIndex(player => player.username === username);
 
-    const previousPlayer = players[previousPlayerIndex];
-    let currentPlayer;
+        const previousPlayer = players[previousPlayerIndex];
+        let currentPlayer;
 
-    if(previousPlayerIndex === -1) {
-      alert("player no longer exists");
-      return;
-    } else if(previousPlayerIndex === (players.length - 1)) {
-      currentPlayer = players[0];
-    } else {
-      currentPlayer = players[(previousPlayerIndex + 1)];
+        if(previousPlayerIndex === -1) {
+          alert("player no longer exists");
+          return;
+        } else if(previousPlayerIndex === (players.length - 1)) {
+          currentPlayer = players[0];
+        } else {
+          currentPlayer = players[(previousPlayerIndex + 1)];
+        }
+
+        transaction.update(documentRef, {
+          currentPlayer: currentPlayer,
+          previousPlayer: previousPlayer,
+        });
+      };
+
+      setDice1(0);
+      setDice2(0);
+      console.log("Updated next player");
+      await runTransaction(db, updateTransaction);
+    } catch (err) {
+      console.log(err.message);
     }
-
-    setDice1(0);
-    setDice2(0);
-    await updateDoc(documentRef, {
-      currentPlayer: currentPlayer,
-      previousPlayer: previousPlayer,
-    });
   };
 
   /**
