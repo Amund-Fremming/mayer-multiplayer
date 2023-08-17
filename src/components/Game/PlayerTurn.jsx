@@ -33,7 +33,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
     // resetGame();
   };
 
-  /**
+  /** 
    * Handles the throw dice mechanism
    */
   const handleThrowDices = () => {
