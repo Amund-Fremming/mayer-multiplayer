@@ -6,9 +6,8 @@
 - Endre fra create-react-app til next?
 
 ### Neste
-- Gjøre metodene i playerturn som transaksjoner, de oppdaterer dat feil i databasen. 
 - Hvis begge terninger viser 0 skal ingen verdi vises eller ikke kastet.
-- Lage tutorial komponent, video eller how to?
+- Lage tutorial komponent, avsnitt med grafisk figur (kvist)
 - Fullføre waitingturn turn og playerturn
 
 - Ordne så spille kan velge om å lyve / bust / spille ærlig
@@ -16,8 +15,6 @@
 - Finn måte å avslutte spillet
 - Hvis spilleren som har tur blir borte eller forlater, må neste spileller oppdateres og han må fjernes fra spillet.
 - timer når det er din tur, hvis du bruker for lang tid så blir du skippa, 3 skips blir du kasta ut.
-
-- Style spillet 
  
 <br/><br/>
 
