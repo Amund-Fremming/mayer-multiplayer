@@ -9,24 +9,25 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
 
   const [thrownDices, setThrownDices] = useState(false);
   const [tryBust, setTryBust] = useState(false);
+  const [bustSuccess, setBustSuccess] = useState(false);
 
   /**
    * Handles the logic if a player thinks the previous player has cheated.
    */
   const handleBust = () => {
     const previousPlayer = game.previousPlayer;
+    setTryBust(true);
 
-    console.log("inputdice1 " + previousPlayer.inputDice1);
-    console.log("dice1 " + previousPlayer.dice1);
-    console.log("inputdice2 " + previousPlayer.inputDice2);
-    console.log("dice2 " + previousPlayer.dice2);
+    console.log("PREV P :" + previousPlayer.dice1 + " " + previousPlayer.inputDice1);
+    console.log("PREV P :" + previousPlayer.dice2 + " " + previousPlayer.inputDice2);
 
-    if(previousPlayer.inputDice1 !== previousPlayer.dice1 && previousPlayer.inputDice2 !== previousPlayer.dice2) {
+    if(previousPlayer.inputDice1+"" !== previousPlayer.dice1+"" && previousPlayer.inputDice2+"" !== previousPlayer.dice2+"") {
       console.log("Previous player got BUSTED!");
-      // kanskje si ifra at en spiller prøvde å buste noen
-      // alertPlayerBusted();
+      setBustSuccess(true);
+      alertPlayerBusted();
     } else {
       console.log(`The BUST was false, player ${username} lost!`);
+      setBustSuccess(false);
     }
     
     // resetGame();
@@ -50,47 +51,45 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
   };
 
   /**
-   * Takes in the values the player decides that the dices are
+   * Takes in the values the player decides that the dices are, we set the previousplayer dice values to the current player here, because the next turn the currentplayer becomes the previous. 
    */
   const updateAllDices = async () => {
-    // Dont need a transaction, only one player can update this at a time
     try {
-      const updatedCurrentPlayer = {
-        ...game.currentPlayer,
-        dice1: dice1,
-        dice2: dice2,
-        inputDice1: inputDice1,
-        inputDice2: inputDice2,
-      }
-
-      const updatedPlayers = game.players.map(player => {
-        if(player.username === username) {
-          return {
-            ...player,
-            dice1: dice1,
-            dice2: dice2, 
-            inputDice1: inputDice1,
-            inputDice2: inputDice2,
-          }
-        }
-        return player;
-      });
-
       const updateDiceTransaction = async (transaction) => {
         const docSnapshot = await transaction.get(documentRef);
         if(!docSnapshot.exists) {
           throw new Error("Document does not exist!");
         }
 
+        const updatedCurrentPlayer = {
+          ...game.currentPlayer,
+          dice1: dice1,
+          dice2: dice2,
+          inputDice1: inputDice1,
+          inputDice2: inputDice2,
+        }
+  
+        const updatedPlayers = game.players.map(player => {
+          if(player.username === username) {
+            return {
+              ...player,
+              dice1: dice1,
+              dice2: dice2, 
+              inputDice1: inputDice1,
+              inputDice2: inputDice2,
+            }
+          }
+          return player;
+        });
+
         transaction.update(documentRef, {
           currentPlayer: updatedCurrentPlayer,
           players: updatedPlayers,
+          previousPlayer: updatedCurrentPlayer
         });
       };  
 
-      await runTransaction(db, updateDiceTransaction);
-
-      updateNextPlayer();
+      await runTransaction(db, updateDiceTransaction).then(async() => await updateNextPlayer());
     } catch(err) {
       console.log("Error: " + err.message);
     }
@@ -107,25 +106,19 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
           throw new Error("Document does not exist!");
         }
 
-        const players = game.players;
-        const previousPlayerIndex = players.findIndex(player => player.username === username);
-
-        const previousPlayer = players[previousPlayerIndex];
+        const previousPlayerIndex = game.players.findIndex(player => player.username === username);
         let currentPlayer;
 
         if(previousPlayerIndex === -1) {
           alert("player no longer exists");
           return;
-        } else if(previousPlayerIndex === (players.length - 1)) {
-          currentPlayer = players[0];
+        } else if(previousPlayerIndex === (game.players.length - 1)) {
+          currentPlayer = game.players[0];
         } else {
-          currentPlayer = players[(previousPlayerIndex + 1)];
+          currentPlayer = game.players[(previousPlayerIndex + 1)];
         }
 
-        transaction.update(documentRef, {
-          currentPlayer: currentPlayer,
-          previousPlayer: previousPlayer,
-        });
+        transaction.update(documentRef, { currentPlayer: currentPlayer });
       };
 
       setDice1(0);
@@ -182,26 +175,34 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
     // Needs to edit db
   };
 
-  if(!thrownDices && !tryBust) {
+  if(!thrownDices) {
     return (
-      <div className='flex justify-center items-center'>
-        <button
-          className='m-2 p-1 bg-gray-200'
-          onClick={handleBust}
-        >
-          Bust
-        </button>
-        <button
-          className='m-2 p-1 bg-gray-200'
-          onClick={handleThrowDices}
-        >
-          Throw dice
-        </button>
+      <div className='flex flex-col justify-center items-center'>
+
+        { tryBust ? <p>The bust was {bustSuccess ? "true" : "false"}</p> : <></> }
+
+        <div>
+          <button
+            className='m-2 p-1 bg-gray-200'
+            onClick={handleBust}
+          >
+            Bust
+          </button>
+          <button
+            className='m-2 p-1 bg-gray-200'
+            onClick={handleThrowDices}
+          >
+            Throw dice
+          </button>
+        </div>
       </div>
     )
   } else if(thrownDices) {
     return(
       <div className='flex flex-col justify-center items-center'>
+        {/* Dices */}
+        <p>Dice1: {dice1}</p>
+        <p>Dice2: {dice2}</p>
         <input 
           type="number"
           className="p-1 m-1 bg-gray-200 w-12"
@@ -224,13 +225,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
         </button>
       </div>
     );
-  } else if(tryBust) {
-    return(
-      <div className='flex justify-center items-center'>
-
-      </div>
-    );
-  }
+  };
 };
 
 export default PlayerTurn

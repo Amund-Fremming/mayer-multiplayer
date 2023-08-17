@@ -73,10 +73,6 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                         ))
                     }
                 </div>
-
-                {/* Dices */}
-                <p>Dice1: {dice1}</p>
-                <p>Dice2: {dice2}</p>
                 
                 {/* Game logic */}
                 {
