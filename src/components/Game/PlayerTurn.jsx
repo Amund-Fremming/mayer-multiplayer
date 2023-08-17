@@ -12,7 +12,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
   /**
    * Updates the dices to a player in the firestore database
    */
-  const updateDices = async (dice1local, dice2local) => {
+  /*const updateDices = async (dice1local, dice2local) => {
     try {
       const updatedPlayers = game.players.map(player => {
         if(player.username === username) {
@@ -29,7 +29,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
     } catch(err) {
       console.log("Error: " + err.message);
     }
-  };
+  };*/
 
   /**
    * Handles the logic if a player thinks the previous player has cheated.
@@ -62,16 +62,18 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
     const dice2Local = Math.floor(Math.random() * 6) + 1;
     setDice1(dice1Local);
     setDice2(dice2Local);
-    updateDices(dice1Local, dice2Local);
-
     // Show lie or play dices to go futher in game logic
     setThrownDices(true);
+  };
+
+  const handleSubmitDices = () => {
+    updateAllDices();
   };
 
   /**
    * Takes in the values the player decides that the dices are
    */
-  const handleinputDices = async (inputDice1, inputDice2) => {
+  const updateAllDices = async () => {
     // Dont need a transaction, only one player can update this at a time
     try {
       const updatedCurrentPlayer = {
@@ -214,7 +216,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
         />
         <button
           className='m-2 p-1 bg-gray-200'
-          onClick={() => handleinputDices(inputDice1, inputDice2)}
+          onClick={handleSubmitDices}
         >
           Play dices
         </button>

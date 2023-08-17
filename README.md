@@ -18,7 +18,7 @@
 - timer når det er din tur, hvis du bruker for lang tid så blir du skippa, 3 skips blir du kasta ut.
 
 - Style spillet 
- 
+
 <br/><br/>
 
 
