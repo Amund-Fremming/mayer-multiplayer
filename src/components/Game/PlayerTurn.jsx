@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { updateDoc } from 'firebase/firestore';
+import { Transaction, updateDoc } from 'firebase/firestore';
 
 /**
  * Handles all the users choices when its their turn
@@ -114,6 +114,10 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
   const updateNextPlayer = async () => {
     const players = game.players;
     const previousPlayerIndex = players.findIndex(player => player.username === username);
+
+     const updateTransaction = async (transaction) => {
+      const docSnapshot = await transaction.get(documentRef);
+     };
 
     const previousPlayer = players[previousPlayerIndex];
     let currentPlayer;
