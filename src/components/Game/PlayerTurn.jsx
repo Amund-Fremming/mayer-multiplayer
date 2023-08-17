@@ -76,10 +76,19 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
         return player;
       });
 
-      await updateDoc(documentRef, {
-        currentPlayer: updatedCurrentPlayer,
-        players: updatedPlayers,
-      });
+      const updateDiceTransaction = async (transaction) => {
+        const docSnapshot = await transaction.get(documentRef);
+        if(!docSnapshot.exists) {
+          throw new Error("Document does not exist!");
+        }
+
+        transaction.update(documentRef, {
+          currentPlayer: updatedCurrentPlayer,
+          players: updatedPlayers,
+        });
+      };  
+
+      await runTransaction(db, updateDiceTransaction);
 
       updateNextPlayer();
     } catch(err) {
