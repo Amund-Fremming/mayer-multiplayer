@@ -10,7 +10,11 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
   const [thrownDices, setThrownDices] = useState(false);
   const [tryBust, setTryBust] = useState(false);
   const [bustSuccess, setBustSuccess] = useState(false);
+  const [turnTimeout, setTurnTimeout] = useState(null);
 
+  /**
+   * This method will skip a player if he uses too long time.
+   */
   useEffect(() => {
     const timeout = setTimeout(() => {
       handleThrowDices();
@@ -18,7 +22,11 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
       setInputDice2(dice2);
       updateAllDices();
       updateNextPlayer();
+      setTurnTimeout(null);
+      clearTimeout(turnTimeout);
     }, 5000);
+
+    setTurnTimeout(timeout);
   }, []);
 
   /**
@@ -27,9 +35,6 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
   const handleBust = () => {
     const previousPlayer = game.previousPlayer;
     setTryBust(true);
-
-    console.log("PREV P :" + previousPlayer.dice1 + " " + previousPlayer.inputDice1);
-    console.log("PREV P :" + previousPlayer.dice2 + " " + previousPlayer.inputDice2);
 
     if(previousPlayer.inputDice1+"" !== previousPlayer.dice1+"" || previousPlayer.inputDice2+"" !== previousPlayer.dice2+"") {
       console.log("Previous player got BUSTED!");
@@ -133,6 +138,8 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
 
       setDice1(0);
       setDice2(0);
+      setTurnTimeout(null);
+      clearTimeout(turnTimeout);
       console.log("Updated next player");
       await runTransaction(db, updateTransaction);
     } catch (err) {
