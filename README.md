@@ -6,15 +6,15 @@
 - Endre fra create-react-app til next?
 
 ### Neste
-- Hvis begge terninger viser 0 skal ingen verdi vises eller ikke kastet.
+- Varsle spiller som ble busted at han ble busted
+
 - Vise hva forrige spiller fikk
-- lage ett bord som viser de andre spillerne og hva de kastet
+- lage ett bord som viser de andre spillerne og hva de kastet, eller vise ikke kastet
 
 - Lage tutorial komponent, avsnitt med grafisk figur (kvist)
 
 - Finn måte å avslutte spillet
-- Hvis spilleren som har tur blir borte eller forlater, må neste spileller oppdateres og han må fjernes fra spillet.
-- timer når det er din tur, hvis du bruker for lang tid så blir du skippa, 3 skips blir du kasta ut.
+- Hvis man bruker for lang tid kaster spillet terninger automatisk, skjer dette 3 ganger fjernes man fra spillet
 
 - Lage design i figma
 - Kjøre A/B testing på design
