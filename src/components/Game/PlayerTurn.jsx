@@ -21,7 +21,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
     console.log("PREV P :" + previousPlayer.dice1 + " " + previousPlayer.inputDice1);
     console.log("PREV P :" + previousPlayer.dice2 + " " + previousPlayer.inputDice2);
 
-    if(previousPlayer.inputDice1+"" !== previousPlayer.dice1+"" && previousPlayer.inputDice2+"" !== previousPlayer.dice2+"") {
+    if(previousPlayer.inputDice1+"" !== previousPlayer.dice1+"" || previousPlayer.inputDice2+"" !== previousPlayer.dice2+"") {
       console.log("Previous player got BUSTED!");
       setBustSuccess(true);
       alertPlayerBusted();

@@ -7,10 +7,10 @@
 
 ### Neste
 - Hvis begge terninger viser 0 skal ingen verdi vises eller ikke kastet.
-- Lage tutorial komponent, avsnitt med grafisk figur (kvist)
-- Fullføre waitingturn turn og playerturn
+- Vise hva forrige spiller fikk
+- lage ett bord som viser de andre spillerne og hva de kastet
 
-- Ordne så spille kan velge om å lyve / bust / spille ærlig
+- Lage tutorial komponent, avsnitt med grafisk figur (kvist)
 
 - Finn måte å avslutte spillet
 - Hvis spilleren som har tur blir borte eller forlater, må neste spileller oppdateres og han må fjernes fra spillet.
