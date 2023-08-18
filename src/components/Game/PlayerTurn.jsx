@@ -30,7 +30,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
       setBustSuccess(false);
     } 
      
-    // resetGame();
+    resetGame();
   };
 
   /** 
