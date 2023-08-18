@@ -5,29 +5,33 @@ import { db } from '../../config/firebase';
 /**
  * Handles all the users choices when its their turn
  */
-function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDice2, inputDice1, setInputDice1, inputDice2, setInputDice2 }) {
+function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDice2, inputDice1, setInputDice1, inputDice2, setInputDice2, playersTurn }) {
 
   const [thrownDices, setThrownDices] = useState(false);
   const [tryBust, setTryBust] = useState(false);
   const [bustSuccess, setBustSuccess] = useState(false);
-  const [turnTimeout, setTurnTimeout] = useState(null);
 
   /**
    * This method will skip a player if he uses too long time.
    */
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    let timeout;
+    const handleTimeout = async () => {
       handleThrowDices();
       setInputDice1(dice1);
       setInputDice2(dice2);
-      updateAllDices();
-      updateNextPlayer();
-      setTurnTimeout(null);
-      clearTimeout(turnTimeout);
-    }, 5000);
+      await updateAllDices();
+      await updateNextPlayer();
+    };
 
-    setTurnTimeout(timeout);
-  }, []);
+    if(playersTurn) {
+      timeout = setTimeout(handleTimeout, 5000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [playersTurn, dice1, dice2]);
 
   /**
    * Handles the logic if a player thinks the previous player has cheated.
@@ -138,8 +142,6 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
 
       setDice1(0);
       setDice2(0);
-      setTurnTimeout(null);
-      clearTimeout(turnTimeout);
       console.log("Updated next player");
       await runTransaction(db, updateTransaction);
     } catch (err) {

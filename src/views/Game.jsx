@@ -89,6 +89,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                         inputDice2={inputDice2}
                         setInputDice1={setInputDice1}
                         setInputDice2={setInputDice2}
+                        playersTurn={playersTurn}
                     />
                     : <WaitingTurn />
                 }
