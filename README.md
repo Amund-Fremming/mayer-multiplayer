@@ -6,6 +6,8 @@
 - Endre fra create-react-app til next?
 
 ### Neste
+- Hvis man bruker for lang tid kaster spillet terninger automatisk, skjer dette 3 ganger fjernes man fra spillet
+- Fikse sjekk som finner ut om man slår personen som slo terninger før ved å ha høyre verdi eller mayer/lille mayer
 - Varsle spiller som ble busted at han ble busted
 
 - Vise hva forrige spiller fikk
@@ -14,7 +16,6 @@
 - Lage tutorial komponent, avsnitt med grafisk figur (kvist)
 
 - Finn måte å avslutte spillet
-- Hvis man bruker for lang tid kaster spillet terninger automatisk, skjer dette 3 ganger fjernes man fra spillet
 
 - Lage design i figma
 - Kjøre A/B testing på design

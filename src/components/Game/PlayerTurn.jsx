@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Transaction, runTransaction, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
@@ -10,6 +10,16 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
   const [thrownDices, setThrownDices] = useState(false);
   const [tryBust, setTryBust] = useState(false);
   const [bustSuccess, setBustSuccess] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      handleThrowDices();
+      setInputDice1(dice1);
+      setInputDice2(dice2);
+      updateAllDices();
+      updateNextPlayer();
+    }, 5000);
+  }, []);
 
   /**
    * Handles the logic if a player thinks the previous player has cheated.
