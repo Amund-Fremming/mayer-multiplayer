@@ -18,7 +18,7 @@
 
 - Lage design i figma
 - Kjøre A/B testing på design
-- beta testing med noen få brukere
+- beta testing med noen få brukere 
  
 <br/><br/>
 
