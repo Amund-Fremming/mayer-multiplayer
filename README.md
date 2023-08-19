@@ -2,7 +2,6 @@
 - Lage popup hvordan man legger til appen på hjemskjerm og at det er bedre der.
 - (bildeopplastning ved username)???
 - ikke bruke alert men vise feilen penere på siden
-- Kunne sende link via snapchat,messenger eller meldinger til ett spill
 - Endre fra create-react-app til vite eller astro
 
 ### Neste
