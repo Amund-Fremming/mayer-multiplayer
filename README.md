@@ -15,7 +15,8 @@
 
 - Lage tutorial komponent, avsnitt med grafisk figur (kvist)
 
-- Finn måte å avslutte spillet
+- (Finn måte å avslutte spillet)
+- (Regne ut antall slurker, ut ifra hvor feil man busta?)
 
 - Lage design i figma
 - Kjøre A/B testing på design
