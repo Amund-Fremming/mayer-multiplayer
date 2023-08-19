@@ -3,7 +3,7 @@
 - (bildeopplastning ved username)???
 - ikke bruke alert men vise feilen penere på siden
 - Kunne sende link via snapchat,messenger eller meldinger til ett spill
-- Endre fra create-react-app til next?
+- Endre fra create-react-app til vite eller astro
 
 ### Neste
 - Hvis man bruker for lang tid kaster spillet terninger automatisk, skjer dette 3 ganger fjernes man fra spillet
