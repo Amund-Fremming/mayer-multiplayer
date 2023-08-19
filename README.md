@@ -1,5 +1,5 @@
 ### Må ordnes
-- Lage popup hvordan man legger til appen på hjemskjerm og at det er bedre der.
+- Lage popup hvordan man legger til appen på hjemskjerm og at det er bedre der / lage ios app
 - (bildeopplastning ved username)???
 - ikke bruke alert men vise feilen penere på siden
 - Endre fra create-react-app til vite eller astro
