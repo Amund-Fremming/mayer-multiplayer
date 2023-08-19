@@ -6,7 +6,7 @@
 - Endre fra create-react-app til vite eller astro
 
 ### Neste
-- Hvis man bruker for lang tid kaster spillet terninger automatisk, skjer dette 3 ganger fjernes man fra spillet
+- Fikse oppdatering av terninger når timer løper ut, justere tid på timer
 - Fikse sjekk som finner ut om man slår personen som slo terninger før ved å ha høyre verdi eller mayer/lille mayer
 - Varsle spiller som ble busted at han ble busted
 
