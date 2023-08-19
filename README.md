@@ -22,7 +22,7 @@
 - Kjøre A/B testing på design
 - beta testing med noen få brukere
 
-- Kontakt, info side der man kan sende inn bugs, og kontakte utvikler
+- Kontakt, info side der man kan sende inn bugs, og kontakte utvikler 
   
 <br/><br/>
 
