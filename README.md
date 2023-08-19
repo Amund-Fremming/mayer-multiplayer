@@ -7,11 +7,12 @@
 
 ### Neste
 - Fikse oppdatering av terninger når timer løper ut, justere tid på timer
-- Fikse sjekk som finner ut om man slår personen som slo terninger før ved å ha høyre verdi eller mayer/lille mayer
+- Lage metode for sjekk av om man slo personen før med terning verdi
+- Varsle spiller om han tapte runden med for lite poeng
 - Varsle spiller som ble busted at han ble busted
 
 - Vise hva forrige spiller fikk
-- lage ett bord som viser de andre spillerne og hva de kastet, eller vise ikke kastet
+- lage ett bord som viser de andre spillerne og hva de kastet
 
 - Lage tutorial komponent, avsnitt med grafisk figur (kvist)
 
