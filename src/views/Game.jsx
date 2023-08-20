@@ -14,6 +14,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
     const [dice2, setDice2] = useState("");
     const [inputDice1, setInputDice1] = useState("");
     const [inputDice2, setInputDice2] = useState("");
+    const [playerInTurn, setPlayerInTurn] = useState({});
 
     useEffect(() => {
         if(!documentRef) return;
@@ -28,6 +29,7 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                 return;
             }
 
+            setPlayerInTurn(snapshot.data().currentPlayer);
             setPlayersTurn(snapshot.data().currentPlayer.username === username);
             setPlayers(snapshot.data().players);
             setGame(snapshot.data());
@@ -75,7 +77,10 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                 </div>
 
                 {/* Game board */}
-                <GameBoard />
+                <GameBoard
+                    players={players}
+                    playerInTurn={playerInTurn}
+                />
                 
                 {/* Game logic */}
                 {

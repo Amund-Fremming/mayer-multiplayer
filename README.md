@@ -7,11 +7,11 @@
 ### Neste
 - Fikse oppdatering av terninger når timer løper ut, justere tid på timer
 - Lage metode for sjekk av om man slo personen før med terning verdi
-- Varsle spiller om han tapte runden med for lite poeng
-- Varsle spiller som ble busted at han ble busted
+- Varsle spillerere om hvem som taper runden
+- Varsle spillere hvem som ble busted og tapte
 
 - Vise hva forrige spiller fikk
-- Lage GameBoard komponent som viser spiller bordet
+- Lage GameBoard komponent som viser spillere på bordet
 
 - Lage tutorial komponent, avsnitt med grafisk figur (kvist)
 
