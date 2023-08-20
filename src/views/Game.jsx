@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { onSnapshot, runTransaction } from "firebase/firestore";
 import PlayerTurn from "../components/Game/Playerturn";
 import WaitingTurn from "../components/Game/WaitingTurn";
+import GameBoard from "../components/Game/GameBoard"; 
 import { db } from "../config/firebase";
 
 const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameState }) => {
@@ -30,7 +31,6 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
             setPlayersTurn(snapshot.data().currentPlayer.username === username);
             setPlayers(snapshot.data().players);
             setGame(snapshot.data());
-
         });
     
         return () => unsubscribe();
@@ -73,6 +73,9 @@ const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameSt
                         ))
                     }
                 </div>
+
+                {/* Game board */}
+                <GameBoard />
                 
                 {/* Game logic */}
                 {

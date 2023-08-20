@@ -5,8 +5,8 @@ import React from 'react'
  */
 function GameBoard() {
   return (
-    <div>
-      
+    <div className='bg-red-400 p-6 rounded-xl flex justify-center items-center'>
+      GameBoard
     </div>
   )
 }
