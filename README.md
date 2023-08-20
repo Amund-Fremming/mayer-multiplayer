@@ -14,7 +14,7 @@
 - Lage GameBoard komponent som viser spillere på bordet
 
 - Lage tutorial komponent, avsnitt med grafisk figur (kvist)
-
+ 
 - (Finn måte å avslutte spillet)
 - (Regne ut antall slurker, ut ifra hvor feil man busta?)
 
