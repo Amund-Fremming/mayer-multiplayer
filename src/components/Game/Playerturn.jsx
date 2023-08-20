@@ -14,6 +14,7 @@ function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDi
   /**
    * This method will skip a player if he uses too long time.
    */
+  // WHEN THE TIMEPOUT TRIGGERS, THE VALUES DOES NOT GET UPDATED IN THE DB, THIS CAN BE CAUSED BY THE ASYNC USEEFFECT.
   useEffect(() => {
     let timeout;
     const handleTimeout = async () => {
