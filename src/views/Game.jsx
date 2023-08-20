@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { onSnapshot, runTransaction } from "firebase/firestore";
-import PlayerTurn from "../components/Game/me-pixel";
-import WaitingTurn from "../components/Game/me-pixel2";
+import PlayerTurn from "../components/Game/Playerturn";
+import WaitingTurn from "../components/Game/WaitingTurn";
 import { db } from "../config/firebase";
 
 const Game = ({ gameid, username, documentRef, saveInSessionStorage, resetGameState }) => {
