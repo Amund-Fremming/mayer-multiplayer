@@ -5,7 +5,7 @@ import { db } from '../../config/firebase';
 /**
  * Handles all the users choices when its their turn
  */
-function PlayerTurn({ documentRef, username, game, dice1, setDice1, dice2, setDice2, inputDice1, setInputDice1, inputDice2, setInputDice2, playersTurn }) {
+const PlayerTurn = ({ documentRef, username, game, dice1, setDice1, dice2, setDice2, inputDice1, setInputDice1, inputDice2, setInputDice2, playersTurn }) => {
 
   const [thrownDices, setThrownDices] = useState(false);
   const [tryBust, setTryBust] = useState(false);

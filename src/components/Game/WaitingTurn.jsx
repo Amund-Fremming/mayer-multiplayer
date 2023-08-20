@@ -3,7 +3,7 @@ import React from 'react'
 /**
  * Handles all the users waiting turn.
  */
-function WaitingTurn() {
+const WaitingTurn = () => {
 
   /**
    * For players that are bored.
