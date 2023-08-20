@@ -11,7 +11,7 @@
 - Varsle spiller som ble busted at han ble busted
 
 - Vise hva forrige spiller fikk
-- lage ett bord som viser de andre spillerne og hva de kastet
+- Lage GameBoard komponent som viser spiller bordet
 
 - Lage tutorial komponent, avsnitt med grafisk figur (kvist)
 
