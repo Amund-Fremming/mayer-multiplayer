@@ -1,5 +1,6 @@
 
 export const sectionHeader = "";
+
 export const mainHeader = "";
 export const subHeader = "";
 
