@@ -5,8 +5,13 @@ import React from 'react'
  */
 function WaitingTurn() {
 
+  /**
+   * For players that are bored.
+   */
   const pokePlayer = (username) => {
-
+    // OnSnapshot to players in database
+    // Update screen when poked is true
+    // Poking resets every 5 seconds or to a player removes the poke
   };
 
   // 
