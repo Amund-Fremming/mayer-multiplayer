@@ -160,7 +160,9 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
 
         return(
             // This needs a bg image
-            <div className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center h-screen w-full bg-gray-500"             style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
+            <div
+                className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center h-screen w-full bg-gray-500" 
+                style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
             >
 
                 {/* Header */}
@@ -236,7 +238,10 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
     } else {
         return(
             // This needs a bg image
-            <div className="flex flex-col justify-center items-center h-screen w-full bg-pink-800">
+            <div
+                className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center h-screen w-full bg-gray-500"
+                style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
+            >
 
                 {/* Header */}
                 <div className="flex flex-col justify-center items-center mb-16 w-full">
