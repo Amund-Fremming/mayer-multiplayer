@@ -62,7 +62,13 @@ const ViewRenderer = () => {
         case "HOME":
             return(
                 <Home
+                    resetGameState={resetGameState}
+                    gameid={gameid}
+                    setGameid={setGameId}
+                    username={username}
+                    setUsername={setUsername}
                     setView={setView}
+                    setDocumentRef={setDocumentRef}
                 /> 
             );
         case "JOIN_GAME":

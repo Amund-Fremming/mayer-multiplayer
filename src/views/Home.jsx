@@ -1,37 +1,160 @@
-import React from "react";
-import Tutorial from "./Tutorial";
+import React, { useState } from "react";
+import { BiGame } from "react-icons/bi";
+import { BsFillPersonFill } from "react-icons/bs";
+import { collection, doc, addDoc, getDocs, query, where, runTransaction } from 'firebase/firestore';
+import { db } from '../config/firebase';
 
 /**
  * Initial screen allowing users to either host or join a game.
  */
-const Home = ({ setView }) => {
+const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setView, setDocumentRef }) => {
 
-    if(!true) {
-        return(
-            <>
-                <div className="flex flex-col justify-center items-center h-screen">
-                    <h1>Velkommen til Mayer</h1>
-                    <div className="mt-3">
-                        <button
-                            className="p-1 bg-gray-200 m-1"
-                            onClick={() => setView("JOIN_GAME")}
-                        >
-                            Join
-                        </button>
-                        <button
-                            className="p-1 bg-gray-200 m-1"
-                            onClick={() => setView("HOST_GAME")}
-                        >
-                            Host
-                        </button>
-                    </div>
-                </div>
-            </>
-        );
-    } else {
+    const [hostView, setHostView] = useState(true);
 
-        // MANGLER
-        // fikse skrivt og srtrl riktig
+    const collectionRef = collection(db, "games");
+    const q = query(collectionRef, where("gameid", "==", gameid));
+
+    /**
+     *  Creates a new game in the firestore database
+     */
+    const createGame = async () => {
+        try {
+            const newGameRef = await addDoc(collectionRef, {
+                gameid: gameid,
+                currentPlayer: {
+                    username: username,
+                    ready: true,
+                    dice1: 0,
+                    dice2: 0,
+                    inputDice1: 0,
+                    inputDice2: 0,
+                },
+                previousPlayer: {},
+                players: [
+                    {
+                        username: username,
+                        ready: false,
+                        dice1: 0,
+                        dice2: 0,
+                        inputDice1: 0,
+                        inputDice2: 0,
+                    },
+                ],
+                roundnumber: 0,
+                state: "CREATED",
+            }); 
+            console.log("Game created");
+
+            // Sets the documentRef, saves us form extra querying later.
+            setDocumentRef(newGameRef);
+        } catch(err) {
+            console.log("Error: " + err);
+        }
+    };
+
+    /**
+     * Sets the states from the App so that the next "page" 
+     * renders
+     */
+    const handleHostedGame = async () => {
+        try {
+            const q = query(collectionRef, where("gameid", "==", gameid));
+            const querySnapshot = await getDocs(q);
+
+            if(gameid === "" || username === "") {
+                alert("Fill out username/gameid");
+            } else if(username.length > 14 || gameid.length > 14) {
+                alert("Too long username or gameid (Max 14)");
+            } else if(!querySnapshot.empty) {
+                alert("Game id in use");
+            } else {
+                createGame();
+                resetGameState();
+                setView("HOST_LOBBY");
+            }
+        } catch (err) {
+            console.log("Error: " + err.message);
+        }
+    };
+
+    /**
+     * Adds the player to the specified game in the database after 
+     * performing necessary checks using a transaction.
+     */
+    const playerJoinGame = async () => {
+        try {
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                const documentRef = doc(collectionRef, querySnapshot.docs[0].id);
+                setDocumentRef(documentRef);
+                
+                const joinTransaction = async (transaction) => {
+                    const docSnapshot = await transaction.get(documentRef);
+                    if (!docSnapshot.exists) {
+                        throw new Error("Document does not exist!");
+                    }
+
+                    // Checks if the game has started
+                    if(docSnapshot.data().state === "IN_PROGRESS") {
+                        return "GAME_STARTED";
+                    };
+    
+                    // Chekcs if the username exists
+                    const players = docSnapshot.data().players;
+                    for (let player of players) {
+                        if (player.username.toUpperCase() === username.toUpperCase()) {
+                            return "USERNAME_EXISTS";
+                        }
+                    }
+                    players.push({
+                        username: username,
+                        ready: false,
+                        dice1: 0,
+                        dice2: 0,
+                        inputDice1: 0,
+                        inputDice2: 0,
+                    });
+                    transaction.update(documentRef, { players: players });
+                };
+                
+                const transactionResult = await runTransaction(db, joinTransaction);
+    
+                if (transactionResult === "USERNAME_EXISTS") {
+                    alert(`Username: ${username} is already in use!`);
+                    return;
+                }
+                if(transactionResult === "GAME_STARTED") {
+                    alert("Game has started");
+                    return;
+                }
+                
+                console.log("Player joined the game!");
+                resetGameState();
+                setView("JOIN_LOBBY");
+    
+            } else {
+                alert(`Game id: ${gameid}, does not exist`);
+            }
+        } catch (err) {
+            console.log("Error: " + err.message);
+        }
+    };
+
+    /**
+     * Verifies user input before attempting to join a game.
+     */
+    const handleJoinGame = async () => {
+        if (username === "" || gameid === "") {
+            alert("Fill out username/gameid");
+        } else if(username.length > 14 || gameid.length > 14) {
+            alert("Too long username or gameid (Max 14)");
+        } else {
+            playerJoinGame();
+        }
+    };
+
+    if(hostView) {
+        // fikse font og srtrl riktig
         // Få input boksene høyrere
 
         return(
@@ -45,9 +168,19 @@ const Home = ({ setView }) => {
                 </div>
 
                 {/* Selection */}
-                <div className="flex justify-evenly w-full text-white">
-                    <p className="text-gray-300 text-xl mx-8">Host</p>
-                    <p className="text-gray-300 text-xl mx-8">Join</p>
+                <div className="flex justify-between w-[265px] text-white">
+                    <p
+                        className="text-gray-300 text-xl mx-8"
+                        onClick={() => setHostView(true)}
+                    >
+                        Host
+                    </p>
+                    <p
+                        onClick={() => setHostView(false)}
+                        className="text-gray-300 text-xl mx-8"
+                    >
+                        Join
+                    </p>
                 </div>
                 
                 {/* Box */}
@@ -57,21 +190,24 @@ const Home = ({ setView }) => {
                     <div className="w-20 h-20 rounded-t-full relative right-20 top-[-20px] bg-white" />
 
                     <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-4 border-gray-300">
-                        <p className="text-2xl text-gray-300">XX</p>
+                        <p className="text-3xl text-gray-300"><BiGame/></p>
                         <input 
                             className="mx-3 text-xl placeholder-gray-300 outline-none text-gray-300"
                             placeholder="Game ID"
+                            onChange={e => setGameid(e.target.value)}
                         />
                     </div>
                     <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-4 border-gray-300">
-                        <p className="text-2xl text-gray-300">XX</p>
+                        <p className="text-3xl text-gray-300"><BsFillPersonFill/></p>
                         <input
                             className="mx-3 text-xl placeholder-gray-300 outline-none text-gray-300"
                             placeholder="Username"
+                            onChange={e => setUsername(e.target.value)}
                         />
                     </div>
                     <button
                         className="w-[60%] mt-6 h-[25%] bg-red-300 rounded-xl text-white text-xl mb-8"
+                        onClick={handleHostedGame}
                     >
                         Host
                     </button>
@@ -80,13 +216,88 @@ const Home = ({ setView }) => {
                 {/* Other views */}
                 <div className="text-gray-300 flex mt-6">
                     <p
-                        className="px-6"
+                        className="px-6 cursor-pointer"
                         onClick={() => setView("TUTORIAL")}
                     >
                         Howto
                     </p>
                     <p
-                        className="px-6"
+                        className="px-6 cursor-pointer"
+                        onClick={() => setView("DEVELOPER")}
+                    >
+                        Developer
+                    </p>
+                </div>
+
+            </div>
+        );
+    } else {
+        return(
+            // This needs a bg image
+            <div className="flex flex-col justify-center items-center h-screen w-full bg-pink-800">
+
+                {/* Header */}
+                <div className="flex flex-col justify-center items-center mb-16 w-full">
+                    <h1 className="text-2xl pr-7">MEYER</h1>
+                    <h1 className="text-2xl pl-7">ONLINE</h1>
+                </div>
+
+                {/* Selection */}
+                <div className="flex justify-between w-[265px] text-white">
+                    <p
+                        className="text-gray-300 text-xl mx-8"
+                        onClick={() => setHostView(true)}
+                    >
+                        Host
+                    </p>
+                    <p
+                        onClick={() => setHostView(false)}
+                        className="text-gray-300 text-xl mx-8"
+                    >
+                        Join
+                    </p>
+                </div>
+                
+                {/* Box */}
+                <div className="mt-10 w-[350px] h-[280px] bg-white  rounded-md flex flex-col justify-center items-center z-1">
+
+                    {/* Half circle */}
+                    <div className="w-20 h-20 rounded-t-full relative left-20 top-[-20px] bg-white" />
+
+                    <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-4 border-gray-300">
+                        <p className="text-3xl text-gray-300"><BiGame/></p>
+                        <input 
+                            className="mx-3 text-xl placeholder-gray-300 outline-none text-gray-300"
+                            placeholder="Game ID"
+                            onChange={e => setGameid(e.target.value)}
+                        />
+                    </div>
+                    <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-4 border-gray-300">
+                        <p className="text-3xl text-gray-300"><BsFillPersonFill/></p>
+                        <input
+                            className="mx-3 text-xl placeholder-gray-300 outline-none text-gray-300"
+                            placeholder="Username"
+                            onChange={e => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <button
+                        className="w-[60%] mt-6 h-[25%] bg-red-300 rounded-xl text-white text-xl mb-8"
+                        onClick={handleJoinGame}
+                    >
+                        Join
+                    </button>
+                </div>
+
+                {/* Other views */}
+                <div className="text-gray-300 flex mt-6">
+                    <p
+                        className="px-6 cursor-pointer"
+                        onClick={() => setView("TUTORIAL")}
+                    >
+                        Howto
+                    </p>
+                    <p
+                        className="px-6 cursor-pointer"
                         onClick={() => setView("DEVELOPER")}
                     >
                         Developer
