@@ -87,7 +87,7 @@ const JoinGame = ({ resetGameState , gameid, setGameid, username, setUsername, s
     };
 
   return(
-    <>
+    <> 
         <div className='flex flex-col items-center justify-center h-screen'>
             JoinGame
             <input

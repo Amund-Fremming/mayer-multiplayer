@@ -8,6 +8,8 @@ import GameLobby from "./GameLobby";
 import Game from "./Game";
 import { collection, doc, getDocs, where, query } from "firebase/firestore";
 import { db } from "../config/firebase";
+import Tutorial from "./Tutorial";
+import Developer from "./Developer";
 
 /**
  * Renders the correct view, and controlls the game flow.
@@ -129,6 +131,16 @@ const ViewRenderer = () => {
                     saveInSessionStorage={saveInSessionStorage}
                     resetGameState={resetGameState}
                 />
+            );
+
+        case "TUTORIAL":
+            return(
+                <Tutorial />
+            );
+
+        case "DEVELOPER":
+            return(
+                <Developer />
             );
         default:
             return(
