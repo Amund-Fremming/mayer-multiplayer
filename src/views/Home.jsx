@@ -3,6 +3,7 @@ import { BiGame } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
 import { collection, doc, addDoc, getDocs, query, where, runTransaction } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { styles } from "../styles/styles";
 
 /**
  * Initial screen allowing users to either host or join a game.
@@ -159,7 +160,8 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
 
         return(
             // This needs a bg image
-            <div className="flex flex-col justify-center items-center h-screen w-full bg-pink-800">
+            <div className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center h-screen w-full bg-gray-500"             style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
+            >
 
                 {/* Header */}
                 <div className="flex flex-col justify-center items-center mb-16 w-full">
@@ -184,29 +186,29 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                 </div>
                 
                 {/* Box */}
-                <div className="mt-10 w-[350px] h-[280px] bg-white  rounded-md flex flex-col justify-center items-center z-1">
+                <div className={`mt-10 w-[350px] h-[280px] bg-[${styles.bgcolor}]  rounded-md flex flex-col justify-center items-center z-1`}>
 
                     {/* Half circle */}
-                    <div className="w-20 h-20 rounded-t-full relative right-20 top-[-20px] bg-white" />
+                    <div className={`w-16 h-10 rounded-t-full relative right-20 top-[-20px] bg-[${styles.bgcolor}]`} />
 
-                    <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-4 border-gray-300">
-                        <p className="text-3xl text-gray-300"><BiGame/></p>
+                    <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
+                        <p className="text-3xl text-[#01ADCB]"><BiGame/></p>
                         <input 
-                            className="mx-3 text-xl placeholder-gray-300 outline-none text-gray-300"
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1]`}
                             placeholder="Game ID"
                             onChange={e => setGameid(e.target.value)}
                         />
                     </div>
-                    <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-4 border-gray-300">
-                        <p className="text-3xl text-gray-300"><BsFillPersonFill/></p>
+                    <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
+                        <p className="text-3xl text-[#01ADCB]"><BsFillPersonFill/></p>
                         <input
-                            className="mx-3 text-xl placeholder-gray-300 outline-none text-gray-300"
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1]`}
                             placeholder="Username"
                             onChange={e => setUsername(e.target.value)}
                         />
                     </div>
                     <button
-                        className="w-[60%] mt-6 h-[25%] bg-red-300 rounded-xl text-white text-xl mb-8"
+                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-white text-xl mb-8"
                         onClick={handleHostedGame}
                     >
                         Host
@@ -262,12 +264,12 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                 <div className="mt-10 w-[350px] h-[280px] bg-white  rounded-md flex flex-col justify-center items-center z-1">
 
                     {/* Half circle */}
-                    <div className="w-20 h-20 rounded-t-full relative left-20 top-[-20px] bg-white" />
+                    <div className={`w-16 h-10 rounded-t-full relative left-20 top-[-20px] bg-white`} />
 
                     <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-4 border-gray-300">
                         <p className="text-3xl text-gray-300"><BiGame/></p>
                         <input 
-                            className="mx-3 text-xl placeholder-gray-300 outline-none text-gray-300"
+                            className={`mx-3 text-xl placeholder-gray-300 outline-none text-gray-300`}
                             placeholder="Game ID"
                             onChange={e => setGameid(e.target.value)}
                         />
@@ -275,7 +277,7 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                     <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-4 border-gray-300">
                         <p className="text-3xl text-gray-300"><BsFillPersonFill/></p>
                         <input
-                            className="mx-3 text-xl placeholder-gray-300 outline-none text-gray-300"
+                            className={`mx-3 text-xl placeholder-gray-300 outline-none text-gray-300`}
                             placeholder="Username"
                             onChange={e => setUsername(e.target.value)}
                         />

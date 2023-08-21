@@ -24,6 +24,12 @@ const styles = {
     // Padding
     paddingX: "",
     paddingY: "",
+
+    // Colors
+    textcolor: "#2D0600",
+    primarycolor: "#32E0FE",
+    secondarycolor: "#A999FE",
+    bgcolor: "#FFD8D1",
 };
 
 export { styles };
