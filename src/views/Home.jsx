@@ -155,9 +155,6 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
     };
 
     if(hostView) {
-        // fikse font og srtrl riktig
-        // Få input boksene høyrere
-
         return(
             // This needs a bg image
             <div
@@ -174,14 +171,14 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                 {/* Selection */}
                 <div className="flex justify-between w-[265px] text-white">
                     <p
-                        className="text-gray-300 text-xl mx-8"
+                        className="text-[#32E0FE] text-xl mx-8"
                         onClick={() => setHostView(true)}
                     >
                         Host
                     </p>
                     <p
                         onClick={() => setHostView(false)}
-                        className="text-gray-300 text-xl mx-8"
+                        className="text-[#32E0FE] text-xl mx-8"
                     >
                         Join
                     </p>
