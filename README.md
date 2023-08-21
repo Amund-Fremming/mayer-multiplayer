@@ -1,7 +1,6 @@
 ### Må ordnes
 - Lage popup hvordan man legger til appen på hjemskjerm og at det er bedre der / lage ios app
 - (bildeopplastning ved username)???
-- ikke bruke alert men vise feilen penere på siden
 - Endre fra create-react-app til vite eller astro
 
 ### Neste
@@ -9,6 +8,8 @@
 - Lage metode for sjekk av om man slo personen før med terning verdi
 - Varsle spillerere om hvem som taper runden
 - Varsle spillere hvem som ble busted og tapte
+
+- Når feil oppstår på create siden så vis i feltet hva dom er feil, på de andre sidene få opp tekst en passende plass
 
 - Vise hva forrige spiller fikk
 - Lage GameBoard komponent som viser spillere på bordet
