@@ -53,7 +53,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
     if(true) {
         return(
             <div
-                className="relative min-h-screen bg-cover bg-center flex flex-col justify-start pt-32 items-center h-screen w-full bg-gray-500" 
+                className="relative min-h-screen bg-cover bg-center flex flex-col justify-start pt-12 items-center h-screen w-full bg-gray-500" 
                 style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
             >
 
@@ -70,18 +70,21 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                 */}
 
                 {/* Box */}
-                <div className={`mt-[500px] w-full h-[400px] bg-[#2B2F54] rounded-t-3xl flex flex-col justify-start items-center z-1`}>
+                <div className={`mt-[600px] w-full h-[400px] bg-[#2B2F54] rounded-t-3xl flex flex-col justify-start items-center z-1`}>
                     <div className={`bg-[${styles.bgcolor}] shadow-xl w-[350px] h-[170px] rounded-xl translate-y-[-100px] flex flex-col justify-center items-center`}>
-                        <p className={`mb-4 text-[#2D0600] text-xl`}>Game ID: {gameid}</p>
+                        <div className="flex">
+                            <p className={`mb-4 text-[#2D0600] text-xl`}>Game ID:</p>
+                            <p className="text-[#01ADCB] text-xl">{gameid}</p>
+                        </div>
                         <div className="flex w-full items-center justify-center">
                             <button
-                                className="m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-white text-xl"
+                                className={`m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-xl text-[${styles.textcolor}]`}
                                 onClick={handleLeaveGame}
                             >
                                 Leave
                             </button>
                             <button
-                                className="m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-white text-xl"
+                                className={`m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-xl text-[${styles.textcolor}]`}
                                 onClick={handleStartGame}
                             >
                                 Start Game
@@ -91,39 +94,6 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                 </div>
 
             </div>
-        );
-    } else {
-        return(
-            <>
-                <div className="flex flex-col justify-center items-center h-screen">                
-                    <div className="m-2 p-1 bg-gray-200">
-                        <h1 className="text-xl font-bold">Players</h1>
-                        {
-                            !players ? "" :
-                            players.map(player => (
-                                <p key={player.username}>{player.username}</p>
-                            ))
-                        }
-                    </div>
-                    <h1>HostLobby</h1>
-                    <h2>username: {username}</h2>
-                    <h2>gameid: {gameid}</h2>
-                    <div className='flex m-1'>
-                        <button
-                            className='p-1 bg-gray-200 m-1'
-                            onClick={handleLeaveGame}
-                        >
-                            Leave
-                        </button>
-                        <button
-                            className="p-1 bg-gray-200 m-1"
-                            onClick={handleStartGame}
-                        >
-                            Start Game
-                        </button>
-                    </div>
-                </div>
-            </>
         );
     }
 };
