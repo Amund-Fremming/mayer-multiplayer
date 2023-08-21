@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Home from "./Home";
-import JoinGame from "./JoinGame";
-import HostGame from "./Hostgame";
 import HostLobby from "./HostLobby";
 import JoinLobby from "./JoinLobby";
 import GameLobby from "./GameLobby";
@@ -70,30 +68,6 @@ const ViewRenderer = () => {
                     setView={setView}
                     setDocumentRef={setDocumentRef}
                 /> 
-            );
-        case "JOIN_GAME":
-            return(
-                <JoinGame
-                    resetGameState={resetGameState}
-                    gameid={gameid}
-                    setGameid={setGameId}
-                    username={username}
-                    setUsername={setUsername}
-                    setView={setView}
-                    setDocumentRef={setDocumentRef}
-                />
-            );
-        case "HOST_GAME":
-            return(
-                <HostGame
-                    resetGameState={resetGameState}
-                    gameid={gameid}
-                    setGameid={setGameId}
-                    username={username}
-                    setUsername={setUsername}
-                    setView={setView}
-                    setDocumentRef={setDocumentRef}
-                />
             );
         case "JOIN_LOBBY":
             return(
