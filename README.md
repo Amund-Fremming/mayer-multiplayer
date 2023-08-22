@@ -4,6 +4,7 @@
 - Endre fra create-react-app til vite eller astro
 
 ### Neste
+- ikke responsiv horisontal på mobil
 - Fikse oppdatering av terninger når timer løper ut, justere tid på timer
 - Lage metode for sjekk av om man slo personen før med terning verdi
 - Varsle spillerere om hvem som taper runden
