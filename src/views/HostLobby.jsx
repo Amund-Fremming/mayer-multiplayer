@@ -91,7 +91,6 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                         </div>
                     </div>
                 </div>
-
             </div>
         );
     }
