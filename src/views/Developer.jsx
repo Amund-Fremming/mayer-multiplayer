@@ -20,12 +20,12 @@ const Developer = ({ username, documentRef, resetGameState }) => {
   return (
     <div className='flex flex-col justify-center items-center h-screen w-full'>
 
-      <div className='absolute top-2 left-2'>
+      <div className='absolute top-8 left-2'>
         <button
           className='m-2 p-2 font-serif bg-gray-300'
           onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
         >
-          Leave
+          Back
         </button>
       </div>
 

@@ -8,7 +8,8 @@ module.exports = {
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
         'oswald': ['Oswald', 'sans-serif'],
-        'lobster': ['Lobster', 'cursive']
+        'lobster': ['Lobster', 'cursive'],
+        'roboto': ['Roboto Condensed', 'sans-serif'],
       }
     },
   },

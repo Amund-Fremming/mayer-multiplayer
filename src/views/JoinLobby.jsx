@@ -44,8 +44,8 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
         >
             {/* Header */}
             <div className="flex flex-col justify-center items-center w-full">
-                <h1 className="text-3xl pr-7 font-oswald">MEYER</h1>
-                <h1 className="text-3xl pl-7 font-oswald">ONLINE</h1>
+                <h1 className="text-3xl pr-7 font-serif">MEYER</h1>
+                <h1 className="text-3xl pl-7 font-serif">ONLINE</h1>
             </div>
 
             {/* Info section */}

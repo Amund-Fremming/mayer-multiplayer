@@ -163,8 +163,8 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
 
                 {/* Header */}
                 <div className="flex flex-col justify-center items-center mb-16 w-full">
-                    <h1 className="text-3xl pr-7 font-oswald">MEYER</h1>
-                    <h1 className="text-3xl pl-7 font-oswald">ONLINE</h1>
+                    <h1 className="text-3xl pr-7 font-serif">MEYER</h1>
+                    <h1 className="text-3xl pl-7 font-serif">ONLINE</h1>
                 </div>
 
                 {/* Selection */}
@@ -184,15 +184,15 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                 </div>
                 
                 {/* Box */}
-                <div className={`mt-10 w-[350px] h-[280px] bg-[${styles.bgcolor}]  rounded-md flex flex-col justify-center items-center z-1`}>
+                <div className={`mt-10 w-[350px] h-[280px] bg-white rounded-md flex flex-col justify-center items-center z-1`}>
 
                     {/* Half circle */}
-                    <div className={`w-16 h-10 rounded-t-full relative right-20 top-[-20px] bg-[${styles.bgcolor}]`} />
+                    <div className={`w-16 h-10 rounded-t-full relative right-20 top-[-20px] bg-white`} />
 
                     <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
                         <p className="text-3xl text-[#01ADCB]"><BiGame/></p>
                         <input 
-                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1] font-lobster`}
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-white font-serif`}
                             placeholder="Game ID"
                             onChange={e => setGameid(e.target.value)}
                         />
@@ -200,13 +200,13 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                     <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
                         <p className="text-3xl text-[#01ADCB]"><BsFillPersonFill/></p>
                         <input
-                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1] font-lobster`}
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-white font-serif`}
                             placeholder="Username"
                             onChange={e => setUsername(e.target.value)}
                         />
                     </div>
                     <button
-                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-[#2D0600] text-xl mb-8 font-oswald"
+                        className="w-[60%] mt-6 h-[25%] bg-[#01ADCB] rounded-xl text-[#2D0600] text-xl mb-8 font-oswald"
                         onClick={handleHostedGame}
                     >
                         Host
@@ -235,13 +235,13 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
         return(
             <div
                 className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center h-screen w-full bg-gray-500"
-                style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
+                style={{ backgroundImage: `url('${require("../img/lake.png")}')`}}
             >
 
                 {/* Header */}
                 <div className="flex flex-col justify-center items-center mb-16 w-full">
-                    <h1 className="text-3xl pr-7 font-oswald">MEYER</h1>
-                    <h1 className="text-3xl pl-7 font-oswald">ONLINE</h1>
+                    <h1 className="text-3xl pr-7 font-serif">MEYER</h1>
+                    <h1 className="text-3xl pl-7 font-serif">ONLINE</h1>
                 </div>
 
                 {/* Selection */}
@@ -261,23 +261,23 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                 </div>
                 
                 {/* Box */}
-                <div className={`mt-10 w-[350px] h-[280px] bg-[${styles.bgcolor}]  rounded-md flex flex-col justify-center items-center z-1`}>
+                <div className={`mt-10 w-[350px] h-[280px] bg-white  rounded-md flex flex-col justify-center items-center z-1`}>
 
                     {/* Half circle */}
-                    <div className={`w-16 h-10 rounded-t-full relative left-20 top-[-20px] bg-[#FFD8D1]`} />
+                    <div className={`w-16 h-10 rounded-t-full relative left-20 top-[-20px] bg-white`} />
 
                     <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
                         <p className="text-3xl text-[#01ADCB]"><BiGame/></p>
                         <input 
-                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1] font-lobster`}
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-white font-serif`}
                             placeholder="Game ID"
                             onChange={e => setGameid(e.target.value)}
                         />
                     </div>
-                    <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600] font-lobster">
+                    <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600] font-serif">
                         <p className="text-3xl text-[#01ADCB]"><BsFillPersonFill/></p>
                         <input
-                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1]`}
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-white`}
                             placeholder="Username"
                             onChange={e => setUsername(e.target.value)}
                         />

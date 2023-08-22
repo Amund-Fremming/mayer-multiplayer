@@ -53,34 +53,27 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
     if(true) {
         return(
             <div
-                className="relative min-h-screen bg-cover bg-center flex flex-col justify-start pt-12 items-center h-screen w-full bg-gray-500" 
+                className="relative min-h-screen bg-cover bg-center flex flex-col justify-start pt-20 items-center h-screen w-full bg-gray-500 overflow-hidden" 
                 style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
             >
 
                 {/* Players */}
-                <div className="absolute left-5 top-40">
-                    <h1 className="text-xl text-gray-300">Players</h1>
-                    <ol>
-                        {
-                            players.map(player => (
-                                <li className="text-gray-400" key={player.username}>{player.username}</li>
-                            ))
-                        }
-                    </ol>
+                <div className="absolute top-52 w-[70%] flex flex-wrap justify-center items-center">
+                    {players.map(player => (<p className="mx-2 px-2 my-2 bg-gray-200 bg-opacity-20 p-1 text-center rounded-md text-gray-300 font-roboto text-xl" key={player.username}>{player.username}</p>))}
                 </div>
 
                 {/* Header */}
                 <div className="flex flex-col items-center w-full">
-                    <h1 className="text-2xl pr-7 font-oswald">MEYER</h1>
-                    <h1 className="text-2xl pl-7 font-oswald">ONLINE</h1>
+                    <h1 className="text-3xl pr-7 font-serif">MEYER</h1>
+                    <h1 className="text-3xl pl-7 font-serif">ONLINE</h1>
                 </div>
 
                 {/* Box */}
-                <div className={`mt-[600px] w-full h-screen bg-gray-700 rounded-t-3xl flex flex-col justify-start items-center z-1`}>
-                    <div className={`bg-[${styles.bgcolor}] shadow-xl w-[350px] h-[170px] rounded-xl translate-y-[-100px] flex flex-col justify-center items-center`}>
-                        <div className="flex">
-                            <p className={`mb-4 text-[#2D0600] text-xl`}>Game ID:</p>
-                            <p className="text-[#01ADCB] text-xl">{gameid}</p>
+                <div className={`mt-[580px] w-full h-screen bg-gray-700 rounded-t-3xl flex flex-col justify-start items-center z-1`}>
+                    <div className={`bg-[${styles.bgcolor}] bg-opacity-70 shadow-xl w-[350px] h-[170px] rounded-xl translate-y-[-100px] flex flex-col justify-center items-center`}>
+                        <div className="flex ml-24 w-full">
+                            <p className={`mb-4 text-[#2D0600] text-2xl font-oswald`}>🎲🎲 Game ID: &nbsp;</p>
+                            <p className="text-[#01ADCB] text-2xl font-oswald">{gameid}</p>
                         </div>
                         <div className="flex w-full items-center justify-center">
                             <button
