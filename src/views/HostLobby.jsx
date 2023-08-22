@@ -69,11 +69,11 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                 </div>
 
                 {/* Box */}
-                <div className={`mt-[580px] w-full h-screen bg-gray-700 rounded-t-3xl flex flex-col justify-start items-center z-1`}>
-                    <div className={`bg-[${styles.bgcolor}] bg-opacity-70 shadow-xl w-[350px] h-[170px] rounded-xl translate-y-[-100px] flex flex-col justify-center items-center`}>
+                <div className={`mt-[580px] w-full h-screen bg-[#2A2E54] rounded-t-3xl flex flex-col justify-start items-center z-1`}>
+                    <div className={`bg-[#281F3C] shadow-xl w-[350px] h-[170px] rounded-xl translate-y-[-100px] flex flex-col justify-center items-center`}>
                         <div className="flex ml-24 w-full">
-                            <p className={`mb-4 text-[#2D0600] text-2xl font-oswald`}>🎲🎲 Game ID: &nbsp;</p>
-                            <p className="text-[#01ADCB] text-2xl font-oswald">{gameid}</p>
+                            <p className={`mb-4 text-gray-300 text-2xl font-oswald`}>🎲 🎲 Game ID: &nbsp;</p>
+                            <p className="text-[#F79437] text-2xl font-oswald">{gameid}</p>
                         </div>
                         <div className="flex w-full items-center justify-center">
                             <button

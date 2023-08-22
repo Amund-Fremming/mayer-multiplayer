@@ -84,30 +84,33 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
         }
     };  
 
-    if(true) {
-        return(
-            <div
-            className="relative min-h-screen bg-cover bg-center flex flex-col justify-start items-center h-screen w-full bg-gray-500" 
-            style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
-        >
+    return(
+        <div
+        className="relative min-h-screen bg-cover bg-center flex flex-col justify-start items-center overflow-hidden h-screen w-full bg-gray-500" 
+        style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
+    >
 
-            {/* Header */}
-            <div className="flex flex-col justify-center items-center w-full pt-20">
-                <h1 className="text-3xl pr-7 font-serif">MEYER</h1>
-                <h1 className="text-3xl pl-7 font-serif">ONLINE</h1>
-                <p className="text-xl font-serif text-[#01ADCB] mt-4">{gameid}</p>
+        {/* Header */}
+        <div className="flex flex-col justify-center items-center w-full pt-20">
+            <h1 className="text-3xl pr-7 font-serif">MEYER</h1>
+            <h1 className="text-3xl pl-7 font-serif">ONLINE</h1>
+        </div>
+
+        {/* Players */}
+        <div className="absolute top-40 w-[90%] flex flex-wrap justify-center items-center">
+            {players.map(player => (<p className={`mx-2 px-2 my-2 ${player.ready ? "text-green-400" : "text-red-400"} bg-gray-200 bg-opacity-20 p-1 text-center rounded-md font-roboto text-xl`} key={player.username}>{player.username}</p>))}
+        </div>
+
+        {/* buttons */}
+        <div className="flex flex-col w-full items-center justify-center absolute bottom-0 bg-[#27213D] pt-[22px] pb-12">
+            <div className="flex items-start justify-center mb-2">
+                <p className={`text-gray-300 text-2xl font-oswald`}>🎲 🎲 Game ID: &nbsp;</p>
+                <p className="text-[#F79437] text-2xl font-oswald">{gameid}</p>
             </div>
-
-            {/* Players */}
-            <div className="absolute top-52 w-[70%] flex flex-wrap justify-center items-center">
-                {players.map(player => (<p className={`mx-2 px-2 my-2 ${player.ready ? "text-green-400" : "text-red-400"} bg-gray-200 bg-opacity-20 p-1 text-center rounded-md font-roboto text-xl`} key={player.username}>{player.username}</p>))}
-            </div>
-
-            {/* buttons */}
-            <div className="flex w-full items-center justify-center absolute bottom-12">
+            <div>
                 <button
                     className={`m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-xl text-[${styles.textcolor}] font-oswald`}
-                    onClick={handleLeaveGame}
+                    onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
                 >
                     Leave
                 </button>
@@ -119,39 +122,8 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
                 </button>
             </div>
         </div>
-        );
-    }
-    else {
-    return(
-        <>
-            <div className="flex flex-col justify-center items-center h-screen">
-                <h1>GameLobby</h1>
-                <h2>Gameid: {gameid}</h2>
-                <h2>Players</h2>
-                <div className="w-[20%] flex flex-wrap">
-                    {
-                        players.map(player => (
-                            <p key={player.username} className={player.ready ? "text-green-500 m-1" : "text-red-500 m-1"}>{player.username}</p>
-                        ))
-                    }
-                </div>
-                <div className="flex">
-                    <button
-                        className='p-1 bg-gray-200 m-1'
-                        onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
-                    >
-                        Leave
-                    </button>  
-                    <button
-                        className={isReady ? `bg-green-500 p-1 m-1 ` : `bg-gray-200 p-1 m-1 `}
-                        onClick={handleReadyUp}
-                    >
-                        Ready
-                    </button>
-                </div>
-            </div>
-        </>
-    )}  
+    </div>
+    );
 };
 
 export default GameLobby;
