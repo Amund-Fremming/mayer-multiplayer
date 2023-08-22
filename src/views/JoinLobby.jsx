@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { runTransaction, onSnapshot } from 'firebase/firestore';
 import { db } from "../config/firebase";
 import { handleLeaveGame } from "../util/databaseFunctions";
+import Typewriter from "typewriter-effect";
+import { styles } from "../styles/styles";
 
 /**
  * Component for players to join a game lobby. Listens for game state changes in the database and reacts accordingly.
@@ -37,7 +39,41 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
      */
 
     return(
-        <>
+        <div
+            className="relative min-h-screen bg-cover bg-center flex flex-col justify-start pt-12 items-center h-screen w-full bg-gray-500" 
+            style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
+        >
+            {/* Header */}
+            <div className="flex flex-col justify-center items-center mb-16 w-full">
+                <h1 className="text-3xl pr-7 font-oswald">MEYER</h1>
+                <h1 className="text-3xl pl-7 font-oswald">ONLINE</h1>
+            </div>
+
+            <div className="text-2xl font-oswald absolute bottom-6 text-gray-400 w-full flex flex-col justify-center items-center">
+                <div className="flex w-full ml-[60%]">
+                    <p>Waiting for host &nbsp;</p>
+                    <Typewriter 
+                        options = {{
+                            strings: [". . ."],
+                            autoStart: true,
+                            loop: true,
+                            cursor: "",
+                            pauseFor: 0,
+                        }}
+                    />
+                </div>
+                <button
+                    className={`m-2 w-[120px] h-[45px] bg-[#A999FE] mt-4 rounded-xl text-2xl text-[${styles.textcolor}] font-oswald`}
+                    onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
+                >
+                    Leave
+                </button>
+
+            </div>
+
+        </div>
+
+        /*<>
             <div className="flex flex-col justify-center items-center h-screen">
                 <h1>JoinLobby</h1>
                 <h2>username: {username}</h2>
@@ -50,7 +86,7 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                     Leave
                 </button>      
             </div>
-        </>
+        </>*/
     );
 };
 

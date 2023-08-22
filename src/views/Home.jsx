@@ -170,14 +170,14 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                 {/* Selection */}
                 <div className="flex justify-between w-[265px] text-white">
                     <p
-                        className="text-gray-300 text-xl mx-8 cursor-pointer"
+                        className="text-gray-300 text-xl mx-8 cursor-pointer font-oswald"
                         onClick={() => setHostView(true)}
                     >
                         Host
                     </p>
                     <p
                         onClick={() => setHostView(false)}
-                        className="text-gray-300 text-xl mx-8 cursor-pointer"
+                        className="text-gray-300 text-xl mx-8 cursor-pointer font-oswald"
                     >
                         Join
                     </p>
@@ -192,7 +192,7 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                     <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
                         <p className="text-3xl text-[#01ADCB]"><BiGame/></p>
                         <input 
-                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1]`}
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1] font-lobster`}
                             placeholder="Game ID"
                             onChange={e => setGameid(e.target.value)}
                         />
@@ -200,13 +200,13 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                     <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
                         <p className="text-3xl text-[#01ADCB]"><BsFillPersonFill/></p>
                         <input
-                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1]`}
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1] font-lobster`}
                             placeholder="Username"
                             onChange={e => setUsername(e.target.value)}
                         />
                     </div>
                     <button
-                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-[#2D0600] text-xl mb-8"
+                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-[#2D0600] text-xl mb-8 font-oswald"
                         onClick={handleHostedGame}
                     >
                         Host
@@ -240,21 +240,21 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
 
                 {/* Header */}
                 <div className="flex flex-col justify-center items-center mb-16 w-full">
-                    <h1 className="text-2xl pr-7">MEYER</h1>
-                    <h1 className="text-2xl pl-7">ONLINE</h1>
+                    <h1 className="text-3xl pr-7 font-oswald">MEYER</h1>
+                    <h1 className="text-3xl pl-7 font-oswald">ONLINE</h1>
                 </div>
 
                 {/* Selection */}
                 <div className="flex justify-between w-[265px] text-white">
                     <p
-                        className="text-gray-300 text-xl mx-8 cursor-pointer"
+                        className="text-gray-300 text-xl mx-8 cursor-pointer font-oswald"
                         onClick={() => setHostView(true)}
                     >
                         Host
                     </p>
                     <p
                         onClick={() => setHostView(false)}
-                        className="text-gray-300 text-xl mx-8 cursor-pointer"
+                        className="text-gray-300 text-xl mx-8 cursor-pointer font-oswald"
                     >
                         Join
                     </p>
@@ -269,12 +269,12 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                     <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
                         <p className="text-3xl text-[#01ADCB]"><BiGame/></p>
                         <input 
-                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1]`}
+                            className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1] font-lobster`}
                             placeholder="Game ID"
                             onChange={e => setGameid(e.target.value)}
                         />
                     </div>
-                    <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
+                    <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600] font-lobster">
                         <p className="text-3xl text-[#01ADCB]"><BsFillPersonFill/></p>
                         <input
                             className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-[#FFD8D1]`}
@@ -283,7 +283,7 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                         />
                     </div>
                     <button
-                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-[#2D0600] text-xl mb-8"
+                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-[#2D0600] text-xl mb-8 font-oswald"
                         onClick={handleJoinGame}
                     >
                         Join
