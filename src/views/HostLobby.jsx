@@ -78,7 +78,7 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                         <div className="flex w-full items-center justify-center">
                             <button
                                 className={`m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-xl text-[${styles.textcolor}] font-oswald`}
-                                onClick={handleLeaveGame}
+                                onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
                             >
                                 Leave
                             </button>

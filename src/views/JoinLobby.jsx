@@ -33,10 +33,6 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
         return () => unsubscribe();
     }, [documentRef, setView]);
 
-    /**
-     * Removes the player from the game's player list and navigates to the landing page.
-     */
-
     return(
         <div
             className="relative min-h-screen bg-cover bg-center flex flex-col justify-start pt-20 items-center h-screen w-full bg-gray-500" 

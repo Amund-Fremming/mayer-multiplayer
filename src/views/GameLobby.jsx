@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { onSnapshot, runTransaction, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { handleLeaveGame } from "../util/databaseFunctions";
+import { styles } from "../styles/styles";
 
 /**
  * GameLobby: Renders when the host starts the game with a "Waiting" state.
@@ -83,6 +84,44 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
         }
     };  
 
+    if(true) {
+        return(
+            <div
+            className="relative min-h-screen bg-cover bg-center flex flex-col justify-start items-center h-screen w-full bg-gray-500" 
+            style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
+        >
+
+            {/* Header */}
+            <div className="flex flex-col justify-center items-center w-full pt-20">
+                <h1 className="text-3xl pr-7 font-serif">MEYER</h1>
+                <h1 className="text-3xl pl-7 font-serif">ONLINE</h1>
+                <p className="text-xl font-serif text-[#01ADCB] mt-4">{gameid}</p>
+            </div>
+
+            {/* Players */}
+            <div className="absolute top-52 w-[70%] flex flex-wrap justify-center items-center">
+                {players.map(player => (<p className={`mx-2 px-2 my-2 ${player.ready ? "text-green-400" : "text-red-400"} bg-gray-200 bg-opacity-20 p-1 text-center rounded-md font-roboto text-xl`} key={player.username}>{player.username}</p>))}
+            </div>
+
+            {/* buttons */}
+            <div className="flex w-full items-center justify-center absolute bottom-12">
+                <button
+                    className={`m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-xl text-[${styles.textcolor}] font-oswald`}
+                    onClick={handleLeaveGame}
+                >
+                    Leave
+                </button>
+                <button
+                    className={`m-2 w-[120px] h-[45px] ${isReady ? "bg-green-400" : "bg-[#A999FE]"} rounded-xl text-xl text-[${styles.textcolor}] font-oswald`}
+                    onClick={handleReadyUp}
+                >
+                    Ready
+                </button>
+            </div>
+        </div>
+        );
+    }
+    else {
     return(
         <>
             <div className="flex flex-col justify-center items-center h-screen">
@@ -112,7 +151,7 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
                 </div>
             </div>
         </>
-    );  
+    )}  
 };
 
 export default GameLobby;
