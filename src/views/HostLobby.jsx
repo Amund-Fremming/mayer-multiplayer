@@ -57,6 +57,18 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                 style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
             >
 
+                {/* Players */}
+                <div className="absolute left-5 top-40">
+                    <h1 className="text-xl text-gray-300">Players</h1>
+                    <ur>
+                        {
+                            players.map(player => (
+                                <li className="text-gray-400" key={players.username}>{player.username}</li>
+                            ))
+                        }
+                    </ur>
+                </div>
+
                 {/* Header */}
                 <div className="flex flex-col items-center w-full">
                     <h1 className="text-2xl pr-7">MEYER</h1>

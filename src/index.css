@@ -2,3 +2,13 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* Imported fonts */
+@font-face {
+    font-family: 'bigfont';
+    src: url('./fonts/outward-block.ttf') format('ttf'),
+        url('./fonts/outward-borders.ttf') format('ttf'),
+        url('./fonts/outward-round.ttf') format('ttf'),
+         
+}
+  

@@ -156,7 +156,6 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
 
     if(hostView) {
         return(
-            // This needs a bg image
             <div
                 className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center h-screen w-full bg-gray-500" 
                 style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
@@ -171,14 +170,14 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                 {/* Selection */}
                 <div className="flex justify-between w-[265px] text-white">
                     <p
-                        className="text-white text-xl mx-8"
+                        className="text-gray-300 text-xl mx-8 cursor-pointer"
                         onClick={() => setHostView(true)}
                     >
                         Host
                     </p>
                     <p
                         onClick={() => setHostView(false)}
-                        className="text-white text-xl mx-8"
+                        className="text-gray-300 text-xl mx-8 cursor-pointer"
                     >
                         Join
                     </p>
@@ -207,7 +206,7 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                         />
                     </div>
                     <button
-                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-white text-xl mb-8"
+                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-[#2D0600] text-xl mb-8"
                         onClick={handleHostedGame}
                     >
                         Host
@@ -234,7 +233,6 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
         );
     } else {
         return(
-            // This needs a bg image
             <div
                 className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center h-screen w-full bg-gray-500"
                 style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
@@ -249,14 +247,14 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                 {/* Selection */}
                 <div className="flex justify-between w-[265px] text-white">
                     <p
-                        className="text-gray-300 text-xl mx-8"
+                        className="text-gray-300 text-xl mx-8 cursor-pointer"
                         onClick={() => setHostView(true)}
                     >
                         Host
                     </p>
                     <p
                         onClick={() => setHostView(false)}
-                        className="text-gray-300 text-xl mx-8"
+                        className="text-gray-300 text-xl mx-8 cursor-pointer"
                     >
                         Join
                     </p>
@@ -285,7 +283,7 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                         />
                     </div>
                     <button
-                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-white text-xl mb-8"
+                        className="w-[60%] mt-6 h-[25%] bg-[#A999FE] rounded-xl text-[#2D0600] text-xl mb-8"
                         onClick={handleJoinGame}
                     >
                         Join
