@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BiGame } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
 import { collection, doc, addDoc, getDocs, query, where, runTransaction } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { styles } from "../styles/styles";
 
 /**
  * Initial screen allowing users to either host or join a game.
@@ -14,6 +13,13 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
 
     const collectionRef = collection(db, "games");
     const q = query(collectionRef, where("gameid", "==", gameid));
+
+    useEffect(() => {
+        if(localStorage.getItem("isNotified") === "true") return;
+        
+        alert(`Set the webpage to homescreen for optimal use. Hit the share button, then scroll down to add to homescreen.`);
+        localStorage.setItem("isNotified", "true");
+    }, []);
 
     /**
      *  Creates a new game in the firestore database

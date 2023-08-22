@@ -1,29 +1,23 @@
 ### Må ordnes
-- Lage popup hvordan man legger til appen på hjemskjerm og at det er bedre der / lage ios app
+- Når feil oppstår på create siden så vis i feltet hva dom er feil, på de andre sidene få opp tekst en passende plass
 - (bildeopplastning ved username)???
-- Endre fra create-react-app til vite eller astro
+- Endre fra create-react-app til vite
+- Lage fler komponenter og bruke samme kode i, HOME så det ikke er dobbelt opp, nederste og header på hostlobby, noe på joinlobby og på gamelobby
+- (Finn måte å avslutte spillet)
 
 ### Neste
 - Fikse oppdatering av terninger når timer løper ut, justere tid på timer
-- Lage metode for sjekk av om man slo personen før med terning verdi
-- Varsle spillerere om hvem som taper runden
-- Varsle spillere hvem som ble busted og tapte
 
-- Når feil oppstår på create siden så vis i feltet hva dom er feil, på de andre sidene få opp tekst en passende plass
+- Lage metode for sjekk av om man slo personen før med terning verdi før neste spiller oppateres
+- Varsle spillere hvem som ble busted eller tapte, spesielt spilleren før må få stor varsling
 
-- Vise hva forrige spiller fikk
-- Lage GameBoard komponent som viser spillere på bordet
+- Lage GameBoard komponent som viser spillere på bordet og hva de kastet sist tur
 
 - Lage tutorial komponent, avsnitt med grafisk figur (kvist)
  
-- (Finn måte å avslutte spillet)
 - (Regne ut antall slurker, ut ifra hvor feil man busta?)
 
-- Lage design i figma
-- Kjøre A/B testing på design
-- beta testing med noen få brukere
-
-- Kontakt, info side der man kan sende inn bugs, og kontakte utvikler
+- beta testing med noen få brukere, så fikse feil
 
 <br/><br/>
 
