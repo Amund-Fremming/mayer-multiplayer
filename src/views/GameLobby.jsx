@@ -101,25 +101,27 @@ const GameLobby = ({ resetGameState, gameid, username, setView, documentRef, sav
             {players.map(player => (<p className={`mx-2 px-2 my-2 ${player.ready ? "text-green-400" : "text-red-400"} bg-gray-200 bg-opacity-20 p-1 text-center rounded-md font-roboto text-xl`} key={player.username}>{player.username}</p>))}
         </div>
 
-        {/* buttons */}
-        <div className="flex flex-col w-full items-center justify-center absolute bottom-0 bg-[#27213D] pt-[22px] pb-12">
-            <div className="flex items-start justify-center mb-2">
-                <p className={`text-gray-300 text-2xl font-oswald`}>🎲 🎲 Game ID: &nbsp;</p>
-                <p className="text-[#F79437] text-2xl font-oswald">{gameid}</p>
-            </div>
-            <div>
-                <button
-                    className={`m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-xl text-[${styles.textcolor}] font-oswald`}
-                    onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
-                >
-                    Leave
-                </button>
-                <button
-                    className={`m-2 w-[120px] h-[45px] ${isReady ? "bg-green-400" : "bg-[#A999FE]"} rounded-xl text-xl text-[${styles.textcolor}] font-oswald`}
-                    onClick={handleReadyUp}
-                >
-                    Ready
-                </button>
+        {/* Box */}
+        <div className={`mt-[580px] w-full h-screen bg-[#2A2E54] rounded-t-3xl flex flex-col justify-start items-center z-1`}>
+            <div className={`bg-[#281F3C] shadow-xl shadow-gray-800 w-[350px] h-[170px] rounded-xl translate-y-[-100px] flex flex-col justify-center items-center`}>
+                <div className="flex ml-24 w-full">
+                    <p className={`mb-4 text-gray-300 text-2xl font-oswald`}>🎲 🎲 Game ID: &nbsp;</p>
+                    <p className="text-[#F79437] text-2xl font-oswald">{gameid}</p>
+                </div>
+                <div className="flex w-full items-center justify-center">
+                    <button
+                        className={`m-2 w-[120px] h-[45px] bg-[#A999FE] rounded-xl text-xl text-[${styles.textcolor}] font-oswald`}
+                        onClick={() => handleLeaveGame(username, documentRef, resetGameState)}
+                    >
+                        Leave
+                    </button>
+                    <button
+                        className={`m-2 w-[120px] h-[45px] ${isReady ? "bg-green-500" : "bg-[#A999FE]"} rounded-xl text-xl text-[${styles.textcolor}] font-oswald`}
+                        onClick={handleReadyUp}
+                    >
+                        Ready
+                    </button>
+                </div>
             </div>
         </div>
     </div>
