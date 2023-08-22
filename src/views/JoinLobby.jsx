@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { runTransaction, onSnapshot } from 'firebase/firestore';
-import { db } from "../config/firebase";
+import { onSnapshot } from 'firebase/firestore';
 import { handleLeaveGame } from "../util/databaseFunctions";
 import Typewriter from "typewriter-effect";
 import { styles } from "../styles/styles";
@@ -50,7 +49,7 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
             </div>
 
             {/* Info section */}
-            <div className="text-2xl font-oswald text-gray-400 w-full flex flex-col justify-end items-center h-screen mb-4">
+            <div className="text-2xl font-oswald text-gray-400 w-full flex flex-col justify-end items-center mt-[530px]">
                 <div className="flex w-full justify-center">
                     <p>Waiting for host &nbsp;</p>
                     <Typewriter 

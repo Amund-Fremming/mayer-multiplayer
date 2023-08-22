@@ -120,7 +120,11 @@ const ViewRenderer = () => {
 
         case "DEVELOPER":
             return(
-                <Developer />
+                <Developer
+                    username={username}
+                    documentRef={documentRef}
+                    resetGameState={resetGameState}
+                />
             );
         default:
             return(
