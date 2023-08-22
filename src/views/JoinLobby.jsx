@@ -39,17 +39,17 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
 
     return(
         <div
-            className="relative min-h-screen bg-cover bg-center flex flex-col justify-start pt-12 items-center h-screen w-full bg-gray-500" 
+            className="relative min-h-screen bg-cover bg-center flex flex-col justify-start pt-20 items-center h-screen w-full bg-gray-500" 
             style={{ backgroundImage: `url('${require("../img/lake.png")}')` }}
         >
             {/* Header */}
-            <div className="flex flex-col justify-center items-center mb-16 w-full">
+            <div className="flex flex-col justify-center items-center w-full">
                 <h1 className="text-3xl pr-7 font-oswald">MEYER</h1>
                 <h1 className="text-3xl pl-7 font-oswald">ONLINE</h1>
             </div>
 
             {/* Info section */}
-            <div className="text-2xl font-oswald text-gray-400 w-full flex flex-col justify-end items-center absolute bottom-4">
+            <div className="text-2xl font-oswald text-gray-400 w-full flex flex-col justify-end items-center absolute bottom-7">
                 <div className="flex w-full justify-center">
                     <p>Waiting for host &nbsp;</p>
                     <Typewriter 
