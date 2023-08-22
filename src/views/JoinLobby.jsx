@@ -49,8 +49,9 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                 <h1 className="text-3xl pl-7 font-oswald">ONLINE</h1>
             </div>
 
-            <div className="text-2xl font-oswald absolute bottom-6 text-gray-400 w-full flex flex-col justify-center items-center">
-                <div className="flex w-full ml-[60%]">
+            {/* Info section */}
+            <div className="text-2xl font-oswald text-gray-400 w-full flex flex-col justify-end items-center h-screen mb-4">
+                <div className="flex w-full justify-center">
                     <p>Waiting for host &nbsp;</p>
                     <Typewriter 
                         options = {{
