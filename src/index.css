@@ -4,11 +4,7 @@
 @import 'tailwindcss/utilities';
 
 /* Imported fonts */
-@font-face {
-    font-family: 'bigfont';
-    src: url('./fonts/outward-block.ttf') format('ttf'),
-        url('./fonts/outward-borders.ttf') format('ttf'),
-        url('./fonts/outward-round.ttf') format('ttf'),
-         
-}
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
   

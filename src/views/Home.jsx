@@ -163,8 +163,8 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
 
                 {/* Header */}
                 <div className="flex flex-col justify-center items-center mb-16 w-full">
-                    <h1 className="text-2xl pr-7">MEYER</h1>
-                    <h1 className="text-2xl pl-7">ONLINE</h1>
+                    <h1 className="text-3xl pr-7 font-oswald">MEYER</h1>
+                    <h1 className="text-3xl pl-7 font-oswald">ONLINE</h1>
                 </div>
 
                 {/* Selection */}

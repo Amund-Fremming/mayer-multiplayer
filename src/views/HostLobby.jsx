@@ -60,19 +60,19 @@ const HostLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
                 {/* Players */}
                 <div className="absolute left-5 top-40">
                     <h1 className="text-xl text-gray-300">Players</h1>
-                    <ur>
+                    <ol>
                         {
                             players.map(player => (
-                                <li className="text-gray-400" key={players.username}>{player.username}</li>
+                                <li className="text-gray-400" key={player.username}>{player.username}</li>
                             ))
                         }
-                    </ur>
+                    </ol>
                 </div>
 
                 {/* Header */}
                 <div className="flex flex-col items-center w-full">
-                    <h1 className="text-2xl pr-7">MEYER</h1>
-                    <h1 className="text-2xl pl-7">ONLINE</h1>
+                    <h1 className="text-2xl pr-7 font-oswald">MEYER</h1>
+                    <h1 className="text-2xl pl-7 font-oswald">ONLINE</h1>
                 </div>
 
                 {/* Box */}
