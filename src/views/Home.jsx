@@ -267,7 +267,7 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                     <div className={`w-16 h-10 rounded-t-full relative left-20 top-[-20px] bg-white`} />
 
                     <div className="flex justify-start px-2  items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600]">
-                        <p className="text-3xl text-[#01ADCB]"><BiGame/></p>
+                        <p className="text-3xl text-[#A999FE]"><BiGame/></p>
                         <input 
                             className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-white font-serif`}
                             placeholder="Game ID"
@@ -275,7 +275,7 @@ const Home = ({ resetGameState , gameid, setGameid, username, setUsername, setVi
                         />
                     </div>
                     <div className="mt-6 flex justify-start px-2 items-end w-[80%] h-[20%] border-b-[3px] border-[#2D0600] font-serif">
-                        <p className="text-3xl text-[#01ADCB]"><BsFillPersonFill/></p>
+                        <p className="text-3xl text-[#A999FE]"><BsFillPersonFill/></p>
                         <input
                             className={`mx-3 text-xl placeholder-gray-400 outline-none text-[#2D0600] bg-white`}
                             placeholder="Username"
