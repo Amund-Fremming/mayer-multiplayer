@@ -49,7 +49,7 @@ const JoinLobby = ({ gameid, username, setView, resetGameState, documentRef, sav
             </div>
 
             {/* Info section */}
-            <div className="text-2xl font-oswald text-gray-400 w-full flex flex-col justify-end items-center mt-[530px]">
+            <div className="text-2xl font-oswald text-gray-400 w-full flex flex-col justify-end items-center absolute bottom-4">
                 <div className="flex w-full justify-center">
                     <p>Waiting for host &nbsp;</p>
                     <Typewriter 
